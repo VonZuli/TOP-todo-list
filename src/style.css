@@ -1,0 +1,13 @@
+@font-face {
+  font-family: 'MyFont';
+  src: url('./assets/fonts/donovan.ttf') format('truetype'),
+    url('./assets/fonts/Donovan.otf') format('opentype');
+  font-weight: 600;
+  font-style: normal;
+}
+
+.hello{
+  color:red;
+  font-family: 'MyFont';
+  background: url('./assets/images/pastizzi.jpg');
+}
