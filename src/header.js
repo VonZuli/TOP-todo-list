@@ -2,13 +2,12 @@
 
 
 export function createHeader() {
-  // let body = document.querySelector("body")
+  let user = "Mike's"
   let header = document.querySelector('header')
   let title = document.createElement('h1')
 
-  title.textContent = 'Mike'
+  title.textContent = `${user} Todo List`
 
-  // body.appendChild(header)
   header.appendChild(title)
 }
 
