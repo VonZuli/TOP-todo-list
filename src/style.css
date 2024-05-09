@@ -1,13 +1,22 @@
-@font-face {
+/* @font-face {
   font-family: 'MyFont';
   src: url('./assets/fonts/donovan.ttf') format('truetype'),
     url('./assets/fonts/Donovan.otf') format('opentype');
   font-weight: 600;
   font-style: normal;
+} */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  background-color: rgb(58, 57, 57);
+  color:aliceblue;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  /* overflow-x: hidden; */
 }
 
 .hello{
   color:red;
   font-family: 'MyFont';
-  background: url('./assets/images/pastizzi.jpg');
+  /* background: url('./assets/images/pastizzi.jpg'); */
 }

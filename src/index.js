@@ -1,19 +1,27 @@
 import _ from 'lodash';
 import './style.css'
-import Pastizzi from './assets/images/pastizzi.jpg'
+import {createHeader as header} from './header'
+import {createFooter as footer} from './footer';
+import { createToDoList as todo } from "./todo";
 
-function component() {
-  const element = document.createElement('div');
+// // import Pastizzi from './assets/images/pastizzi.jpg'
 
-  // Lodash, imported via scrpit
-  element.innerHTML = _.join(['Hello', 'webpack'], ' ');
-  element.classList.add('hello');
+// function component() {
+//   const element = document.createElement('div');
 
-  const myIcon = new Image();
-  myIcon.src = Pastizzi;
+//   // Lodash, imported via scrpit
+//   element.innerHTML = _.join(['Hello', 'webpack'], ' ');
+//   element.classList.add('hello');
 
-  element.appendChild(myIcon);
-  return element;
-}
+//   // const myIcon = new Image();
+//   // myIcon.src = Pastizzi;
 
-document.body.appendChild(component());
+//   // element.appendChild(myIcon);
+//   return element;
+// }
+
+// document.body.appendChild(component());
+
+header();
+todo();
+footer();
