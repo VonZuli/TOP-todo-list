@@ -29,26 +29,40 @@ export function createModal(e) {
         const modalTitle = document.createElement('h1')
         
         if(folderBtn === e){
+          newForm.setAttribute('id', createFormObject.label.labelAttr.form[0])
           createFolderForm()
         }
         if (taskBtn === e) {
+          newForm.setAttribute('id', createFormObject.label.labelAttr.form[1])
           createTaskForm()
         }
-
+        
         modalContent.appendChild(modalTitle)
         modalContent.appendChild(modalClose)
         modalContent.appendChild(newForm)
-      
+
+        const folderForm = document.querySelector("#modalNewFolderForm")
+        const folderField = document.createElement('div')
+        folderField.id = "folderField"
+        folderForm.appendChild(folderField)
+        folderField.innerHTML = 
+        `${createFormObject.label.generateFolderLabel()}
+         ${createFormObject.input.generateInput()}`
+
         function createFolderForm(){
-          newForm.setAttribute('id', createFormObject.label.labelAttr.form[0])
           modalTitle.textContent = "Create new folder"
+          //create label
+          
+          // const folderNameLabel = 
+          // const folderNameInput = 
+          //create textbox input
+
+          //create add button
         }
     
         function createTaskForm(){
-          newForm.setAttribute('id', createFormObject.label.labelAttr.form[1])
           modalTitle.textContent = "Create new task"
         }
-        modalContent.appendChild(newForm)
       }
       createForm()
   }
@@ -62,16 +76,23 @@ let createFormObject = {
   label:{
     labelAttr:{
       for:{
-        title: ["Task", "Description", "Due Date", "Priority", "Notes", "Completed?"]
+        taskTitle: ["Task", "Description", "Due Date", "Priority", "Notes", "Completed?"],
+        folderTitle:"Folder Name"
       },
       form: ["modalNewFolderForm","modalNewTaskForm"]
     },
-    generateLabel: function(){
+    generateTaskLabel: function(){
       let forAttr = Object.keys(this.labelAttr)[0]
       let forAttrContent = Object.keys(this.labelAttr.for)[0]
-      let labelText = this.labelAttr.for.title[0]
+      let labelText = this.labelAttr.for.taskTitle[0]
       return `<label ${forAttr}=${forAttrContent}>${labelText}:</label>` 
     },
+    generateFolderLabel: function() {
+      let forAttr = Object.keys(this.labelAttr)[1]
+      let forAttrContent = Object.keys(this.labelAttr.for)[1]
+      let labelText = this.labelAttr.for.folderTitle
+      return `<label ${forAttr}=${forAttrContent}>${labelText}:</label>` 
+    }
   },
   input:{
     type:['text','button','checkbox','date','radio'],
@@ -80,7 +101,7 @@ let createFormObject = {
       let typeAttr = Object.keys(this)[0]
       let type = this.type[0]
       let idAttr = Object.keys(this)[1]
-      let id = this.id[0]
+      let id = this.id[0] //this may need to be fixed
       return `<input ${typeAttr}=${type} ${idAttr}=${id}>`
     },
   }
@@ -124,10 +145,10 @@ let createFormObject = {
 //     }
 //   }
 // }
-  // newTaskFrm.innerHTML = 
-  // //   // `${formObject.label()}
-  // //   //  ${formObject.input()}
-  // //   //  `
+  // folderField.innerHTML = 
+  // // //   // `${formObject.label()}
+  // // //   //  ${formObject.input()}
+  // // //   //  `
   //    `${createFormObject.label.generateLabel()}
   //     ${createFormObject.input.generateInput()}`
   //  `${formObject.label('taskTitle', 'Task:')} 
