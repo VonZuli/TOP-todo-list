@@ -6,9 +6,10 @@ module.exports = {
   mode: 'development',
 	entry: {
    index: './src/index.js',
-   header: './src/header.js',
-   todo: './src/todo.js',
-   footer: './src/footer.js',
+   header: './src/scripts/header.js',
+   todo: './src/scripts/todo.js',
+   footer: './src/scripts/footer.js',
+   modal: './src/scripts/modal.js'
   },
   output: {
     filename: 'main.js',
