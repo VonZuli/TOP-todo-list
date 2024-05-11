@@ -16,19 +16,36 @@
 *::before,
 *::after {
   box-sizing: border-box;
-  background-color: rgb(58, 57, 57);
-  color:aliceblue;
+ 
   font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
   /* overflow-x: hidden; */
 }
-/* body{
+header{
+  min-height: 50px;
+}
+footer{
+  background-color: cadetblue;
+  margin: 20px 0 0 0;
+  padding: 5px;
+  min-height: 50px;
+  text-align: center;
+}
+body{
+  display: flex;
+  flex-direction: column;
   background-color: rgb(58, 57, 57);
-} */
+  color:aliceblue;
+  width: 80%;
+  margin: 0 auto;
+}
 .content{
+  /* flex: 1; */
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  justify-content: flex-start;
+  min-height: 81vh;
+  /* min-height: 100vh; */
+  justify-content: center;
   align-content: flex-start;
   align-items: center;
 }
@@ -47,7 +64,7 @@
   top: 0;
   width: 100%;
   height: 100%;
-  overflow: auto;
+  /* overflow: auto; */
   background-color: cadetblue;
   background-color: rgba(0,0,0,0.4);
 }
@@ -57,11 +74,12 @@
     border-radius: 10px;
     margin: 15% auto;
     border: 5px solid #888;
-    width: 80%; 
+    width: 600px; 
     flex-wrap: wrap;
+    background-color: #363636
   }
   .modal-content > h1{
-    width: 89%;
+    width: 85%;
     padding: 20px;
     margin: 0;
   }
@@ -93,3 +111,56 @@
     border-radius: 5px;
     background-color: #888;
   }
+  form{
+    display: flex;
+    flex-direction: column;
+  }
+    form > div{
+      display: flex;
+      flex-direction: column;
+     
+      width: fit-content
+    }
+    form > button{
+      padding: 5px;
+    
+      align-self: flex-end;
+    }
+    #formFieldContainer > div{
+      display: flex;
+      flex-direction: row;
+      justify-content:space-between;
+      padding: 5px;
+    }
+    #formFieldContainer > div > label{
+      flex-basis:50%;
+      text-align: right;
+      padding-right: 5px;
+      /* max-width: fit-content; */
+    }
+    #formFieldContainer > div > input{
+      flex-basis:50%;
+      border-radius: 5px;
+      min-width: 100px;
+    }
+    #formFieldContainer > div:nth-child(4){
+      display: flex;
+      flex-direction: row;
+    }
+    #formFieldContainer > div:nth-child(4) > label{
+      align-self: start;
+      /* flex-basis: 100%; */
+    }
+    #formFieldContainer > div:nth-child(4) > div:nth-child(2){
+      
+      flex-basis: 100%;
+    }
+    #formFieldContainer > div:nth-child(4) > div{
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      max-width: fit-content;
+    }
+    /* #formFieldContainer > div > input[type='radio']{
+      
+    } */
