@@ -129,7 +129,7 @@ body{
     #formFieldContainer > div{
       display: flex;
       flex-direction: row;
-      justify-content:space-between;
+      /* justify-content:space-between; */
       padding: 5px;
     }
     #formFieldContainer > div > label{
@@ -158,9 +158,11 @@ body{
     #formFieldContainer > div:nth-child(4) > div{
       display: flex;
       flex-direction: column;
-      justify-content: flex-end;
+      /* justify-content: flex-end; */
       max-width: fit-content;
     }
     /* #formFieldContainer > div > input[type='radio']{
       
     } */
+
+  
