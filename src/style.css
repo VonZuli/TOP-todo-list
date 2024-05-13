@@ -158,6 +158,16 @@ body{
 
 /*#endregion modal*/
 /*#region folders*/ 
-
+#folder-content{
+  display: flex;
+  flex-direction: column;
+}
+  #folder-content > ul{
+    padding: 0;
+  }
+  #folder-content > ul > li{
+    list-style-type: none;
+    max-width: fit-content;
+  }
 
 /*#endregion folders*/  

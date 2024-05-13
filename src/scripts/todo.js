@@ -4,29 +4,43 @@ import {createModal as modal} from './modal'
 export function createToDoList(){
   const folderSection = document.querySelector('.folders-section')
   const folderSubtitle = document.createElement('h2')
+  const folderSubtitleContainer = document.createElement('div')
   const folderContent = document.createElement('div')
+  const folderList = document.createElement('ul')
   const newFolderBtn = document.createElement('button')
-
-  const taskSection = document.querySelector('.tasks-section')
+  
+  const tasksSection = document.querySelector('.tasks-section')
   const tasksSubtitle = document.createElement('h2')
+  const tasksSubtitleContainer = document.createElement('div')
   const tasksContent = document.createElement('div')
+  const tasksList = document.createElement('ul')
   const newTaskBtn = document.createElement('button')
 
   folderSubtitle.textContent = "Folders"
-  folderSection.appendChild(folderSubtitle)
+  folderSubtitleContainer.id = 'folder-subtitle'
+  folderContent.id = 'folder-content'
+
+  folderSection.appendChild(folderSubtitleContainer)
+  folderSubtitleContainer.appendChild(folderSubtitle)
   folderSection.appendChild(folderContent)
+  folderContent.appendChild(folderList)
   
   newFolderBtn.textContent = 'Add Folder ➕'
   newFolderBtn.id = 'newFolder'
-  folderContent.appendChild(newFolderBtn)
+  folderSection.appendChild(newFolderBtn)
 
   tasksSubtitle.textContent = "Tasks"
-  taskSection.appendChild(tasksContent)
-  tasksContent.appendChild(tasksSubtitle)
+  tasksSubtitleContainer.id = 'tasks-subtitle'
+  tasksContent.id = 'tasks-content'
+  tasksContent.appendChild(tasksList)
+
+  tasksSection.appendChild(tasksSubtitleContainer)
+  tasksSubtitleContainer.appendChild(tasksSubtitle)
+  tasksSection.appendChild(tasksContent)
 
   newTaskBtn.textContent = 'Add Task ➕'
   newTaskBtn.id = 'newTask'
-  tasksContent.appendChild(newTaskBtn)
+  tasksSection.appendChild(newTaskBtn)
 
   const formBtn = document.querySelectorAll('button');
   formBtn.forEach(btn => {
@@ -53,3 +67,11 @@ export function createToDoList(){
 // let taskNotes
 // let taskCheckbox
 
+/*
+Task Name:
+Description:
+Due Date:
+Prio:
+Notes:
+Completed:  add date when checked
+*/

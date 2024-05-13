@@ -2,11 +2,29 @@
 
 //#endregion imports
 
-//user clicks add folder >>> modal appears
+
+
 //user enters folder data
 //user clicks add
 //user data is appended to Folders list
 
-//user clicks child of Folder header
-//Tasks section is updated with tasks for that folder
+export function addFolder() {
+  const folderList = document.querySelector("#folder-content > ul")
+  const listItem = document.createElement('li')
+  const userInput = document.querySelector("#title")
 
+  listItem.textContent = userInput.value
+  folderList.appendChild(listItem)
+}
+
+
+//user clicks child of Folder header
+
+function displayFolder() {
+
+}
+//Tasks section is updated with tasks assigned to that folder
+
+
+//selected folder width expands out to show delete/edit opt
+//

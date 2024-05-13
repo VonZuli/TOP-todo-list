@@ -1,27 +1,35 @@
 import { add, forEach } from "lodash"
 
+import { addFolder } from "./folders";
+
 export function createModal(e) {
   
   function renderModal() {
+    // create the modal element and append to DOM
     const newModal = document.createElement('div');
     newModal.id = 'new-modal';
     newModal.classList.add('modal');
     document.body.appendChild(newModal);
 
+    // create the content
     const modalContent = document.createElement('div');
     modalContent.classList.add('modal-content');
     
+    // add a close "button"
     const modalClose = document.createElement('span');
     modalClose.classList.add('modal-close');
     modalClose.textContent = '❌';
 
+    // display the modal
     newModal.style.display = 'block';
     
+    // add close event to close "button"
     modalClose.addEventListener('click', ()=>{
       document.querySelector('#new-modal').remove();
     });
     newModal.appendChild(modalContent);
     
+    // dynamically create forms
       function createForm(){
         const folderBtn = document.getElementById('newFolder');
         const taskBtn = document.getElementById('newTask');
@@ -30,11 +38,8 @@ export function createModal(e) {
         const createNewForm = document.createElement('form');
         const formFieldContainer = document.createElement('div')
         formFieldContainer.id = "formFieldContainer"
-       
-        // const newForm = document.getElementsByTagName('form');
-        // const folderForm = document.querySelector("#modalNewFolderForm")
-        // const taskForm = document.querySelector("#modalNewTaskForm")
         
+        // logic to call function depending on button pressed
         if(folderBtn === e){
           createFolderForm(createNewForm);
         }
@@ -47,8 +52,18 @@ export function createModal(e) {
         modalContent.appendChild(modalClose);
         modalContent.appendChild(createNewForm);
         createNewForm.appendChild(formFieldContainer)
+
+        // append addBtn to modal
         let addBtn = createFormObject.input.generateInput(1,6);
         formFieldContainer.insertAdjacentHTML("afterend", addBtn);
+        
+        // if rendering form add data-type attr to addBtn
+        if (createNewForm.id === createFormObject.label.labelAttr.form[0]) {
+          document.querySelector('#addBtn').setAttribute('data-add-type', 'folder')
+        }
+        if (createNewForm.id === createFormObject.label.labelAttr.form[1]) {
+          document.querySelector('#addBtn').setAttribute('data-add-type', 'task')
+        }
 
         // creates folder form       
         function createFolderForm(newForm){
@@ -59,20 +74,15 @@ export function createModal(e) {
             `${createFormObject.label.generateLabel(0,6)}
              ${createFormObject.input.generateInput(0,0,0)}
             `;
+          
         };
 
         // creates task form
         function createTaskForm(newForm){
           modalFormTitle.textContent = "Create new task";
           newForm.setAttribute('id', createFormObject.label.labelAttr.form[1]);
-          /*
-          Task Name:
-          Description:
-          Due Date:
-          Prio:
-          Notes:
-          Completed:  add date when checked
-          */
+
+          // create form from object
           formFieldContainer.innerHTML = 
           `${createFormObject.label.generateLabel(0,0)}
            ${createFormObject.input.generateInput(0,1,0)} 
@@ -93,6 +103,16 @@ export function createModal(e) {
 
       }
       createForm();
+
+      addBtn.addEventListener('click', (e)=>{
+          e.preventDefault()
+          if (e.target.dataset.addType === 'folder') {
+            addFolder()
+          }
+          if (e.target.dataset.addType === 'task') {
+            // addTask()
+          }
+      })
   }
   renderModal();
 };
@@ -125,7 +145,7 @@ let createFormObject = {
       let type = this.type[key1]
 
       let idAttr = Object.keys(this)[1]
-      let id = this.id[key3] //folder needs key 2 (6) 
+      let id = this.id[key3]
       
       let nameAttr = 'name';
       let name = this.id[key3];
