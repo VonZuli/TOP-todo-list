@@ -49,8 +49,10 @@ export function createToDoList(){
       modal(e.target)
     })
   });
-}
 
+  // const folderName = localStorage.getItem('taskFolderObject')
+  // tasksList.innerHTML = `<li data-folder="${folderName}"></li>`
+}
 // function createFolder(){
 //   modal()
 //   // <div class="folder-title">Main</div>

@@ -11,6 +11,7 @@ module.exports = {
    footer: './src/scripts/footer.js',
    modal: './src/scripts/modal.js',
    folder: './src/scripts/folders.js',
+   tasks: './src/scripts/tasks.js',
   },
   output: {
     filename: 'main.js',

@@ -1,6 +1,7 @@
 import { add, forEach } from "lodash"
 
 import { addFolder } from "./folders";
+import { addTask } from "./tasks"
 
 export function createModal(e) {
   
@@ -110,7 +111,7 @@ export function createModal(e) {
             addFolder()
           }
           if (e.target.dataset.addType === 'task') {
-            // addTask()
+            addTask()
           }
       })
   }
