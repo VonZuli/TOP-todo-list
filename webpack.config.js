@@ -9,7 +9,8 @@ module.exports = {
    header: './src/scripts/header.js',
    todo: './src/scripts/todo.js',
    footer: './src/scripts/footer.js',
-   modal: './src/scripts/modal.js'
+   modal: './src/scripts/modal.js',
+   folder: './src/scripts/folders.js',
   },
   output: {
     filename: 'main.js',

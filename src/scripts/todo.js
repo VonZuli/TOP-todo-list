@@ -1,6 +1,6 @@
-//imports
+//#region imports
 import {createModal as modal} from './modal'
-
+//#endregion imports
 export function createToDoList(){
   const folderSection = document.querySelector('.folders-section')
   const folderSubtitle = document.createElement('h2')

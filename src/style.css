@@ -5,13 +5,7 @@
   font-weight: 600;
   font-style: normal;
 } */
-
-/* .hello{
-  color:red;
-  font-family: 'MyFont';
-  /* background: url('./assets/images/pastizzi.jpg');
-} */
-
+/*#region html*/
 *,
 *::before,
 *::after {
@@ -39,7 +33,6 @@ body{
   margin: 0 auto;
 }
 .content{
-  /* flex: 1; */
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -55,7 +48,8 @@ body{
   .tasks-section{
     flex: 3 2 70%
   }
-
+/*#endregion html*/
+/*#region modal*/
 .modal{
   display: none;
   position: fixed;
@@ -118,25 +112,21 @@ body{
     form > div{
       display: flex;
       flex-direction: column;
-     
       width: fit-content
     }
     form > button{
       padding: 5px;
-    
       align-self: flex-end;
     }
     #formFieldContainer > div{
       display: flex;
       flex-direction: row;
-      /* justify-content:space-between; */
       padding: 5px;
     }
     #formFieldContainer > div > label{
       flex-basis:50%;
       text-align: right;
       padding-right: 5px;
-      /* max-width: fit-content; */
     }
     #formFieldContainer > div > input{
       flex-basis:50%;
@@ -149,7 +139,7 @@ body{
     }
     #formFieldContainer > div:nth-child(4) > label{
       align-self: start;
-      /* flex-basis: 100%; */
+
     }
     #formFieldContainer > div:nth-child(4) > div:nth-child(2){
       flex-basis: 100%;
@@ -157,11 +147,17 @@ body{
     #formFieldContainer > div:nth-child(4) > div{
       display: flex;
       flex-direction: column;
-      /* justify-content: flex-end; */
       max-width: fit-content;
     }
-    /* #formFieldContainer > div > input[type='radio']{
-      
-    } */
+    #formFieldContainer > div > input[type='text']{
+      padding: 3px;
+    }
+    #formFieldContainer > div > input[type='date']{
+      padding: 3px;
+    }
 
-  
+/*#endregion modal*/
+/*#region folders*/ 
+
+
+/*#endregion folders*/  
