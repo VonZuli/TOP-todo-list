@@ -16,6 +16,7 @@
 }
 header{
   min-height: 50px;
+  margin-top: 10px;
 }
 footer{
   background-color: cadetblue;
@@ -36,7 +37,7 @@ body{
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  min-height: 81vh;
+  min-height: 85vh;
   /* min-height: 100vh; */
   /* justify-content: center; */
   align-content: flex-start;
@@ -58,6 +59,7 @@ body{
     padding: 10px;
     /* flex: 3 2 70% */
   }
+  
 /*#endregion html*/
 /*#region modal*/
 .modal{
@@ -182,6 +184,9 @@ body{
     cursor: pointer;
     margin-bottom: 10px;
   }
+  #folder-content > ul > li:hover{
+    color: cadetblue;
+  }
 #folder-subtitle{
   margin: 0 0 20px 0;
 }
@@ -192,7 +197,7 @@ body{
   margin: 0 0 20px 0;
 }
 #tasks-content > ul{
-  
+
   padding: 0;
   margin: 0 0 10px 0;
 }
@@ -202,5 +207,25 @@ body{
   max-width: fit-content;
   /* cursor: pointer; */
   margin-bottom: 10px;
+  padding-bottom: 5px;
 }
+.item-container{
+  padding-left: 10px;
+  border-left: 2px solid rgba(95, 158, 160, 0.4)
+}
+.completed > *{
+  opacity: 30%;
+  text-decoration: line-through;
+}
+.item-container.low-prio{
+  border-left: 2px solid rgb(0, 255, 0);
+}
+.item-container.medium-prio{
+  border-left: 2px solid yellow;
+}
+.item-container.high-prio{
+  border-left: 2px solid red;
+}
+
+
 /*#endregion tasks*/

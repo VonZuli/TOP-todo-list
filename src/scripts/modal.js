@@ -109,9 +109,11 @@ export function createModal(e) {
           e.preventDefault()
           if (e.target.dataset.addType === 'folder') {
             addFolder()
+            document.querySelector('#new-modal').remove();
           }
           if (e.target.dataset.addType === 'task') {
             addTask()
+            document.querySelector('#new-modal').remove();
           }
       })
   }
