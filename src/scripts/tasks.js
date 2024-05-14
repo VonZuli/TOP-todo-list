@@ -47,13 +47,15 @@ export function addTask() {
   let listItem = `
   <li data-tasks=${taskTitle.value.toLowerCase()}>
     <div class="item-container ${taskPrioritySelection.toLowerCase()}-prio">
-      <input for=${taskId} type=checkbox class="completedChk">
-      <label id=${taskId} class="taskTitle">${taskTitle.value}</label>
+      <div class="taskControl">
+        <input for=${taskId} type=checkbox class="completedChk">
+        <label id=${taskId} class="taskTitle">${taskTitle.value}</label>
+      </div>
       <div class="taskDesc">${taskDesc.value}</div>
       <div class="taskDueDate">${taskDueDate.value}</div>
       <div class="taskPriority ${taskPrioritySelection.toLowerCase()}-prio">${taskPrioritySelection}</div>
       <div class="taskNotes">${taskNotes.value}</div>
-    </div>
+      </div>
   </li>`
   
   tasksList.insertAdjacentHTML('beforeend', listItem)
@@ -63,16 +65,14 @@ export function addTask() {
     const completedChk = document.querySelectorAll('.completedChk')
 
     completedChk.forEach((e)=>{
-      e.addEventListener('click',(chk)=>{
+      e.addEventListener('click',()=>{
         const task = document.querySelector('li')
-        console.log(task.dataset);
-        console.log(chk);
         const taskItemContainer = document.querySelector(".item-container")
 
-        if (chk.checked === true) {
+        if (e.checked === true) {
           taskItemContainer.removeAttribute("class")
           taskItemContainer.setAttribute("class","item-container completed")
-        } else if (chk.checked === false) {
+        } else if (e.checked === false) {
           taskItemContainer.classList.add(`${taskPrioritySelection.toLowerCase()}-prio`)
           taskItemContainer.classList.remove("completed")
         }

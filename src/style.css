@@ -15,8 +15,12 @@
   /* overflow-x: hidden; */
 }
 header{
+  display: flex;
+  flex-direction: row;
   min-height: 50px;
-  margin-top: 10px;
+  margin: 10px 0 10px 0;
+  align-items: center;
+  flex-basis: 100%;
 }
 footer{
   background-color: cadetblue;
@@ -41,7 +45,7 @@ body{
   /* min-height: 100vh; */
   /* justify-content: center; */
   align-content: flex-start;
-  align-items: center;
+
   
 }
   .folders-section{
@@ -53,11 +57,11 @@ body{
     max-width: 200px;
   }
   .tasks-section{
+    flex: 3 2 70%;
     visibility: hidden;
     border: 2px solid cadetblue;
     border-radius: 20px;
     padding: 10px;
-    /* flex: 3 2 70% */
   }
   
 /*#endregion html*/
@@ -170,31 +174,56 @@ body{
 
 /*#endregion modal*/
 /*#region folders*/ 
+#folder-subtitle{
+  margin: 0 0 20px 0;
+}
 #folder-content{
   display: flex;
   flex-direction: column;
+  flex-wrap: nowrap;
 }
   #folder-content > ul{
     padding: 0;
     margin: 0 0 10px 0;
   }
-  #folder-content > ul > li{
-    list-style-type: none;
-    max-width: fit-content;
-    cursor: pointer;
-    margin-bottom: 10px;
-  }
-  #folder-content > ul > li:hover{
-    color: cadetblue;
-  }
-#folder-subtitle{
-  margin: 0 0 20px 0;
-}
+    #folder-content > ul > .folder-container{
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 5px;
+    }
+    #folder-content > ul > .folder-container:hover{
+      background-color: rgba(95, 158, 160, 0.308);
+      border-radius: 10px;
+    }
+    #folder-content > ul > div > li{
+      list-style-type: none;
+      max-width: fit-content;
+      cursor: pointer;
+    }
+    .folder-container > *{
+      padding: 10px;
+      text-align: center;
+      align-items: center;
+    }
+    .folder-counter{
+      background-color: cadetblue;
+      border-radius: 50%;
+      width: 30px;
+      height: 30px;
+      align-content: center;
+    }
+
 /*#endregion folders*/
 
 /*#region tasks*/
 #tasks-subtitle{
   margin: 0 0 20px 0;
+}
+#tasks-content{
+  display: flex;
+  flex-direction: column;
 }
 #tasks-content > ul{
 
@@ -207,25 +236,59 @@ body{
   max-width: fit-content;
   /* cursor: pointer; */
   margin-bottom: 10px;
-  padding-bottom: 5px;
+  padding-bottom: 10px;
 }
 .item-container{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
   padding-left: 10px;
-  border-left: 2px solid rgba(95, 158, 160, 0.4)
+  border-left: 4px solid rgba(95, 158, 160, 0.4)
 }
 .completed > *{
   opacity: 30%;
   text-decoration: line-through;
 }
 .item-container.low-prio{
-  border-left: 2px solid rgb(0, 255, 0);
+  border-left: 4px solid rgb(0, 255, 0);
 }
 .item-container.medium-prio{
-  border-left: 2px solid yellow;
+  border-left: 4px solid yellow;
 }
 .item-container.high-prio{
-  border-left: 2px solid red;
+  border-left: 4px solid red;
 }
-
+.item-container > *{
+  padding: 5px;
+  margin: 5px;
+}
+/* .completedChk{
+  
+   min-width: 20px;
+   margin: 5px; 
+} */
+.item-container > .taskControl{
+  max-width: fit-content;
+  flex-basis: 50%;
+  flex-grow: 3;
+  flex-shrink: 2;
+}
+.taskDesc{
+  flex-grow: 2;
+  flex-shrink: 1;
+  flex-basis: 70%;
+}
+.taskDueDate{
+  /* flex-grow:  */
+  flex-basis: 20%;
+}
+.taskPriority{
+  /* flex-grow: 3; */
+  flex-basis: 75%;
+}
+.taskNotes{
+  flex-basis: 100%;
+}
 
 /*#endregion tasks*/

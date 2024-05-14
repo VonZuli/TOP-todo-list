@@ -11,12 +11,16 @@
 
 export function addFolder() {
   const folderList = document.querySelector("#folder-content > ul")
+  const folderContainer = document.createElement('div')
+  const folderCounter = document.createElement('div')
   const listItem = document.createElement('li')
   const folderNameInput = document.querySelector("#title")
 
   let userInput = folderNameInput.value.toLowerCase()
 
-
+  folderContainer.classList.add('folder-container')
+  folderCounter.classList.add('folder-counter')
+  folderCounter.textContent = 0
   listItem.textContent = folderNameInput.value
   listItem.setAttribute('data-folder', userInput)
   
@@ -36,7 +40,10 @@ export function addFolder() {
 
   // localStorage.setItem('taskFolderObject', JSON.stringify(taskFolderObject))
 
-  folderList.appendChild(listItem)
+  folderList.appendChild(folderContainer)
+  folderContainer.appendChild(listItem)
+  folderContainer.appendChild(folderCounter)
+  
 
   listItem.addEventListener('click', (e)=>{
     e.preventDefault();
