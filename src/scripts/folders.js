@@ -1,13 +1,22 @@
 //#region imports
-
+import { addTask } from "./tasks";
 //#endregion imports
-
-
-
 
 //user enters folder data
 //user clicks add
 //user data is appended to Folders list
+
+// let taskFolderObject = {}
+
+let taskTitle = document.querySelector("#title");
+let taskDesc = document.querySelector("#desc")
+let taskDueDate = document.querySelector("#dueDate")
+let taskPriority
+let lowPriority = document.querySelector("#low-priority")
+let medPriority = document.querySelector("#med-priority")
+let highPriority = document.querySelector("#high-priority")
+let taskNotes = document.querySelector("#notes")
+let taskCheckbox = document.querySelector(".completedChk")
 
 export function addFolder() {
   const folderList = document.querySelector("#folder-content > ul")
@@ -24,7 +33,26 @@ export function addFolder() {
   listItem.textContent = folderNameInput.value
   listItem.setAttribute('data-folder', userInput)
   
-  // taskFolderObject = [userInput,{taskTitle, taskDesc, taskDueDate, taskPriority, taskNotes, taskCheckbox}]
+  localStorage.setItem('state', JSON.stringify(userInput))
+
+  // taskFolderObject = [
+  //   [userInput,
+  //     {"folder":userInput,
+  //      "tasks":[
+  //         {taskTitle,
+  //         taskDesc,
+  //         taskDueDate,
+  //         taskPriority,
+  //         taskNotes,
+  //         taskCheckbox
+  //         },
+  //         {}
+  //       ]
+  //     }
+  //   ],
+  //   [],
+  //   []
+  // ]
 
   // Object(taskFolderObject, userInput, {
   //   taskTitle: 'test',
@@ -36,16 +64,14 @@ export function addFolder() {
   // })
   //insert task objects here.
 
-  console.log(taskFolderObject);
 
-  // localStorage.setItem('taskFolderObject', JSON.stringify(taskFolderObject))
 
   folderList.appendChild(folderContainer)
   folderContainer.appendChild(listItem)
   folderContainer.appendChild(folderCounter)
   
 
-  listItem.addEventListener('click', (e)=>{
+  folderContainer.addEventListener('click', (e)=>{
     e.preventDefault();
     displayFolder(e)
   })
@@ -57,7 +83,7 @@ export function addFolder() {
 function displayFolder(e) {
   const tasksSection = document.querySelector(".tasks-section")
   tasksSection.style.visibility = "visible"
-  let taskHeader = e.target.textContent;
+  let taskHeader = e.target.firstChild.textContent;
   //modify tasks subtitle h2 to display "folder name + tasks"
   const tasksSubtitle = document.querySelector("#tasks-subtitle > h2")
   tasksSubtitle.textContent = `${taskHeader} Tasks`
@@ -74,17 +100,7 @@ function displayFolder(e) {
 
 }
 
-let taskFolderObject = {}
 
-let taskTitle = document.querySelector("#title");
-let taskDesc = document.querySelector("#desc")
-let taskDueDate = document.querySelector("#dueDate")
-let taskPriority
-let lowPriority = document.querySelector("#low-priority")
-let medPriority = document.querySelector("#med-priority")
-let highPriority = document.querySelector("#high-priority")
-let taskNotes = document.querySelector("#notes")
-let taskCheckbox
 
 /*
 Task Name:

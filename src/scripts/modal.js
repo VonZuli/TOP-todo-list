@@ -34,10 +34,9 @@ export function createModal(e) {
       function createForm(){
         const folderBtn = document.getElementById('newFolder');
         const taskBtn = document.getElementById('newTask');
-
         const modalFormTitle = document.createElement('h1');
         const createNewForm = document.createElement('form');
-        const formFieldContainer = document.createElement('div')
+        const formFieldContainer = document.createElement('div');
         formFieldContainer.id = "formFieldContainer"
         
         // logic to call function depending on button pressed
@@ -75,7 +74,6 @@ export function createModal(e) {
             `${createFormObject.label.generateLabel(0,6)}
              ${createFormObject.input.generateInput(0,0,0)}
             `;
-          
         };
 
         // creates task form
@@ -101,7 +99,6 @@ export function createModal(e) {
            ${createFormObject.input.generateInput(0,1,4)}
           `;
         };
-
       }
       createForm();
 
@@ -143,32 +140,32 @@ let createFormObject = {
   input:{
     type:['text','button','date','checkbox','radio','submit'],
     id:['title','desc','dueDate','priority','notes','checkbox','addBtn'],
-    generateInput: function(key1,key2,key3){
+    generateInput: function(val1,val2,val3){
       let typeAttr = Object.keys(this)[0]
-      let type = this.type[key1]
+      let type = this.type[val1]
 
       let idAttr = Object.keys(this)[1]
-      let id = this.id[key3]
+      let id = this.id[val3]
       
       let nameAttr = 'name';
-      let name = this.id[key3];
+      let name = this.id[val3];
 
       if (type === this.type[1]) {
-        return `<button ${typeAttr}=${type} ${idAttr}=${this.id[key2]}>Add ➕</button>
+        return `<button ${typeAttr}=${type} ${idAttr}=${this.id[val2]}>Add ➕</button>
               </div>`
       }else if(type === this.type[4]){
         return `<div>
                   <div>
                     <input ${typeAttr}=${type} ${idAttr}=low-${id} ${nameAttr}=${name}>
-                    <label for=low-${this.id[key3]}>Low</label>
+                    <label for=low-${this.id[val3]}>Low</label>
                   </div>
                   <div>
                     <input ${typeAttr}=${type} ${idAttr}=med-${id} ${nameAttr}=${name}>
-                    <label for=med-${this.id[key3]}>Medium</label>
+                    <label for=med-${this.id[val3]}>Medium</label>
                   </div>
                   <div>
                     <input ${typeAttr}=${type} ${idAttr}=high-${id} ${nameAttr}=${name}>
-                    <label for=high-${this.id[key3]}>High</label>
+                    <label for=high-${this.id[val3]}>High</label>
                   </div>
                 </div> 
               </div>`
@@ -179,40 +176,3 @@ let createFormObject = {
     },
   }
 };
-
-// let formObject = {
-//   label: function(){
-//     return `<label for=${this.formFields.title.titleLabel[0]}>${this.formFields.title.titleLabel[1]}</label>`
-//     // return `<label for=${forAttr}>${labelText}</label>`
-//   },
-//   input: function(){
-//     return `<input type=${this.formFields.title.titleInput} id=${this.formFields.title.titleLabel[0]}>`
-//     // return `<input type=${type} id=${id}>`
-//   },
-//   formFields:{
-//     title:{
-//       titleLabel: ['taskTitle','Task:'],
-//       titleInput: 'text'
-//     },
-//     description: {
-//       descLabel: [],
-//       descInput: ''
-//     },
-//     dueDate:{
-//       dueLabel: [],
-//       dueInput:''
-//     },
-//     priority:{
-//       prioLabel: [],
-//       prioInput: ''
-//     },
-//     notes:{
-//       notesLabel: [],
-//       notesInput: ''
-//     },
-//     checkbox:{
-//       checkboxLabel: [],
-//       checkboxInput: ''
-//     }
-//   }
-// }

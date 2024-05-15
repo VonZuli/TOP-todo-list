@@ -83,7 +83,7 @@ body{
     flex-direction: row;
     border-radius: 10px;
     margin: 15% auto;
-    border: 5px solid #888;
+    border: 5px solid cadetblue;
     width: 600px; 
     flex-wrap: wrap;
     background-color: #363636
@@ -192,6 +192,7 @@ body{
       justify-content: space-between;
       align-items: center;
       margin-bottom: 5px;
+      cursor: pointer;
     }
     #folder-content > ul > .folder-container:hover{
       background-color: rgba(95, 158, 160, 0.308);
@@ -200,7 +201,6 @@ body{
     #folder-content > ul > div > li{
       list-style-type: none;
       max-width: fit-content;
-      cursor: pointer;
     }
     .folder-container > *{
       padding: 10px;
@@ -213,6 +213,7 @@ body{
       width: 30px;
       height: 30px;
       align-content: center;
+      pointer-events: none;
     }
 
 /*#endregion folders*/

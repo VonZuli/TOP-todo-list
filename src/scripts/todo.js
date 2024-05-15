@@ -2,6 +2,8 @@
 import {createModal as modal} from './modal'
 //#endregion imports
 export function createToDoList(){
+  
+  //folders section declarations
   const folderSection = document.querySelector('.folders-section')
   const folderSubtitle = document.createElement('h2')
   const folderSubtitleContainer = document.createElement('div')
@@ -9,6 +11,7 @@ export function createToDoList(){
   const folderList = document.createElement('ul')
   const newFolderBtn = document.createElement('button')
   
+  //tasks section declarations
   const tasksSection = document.querySelector('.tasks-section')
   const tasksSubtitle = document.createElement('h2')
   const tasksSubtitleContainer = document.createElement('div')
@@ -16,6 +19,7 @@ export function createToDoList(){
   const tasksList = document.createElement('ul')
   const newTaskBtn = document.createElement('button')
 
+  //create folders section
   folderSubtitle.textContent = "Folders"
   folderSubtitleContainer.id = 'folder-subtitle'
   folderContent.id = 'folder-content'
@@ -27,8 +31,10 @@ export function createToDoList(){
   
   newFolderBtn.textContent = 'Add Folder ➕'
   newFolderBtn.id = 'newFolder'
+  newFolderBtn.classList.add('addBtn')
   folderSection.appendChild(newFolderBtn)
 
+  //create tasks section
   tasksSubtitle.textContent = "Tasks"
   tasksSubtitleContainer.id = 'tasks-subtitle'
   tasksContent.id = 'tasks-content'
@@ -40,40 +46,15 @@ export function createToDoList(){
 
   newTaskBtn.textContent = 'Add Task ➕'
   newTaskBtn.id = 'newTask'
+  newTaskBtn.classList.add('addBtn')
   tasksSection.appendChild(newTaskBtn)
 
-  const formBtn = document.querySelectorAll('button');
+  //add event listener to form buttons that displays appropriate modal
+  const formBtn = document.querySelectorAll('.addBtn');
   formBtn.forEach(btn => {
     btn.addEventListener('click', (e)=>{
       e.preventDefault()
       modal(e.target)
     })
   });
-
-  // const folderName = localStorage.getItem('taskFolderObject')
-  // tasksList.innerHTML = `<li data-folder="${folderName}"></li>`
 }
-// function createFolder(){
-//   modal()
-//   // <div class="folder-title">Main</div>
-// }
-
-// function createTask() {
-//   modal()
-  
-// }
-// let taskTitle 
-// let taskDesc 
-// let taskDueDate
-// let taskPriority 
-// let taskNotes
-// let taskCheckbox
-
-/*
-Task Name:
-Description:
-Due Date:
-Prio:
-Notes:
-Completed:  add date when checked
-*/
