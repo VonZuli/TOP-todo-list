@@ -55,7 +55,7 @@ export function addTask() {
       <div class="taskDueDate">${taskDueDate.value}</div>
       <div class="taskPriority ${taskPrioritySelection.toLowerCase()}-prio">${taskPrioritySelection}</div>
       <div class="taskNotes">${taskNotes.value}</div>
-      </div>
+    </div>
   </li>`
   
   tasksList.insertAdjacentHTML('beforeend', listItem)

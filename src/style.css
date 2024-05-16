@@ -36,29 +36,40 @@ body{
   color:aliceblue;
   width: 80%;
   margin: 0 auto;
+  min-height: 85vh;
 }
 .content{
   display: flex;
   flex-direction: row;
-  flex-wrap: wrap;
+  flex-wrap: none;
   min-height: 85vh;
   /* min-height: 100vh; */
   /* justify-content: center; */
   align-content: flex-start;
-
-  
 }
   .folders-section{
-    flex: 1 2 30%;
-    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    /* justify-content: flex-start; */
+    flex: 1 2 20%;
     margin-right: 20px;
-    border: 2px solid cadetblue;
-    border-radius: 20px;
-    max-width: 200px;
+    max-width: 20%
   }
+    .folders-section > .container{
+      padding: 10px;
+      border: 2px solid cadetblue;
+      border-radius: 20px;
+      
+    }
   .tasks-section{
-    flex: 3 2 70%;
+    display: flex;
+    flex-direction: column;
+    flex: 3 2 80%;
     visibility: hidden;
+    max-width: fit-content;
+    margin-right: 20px;
+  }
+  .tasks-section > .container{
     border: 2px solid cadetblue;
     border-radius: 20px;
     padding: 10px;
@@ -181,6 +192,7 @@ body{
   display: flex;
   flex-direction: column;
   flex-wrap: nowrap;
+  margin-bottom: 5px;
 }
   #folder-content > ul{
     padding: 0;
@@ -227,15 +239,12 @@ body{
   flex-direction: column;
 }
 #tasks-content > ul{
-
   padding: 0;
   margin: 0 0 10px 0;
 }
 #tasks-content > ul > li{
   border-bottom: 2px dotted cadetblue;
   list-style-type: none;
-  max-width: fit-content;
-  /* cursor: pointer; */
   margin-bottom: 10px;
   padding-bottom: 10px;
 }
@@ -282,6 +291,7 @@ body{
 }
 .taskDueDate{
   /* flex-grow:  */
+  min-width: fit-content;
   flex-basis: 20%;
 }
 .taskPriority{
@@ -293,3 +303,26 @@ body{
 }
 
 /*#endregion tasks*/
+
+/*#region extras*/
+/* .widgets{
+  display: flex;
+  flex-direction: column;
+  border: 2px solid red;
+  border-radius: 20px;
+  flex-basis: 30%;
+  padding: 10px;
+}
+.countdown{
+  border: 2px solid green;
+  border-radius: 20px;
+  flex-basis: 30%;
+  margin: 5px;
+}
+.calendar{
+  border: 2px solid blue;
+  border-radius: 20px;
+  flex-basis: 30%;
+  margin: 5px;
+} */
+/*#endregion extras*/
