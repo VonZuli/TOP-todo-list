@@ -33,7 +33,7 @@ export function addFolder() {
   listItem.textContent = folderNameInput.value
   listItem.setAttribute('data-folder', userInput)
   
-  localStorage.setItem('state', JSON.stringify(userInput))
+  // localStorage.setItem('state', JSON.stringify(userInput))
 
   // taskFolderObject = [
   //   [userInput,
@@ -70,14 +70,17 @@ export function addFolder() {
   folderContainer.appendChild(listItem)
   folderContainer.appendChild(folderCounter)
   
-
-  folderContainer.addEventListener('click', (e)=>{
-    e.preventDefault();
-    displayFolder(e)
-  })
+  selectFolder();
 }
 
-
+export function selectFolder(){
+  const selectedFolder = document.querySelectorAll(".folder-container")
+  selectedFolder.forEach((folderDiv)=>
+    folderDiv.addEventListener('click', (e)=>{
+    e.preventDefault();
+    displayFolder(e)
+  }))
+}
 //user clicks child of Folder header
 
 function displayFolder(e) {
