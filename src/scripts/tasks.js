@@ -10,7 +10,6 @@ export function addTask() {
   let lowPriority = document.querySelector("#low-priority")
   let medPriority = document.querySelector("#med-priority")
   let highPriority = document.querySelector("#high-priority")
-  let taskNotes = document.querySelector("#notes")
   let taskPrioritySelection = ""
   
   let generateTaskId = () => {
@@ -43,21 +42,23 @@ export function addTask() {
      return taskPrioritySelection;
     }
   })
-
+  
   let listItem = `
   <li data-tasks=${taskTitle.value.toLowerCase()}>
     <div class="item-container ${taskPrioritySelection.toLowerCase()}-prio">
-      <div class="taskControl">
+      <div class="taskControls">
         <input for=${taskId} type=checkbox class="completedChk">
-        <label id=${taskId} class="taskTitle">${taskTitle.value}</label>
       </div>
-      <div class="taskDesc">${taskDesc.value}</div>
-      <div class="taskDueDate">${taskDueDate.value}</div>
-      <div class="taskPriority ${taskPrioritySelection.toLowerCase()}-prio">${taskPrioritySelection}</div>
-      <div class="taskNotes">${taskNotes.value}</div>
+      <div class="taskDetails">
+        <label id=${taskId} class="taskTitle">${taskTitle.value}</label>
+        <div class="taskDesc">${taskDesc.value}</div>
+        <div class="taskDueDate">${taskDueDate.value}</div>
+        <div class="taskPriority ${taskPrioritySelection.toLowerCase()}-prio">${taskPrioritySelection}</div>
+      </div>
     </div>
   </li>`
   
+  //appends task to DOM
   tasksList.insertAdjacentHTML('beforeend', listItem)
   handleCheckbox()
   

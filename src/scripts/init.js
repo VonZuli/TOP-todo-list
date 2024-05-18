@@ -1,17 +1,24 @@
 //#region imports
 import {createModal as modal} from './modal'
 import {selectFolder} from './folders'
+import { imagepath } from "../index";
 //#endregion imports
+
 export function createInit(){
   
   //create folders DOM
   let folderInit = (() =>{
+
+    
+    // const folderSVG = imagepath('./svg/folder.svg')
+
  
     //folders section declarations
     const folderSection = document.querySelector('.folders-section')
-    const folderContainer = document.createElement('div')
-    const folderSubtitle = document.createElement('h2')
+    const foldersContainer = document.createElement('div')
     const folderSubtitleContainer = document.createElement('div')
+    const svgContainer = document.createElement('div')
+    const folderSubtitle = document.createElement('h2')
     const folderContent = document.createElement('div')
     const folderList = document.createElement('ul')
     const newFolderBtn = document.createElement('button')
@@ -20,21 +27,23 @@ export function createInit(){
     const folderCounter = document.createElement('div')
 
     //create folders section
-    folderContainer.classList.add("container")
-    folderSubtitle.textContent = "Folders"
+    foldersContainer.classList.add('container')
+    folderSubtitle.textContent = 'Folders'
     folderSubtitleContainer.id = 'folder-subtitle'
+    svgContainer.classList.add('svg-container')
     folderContent.id = 'folder-content'
     defaultFolder.classList.add('folder-container')
     defaultListItem.textContent = "General"
-    defaultListItem.setAttribute('data-folder', "default")
+    defaultListItem.setAttribute('data-folder', 'default')
     folderCounter.classList.add('folder-counter')
     folderCounter.textContent = 0
-
+    
     //append folderSection
-    folderSection.appendChild(folderContainer)
-    folderContainer.appendChild(folderSubtitleContainer)
+    folderSection.appendChild(foldersContainer)
+    foldersContainer.appendChild(folderSubtitleContainer)
+    folderSubtitleContainer.appendChild(svgContainer)
     folderSubtitleContainer.appendChild(folderSubtitle)
-    folderContainer.appendChild(folderContent)
+    foldersContainer.appendChild(folderContent)
     folderContent.appendChild(folderList)
     folderList.appendChild(defaultFolder)
     defaultFolder.appendChild(defaultListItem)
@@ -43,7 +52,7 @@ export function createInit(){
     newFolderBtn.textContent = 'Add Folder ➕'
     newFolderBtn.id = 'newFolder'
     newFolderBtn.classList.add('addBtn')
-    folderContainer.appendChild(newFolderBtn)
+    foldersContainer.appendChild(newFolderBtn)
   })();
   
   //create tasks DOM

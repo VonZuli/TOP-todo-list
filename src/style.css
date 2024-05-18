@@ -55,10 +55,11 @@ body{
     margin-right: 20px;
     max-width: 20%;
     min-width: 225px;
+
   }
     .folders-section > .container{
       padding: 10px;
-      border: 2px solid cadetblue;
+      border: 2px solid rgb(95, 158, 160);
       border-radius: 20px;
       
     }
@@ -187,8 +188,25 @@ body{
 /*#endregion modal*/
 /*#region folders*/ 
 #folder-subtitle{
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
   margin: 0 0 20px 0;
+  align-items: center;
 }
+#folder-subtitle > *{
+  padding: 10px;
+}
+#folder-subtitle > .svg-container{
+  width: 40px;
+  height: 40px;
+  padding: 10px;
+  /* background-color: red; */
+  background: url('./assets/images/svg/folder.svg');
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
 #folder-content{
   display: flex;
   flex-direction: column;
@@ -253,7 +271,7 @@ body{
 .item-container{
   display: flex;
   flex-direction: row;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   justify-content: flex-start;
   padding-left: 10px;
   border-left: 4px solid rgba(95, 158, 160, 0.4)
@@ -271,37 +289,57 @@ body{
 .item-container.high-prio{
   border-left: 4px solid red;
 }
-.item-container > *{
+/* .item-container > *{
   padding: 5px;
-  margin: 5px;
-}
-/* .completedChk{
-  
-   min-width: 20px;
-   margin: 5px; 
+  margin: 2px;
 } */
-.item-container > .taskControl{
-  max-width: fit-content;
-  flex-basis: 50%;
+/* .item-container > * > *{
+  padding: 5px;
+  margin: 2px;
+} */
+
+.item-container > .taskControls{
+  margin-right: 10px;
+  display: flex;
+  /* width: 10%; */
+  /* max-width: fit-content; */
+  /* flex-basis: 50%;
   flex-grow: 3;
-  flex-shrink: 2;
+  flex-shrink: 2; */
+}
+.item-container > .taskDetails{
+  display: flex;
+  flex-direction: column;
+
+}
+.item-container > .taskDetails > *{
+  padding-bottom: 5px;
+
+}
+  .completedChk{
+    width: 20px;
+    /* margin: 0 20px 0 0; */
+  }
+
+.taskTitle{
+  /* padding: 5px; */
 }
 .taskDesc{
-  flex-grow: 2;
-  flex-shrink: 1;
-  flex-basis: 70%;
+  /* flex-grow: 2; */
+  /* flex-shrink: 1; */
+  /* flex-basis: 70%; */
 }
 .taskDueDate{
   /* flex-grow:  */
-  min-width: fit-content;
-  flex-basis: 20%;
+  /* min-width: fit-content; */
+  /* flex-basis: 20%; */
 }
 .taskPriority{
   /* flex-grow: 3; */
-  flex-basis: 75%;
+  /* flex-basis: 75%; */
 }
 .taskNotes{
-  flex-basis: 100%;
+  /* flex-basis: 100%; */
 }
 
 /*#endregion tasks*/

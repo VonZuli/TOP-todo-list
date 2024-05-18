@@ -5,6 +5,11 @@ import {createHeader as header} from './scripts/header'
 import {createFooter as footer} from './scripts/footer';
 import {createInit as init } from './scripts/init';
 import { createTask } from "./scripts/todo";
+
+// import images
+const images = require.context('../src/assets/images', true)
+export const imagepath = (name) => images(name, true)
+import { folder } from './assets/images/svg/folder.svg';
 //#endregion imports
 
 //import calls
@@ -12,8 +17,12 @@ header();
 init();
 footer();
 
-//create sign in function
+// const folder = new Image()
+// folder.src = imagepath('./svg/folder.svg')
 
+
+//create sign in function
+//add clock svg to due date when task approaches X amount of time left
 
 //initialize folders array
 //push the default list item title dataset to folders array

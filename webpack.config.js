@@ -14,10 +14,6 @@ module.exports = {
    folder: './src/scripts/folders.js',
    tasks: './src/scripts/tasks.js',
   },
-  output: {
-    filename: 'main.js',
-    path: path.resolve(__dirname, 'dist'),
-  },
   devtool: 'inline-source-map',
   devServer: {
     static: './dist',
@@ -29,9 +25,13 @@ module.exports = {
 				use: [MiniCssExtractPlugin.loader, 'css-loader'],
       },
       {
-				test: /\.(png|svg|jpe?g|gif)$/i,
+				test: /\.(png|jpe?g|gif)$/i,
 				type: 'asset/resource',
 			},
+      {
+        test: /\.svg/,
+				type: 'asset',
+      },
 			{
 				test: /\.(woff|woff2|eot|ttf|otf)$/i,
 				type: 'asset/resource',
@@ -39,7 +39,6 @@ module.exports = {
     ]
   },
   output: {
-	
 		path: path.resolve(__dirname, 'dist'),
 		clean: true,
 		

@@ -94,9 +94,6 @@ export function createModal(e) {
 
            ${createFormObject.label.generateLabel(3,3)}
            ${createFormObject.input.generateInput(4,1,3)}
-
-           ${createFormObject.label.generateLabel(4,4)}
-           ${createFormObject.input.generateInput(0,1,4)}
           `;
         };
       }
