@@ -9,7 +9,7 @@ import { createTask } from "./scripts/todo";
 // import images
 const images = require.context('../src/assets/images', true)
 export const imagepath = (name) => images(name, true)
-import { folder } from './assets/images/svg/folder.svg';
+// import { folder } from './assets/images/svg/folder.svg';
 //#endregion imports
 
 //import calls
@@ -35,7 +35,7 @@ let foldersArrInit = (() => {
     let defaultfolderTitle = defaultListItem.dataset.folder
   
     foldersArr.push({defaultfolderTitle})
-    console.table(foldersArr);
+    // console.table(foldersArr);
     return {foldersArr, defaultfolderTitle}
   })() 
 })()

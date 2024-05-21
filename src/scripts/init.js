@@ -2,22 +2,25 @@
 import {createModal as modal} from './modal'
 import {selectFolder} from './folders'
 import { imagepath } from "../index";
+import { addTask } from "./tasks";
 //#endregion imports
 
 export function createInit(){
   
+
+
   //create folders DOM
   let folderInit = (() =>{
 
     
-    // const folderSVG = imagepath('./svg/folder.svg')
-
+    const folderSVG = new Image();
+    folderSVG.src = imagepath('./svg/folder.svg');
  
     //folders section declarations
     const folderSection = document.querySelector('.folders-section')
     const foldersContainer = document.createElement('div')
     const folderSubtitleContainer = document.createElement('div')
-    const svgContainer = document.createElement('div')
+    // const svgContainer = document.createElement('div')
     const folderSubtitle = document.createElement('h2')
     const folderContent = document.createElement('div')
     const folderList = document.createElement('ul')
@@ -30,7 +33,7 @@ export function createInit(){
     foldersContainer.classList.add('container')
     folderSubtitle.textContent = 'Folders'
     folderSubtitleContainer.id = 'folder-subtitle'
-    svgContainer.classList.add('svg-container')
+    // svgContainer.classList.add('svg-container')
     folderContent.id = 'folder-content'
     defaultFolder.classList.add('folder-container')
     defaultListItem.textContent = "General"
@@ -41,7 +44,8 @@ export function createInit(){
     //append folderSection
     folderSection.appendChild(foldersContainer)
     foldersContainer.appendChild(folderSubtitleContainer)
-    folderSubtitleContainer.appendChild(svgContainer)
+    // folderSubtitleContainer.appendChild(svgContainer)
+    folderSubtitleContainer.appendChild(folderSVG)
     folderSubtitleContainer.appendChild(folderSubtitle)
     foldersContainer.appendChild(folderContent)
     folderContent.appendChild(folderList)
@@ -77,11 +81,13 @@ export function createInit(){
     tasksSubtitleContainer.appendChild(tasksSubtitle)
     tasksContainer.appendChild(tasksContent)
     tasksContent.appendChild(tasksList)
+    
 
     newTaskBtn.textContent = 'Add Task ➕'
     newTaskBtn.id = 'newTask'
     newTaskBtn.classList.add('addBtn')
     tasksContainer.appendChild(newTaskBtn)
+    
   })();
   
 
