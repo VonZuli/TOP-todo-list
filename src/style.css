@@ -193,6 +193,7 @@ body{
   justify-content: flex-start;
   margin: 0 0 10px 0;
   align-items: center;
+  border-bottom: 2px dotted cadetblue;
 }
 
 #folder-subtitle > *{
@@ -258,6 +259,7 @@ body{
 /*#region tasks*/
 #tasks-subtitle{
   margin: 0 0 10px 0;
+  /* border-bottom: 2px dotted cadetblue; */
 }
 #tasks-content{
   display: flex;

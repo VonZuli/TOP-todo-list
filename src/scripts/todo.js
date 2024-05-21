@@ -3,7 +3,12 @@
 //#endregion imports
 
 //initialze tasks array
-let tasksArray = [];
+let tasksArray;
+
+const savedTasks = JSON.parse(localStorage.getItem("tasks"))
+
+Array.isArray(savedTasks) ? tasksArray = savedTasks : tasksArray = new Array()
+
 
 // factory function to create a todo task 
 export const createTask = (title, desc, dueDate, priority, completed) =>{
