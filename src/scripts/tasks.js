@@ -78,30 +78,36 @@ export function addTask() {
   </div>`
   
   //appends task to DOM
-  tasksList.insertAdjacentHTML('beforeend', listItem)
-  handleCheckbox(taskId)
-  
-  // when we add a new task call this function
-  function handleCheckbox(e) {
-    console.log(e);
-    // this function gives the new checkbox an event listener
-    const taskItemsChk = document.querySelectorAll(".completedChk")
-
-    taskItemsChk.forEach(task => task.addEventListener("change", function(e){
-      console.log(e);
-      const taskDetails = document.querySelector('.taskDetails')
-      const taskItemContainer = document.querySelector(".item-container")
-      if (this.checked) {
-        taskDetails.classList.add("completed")
-        taskItemContainer.classList.add("completed")
-      }
-      if (!this.checked) {
-        taskDetails.classList.remove("completed")
-        taskItemContainer.classList.remove("completed")
-      }  
-    })
-  )}
-
-  
-   
+  tasksList.insertAdjacentHTML('beforeend', listItem)  
 }
+
+
+  // // handleCheckbox(taskId)
+  
+  // // when we add a new task call this function
+  // function handleCheckbox(taskId, checked) {
+  //   taskArray.forEach((task)=>{
+  //     if (task.id === taskId){
+  //       task.complete = checked;
+
+  //     }
+  //   })
+    
+
+
+  //   // this function gives the new checkbox an event listener
+  //   const taskItemsChk = document.querySelectorAll(".completedChk")
+
+  //   taskItemsChk.forEach(task => task.addEventListener("change", function(){
+  //     const taskDetails = document.querySelector('.taskDetails')
+  //     const taskItemContainer = document.querySelector(".item-container")
+  //     if (this.checked) {
+  //       taskDetails.classList.add("completed")
+  //       taskItemContainer.classList.add("completed")
+  //     }
+  //     if (!this.checked) {
+  //       taskDetails.classList.remove("completed")
+  //       taskItemContainer.classList.remove("completed")
+  //     }  
+  //   })
+  // )}

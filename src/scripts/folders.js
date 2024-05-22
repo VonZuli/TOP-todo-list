@@ -1,5 +1,6 @@
 //#region imports
 import { addTask } from "./tasks";
+import { initFolderArray } from "./init";
 //#endregion imports
 
 //user enters folder data
@@ -33,43 +34,13 @@ export function addFolder() {
   listItem.textContent = folderNameInput.value
   listItem.setAttribute('data-folder', userInput)
   
-  // localStorage.setItem('state', JSON.stringify(userInput))
-
-  // taskFolderObject = [
-  //   [userInput,
-  //     {"folder":userInput,
-  //      "tasks":[
-  //         {taskTitle,
-  //         taskDesc,
-  //         taskDueDate,
-  //         taskPriority,
-  //         taskNotes,
-  //         taskCheckbox
-  //         },
-  //         {}
-  //       ]
-  //     }
-  //   ],
-  //   [],
-  //   []
-  // ]
-
-  // Object(taskFolderObject, userInput, {
-  //   taskTitle: 'test',
-  //   description: 'testdesc',
-  //   dueDate: 'somedate',
-  //   priority: 'high',
-  //   notes: 'oooo so many notes',
-  //   completed: true
-  // })
-  //insert task objects here.
-
-
-
+  localStorage.setItem(userInput, JSON.stringify("taskArray"))
+  
   folderList.appendChild(folderContainer)
   folderContainer.appendChild(listItem)
   folderContainer.appendChild(folderCounter)
   
+
   selectFolder();
 }
 
@@ -113,3 +84,32 @@ Prio:
 Notes:
 Completed:  add date when checked
 */
+
+  // taskFolderObject = [
+  //   [userInput,
+  //     {"folder":userInput,
+  //      "tasks":[
+  //         {taskTitle,
+  //         taskDesc,
+  //         taskDueDate,
+  //         taskPriority,
+  //         taskNotes,
+  //         taskCheckbox
+  //         },
+  //         {}
+  //       ]
+  //     }
+  //   ],
+  //   [],
+  //   []
+  // ]
+
+  // Object(taskFolderObject, userInput, {
+  //   taskTitle: 'test',
+  //   description: 'testdesc',
+  //   dueDate: 'somedate',
+  //   priority: 'high',
+  //   notes: 'oooo so many notes',
+  //   completed: true
+  // })
+  //insert task objects here.

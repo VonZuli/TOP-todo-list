@@ -3,7 +3,8 @@ import _ from 'lodash';
 import './style.css'
 import {createHeader as header} from './scripts/header'
 import {createFooter as footer} from './scripts/footer';
-import {createInit as init } from './scripts/init';
+import {initDOM } from './scripts/init';
+import { initFolderArray } from './scripts/init';
 import { createTask } from "./scripts/todo";
 
 // import images
@@ -14,11 +15,11 @@ export const imagepath = (name) => images(name, true)
 
 //import calls
 header();
-init();
+initDOM();
+initFolderArray();
 footer();
 
-// const folder = new Image()
-// folder.src = imagepath('./svg/folder.svg')
+
 
 
 //create sign in function
@@ -27,20 +28,9 @@ footer();
 //initialize folders array
 //push the default list item title dataset to folders array
 //IIFE gets invoked immediately and returns the result. You can't call it later. If you want to call it later, create a normal function.
-let foldersArrInit = (() => {
-  let foldersArr = [];
-  
-  return (() =>{
-    let defaultListItem = document.querySelector('[data-folder]');
-    let defaultfolderTitle = defaultListItem.dataset.folder
-  
-    foldersArr.push({defaultfolderTitle})
-    // console.table(foldersArr);
-    return {foldersArr, defaultfolderTitle}
-  })() 
-})()
 
-let todo = createTask("A", "B", "C", "D", "E")
-let todo2 = createTask("F", "G", "H", "I", "J")
+
+// let todo = createTask("A", "B", "C", "D", "E")
+// let todo2 = createTask("F", "G", "H", "I", "J")
 
 

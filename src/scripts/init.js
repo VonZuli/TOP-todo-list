@@ -3,16 +3,14 @@ import {createModal as modal} from './modal'
 import {selectFolder} from './folders'
 import { imagepath } from "../index";
 import { addTask } from "./tasks";
+import { initArray } from "./todo"
 //#endregion imports
 
-export function createInit(){
-  
-
-
+export function initDOM(){
+ 
   //create folders DOM
   let folderInit = (() =>{
 
-    
     const folderSVG = new Image();
     folderSVG.src = imagepath('./svg/folder.svg');
  
@@ -20,7 +18,7 @@ export function createInit(){
     const folderSection = document.querySelector('.folders-section')
     const foldersContainer = document.createElement('div')
     const folderSubtitleContainer = document.createElement('div')
-    // const svgContainer = document.createElement('div')
+    
     const folderSubtitle = document.createElement('h2')
     const folderContent = document.createElement('div')
     const folderList = document.createElement('ul')
@@ -33,7 +31,6 @@ export function createInit(){
     foldersContainer.classList.add('container')
     folderSubtitle.textContent = 'Folders'
     folderSubtitleContainer.id = 'folder-subtitle'
-    // svgContainer.classList.add('svg-container')
     folderContent.id = 'folder-content'
     defaultFolder.classList.add('folder-container')
     defaultListItem.textContent = "General"
@@ -44,7 +41,6 @@ export function createInit(){
     //append folderSection
     folderSection.appendChild(foldersContainer)
     foldersContainer.appendChild(folderSubtitleContainer)
-    // folderSubtitleContainer.appendChild(svgContainer)
     folderSubtitleContainer.appendChild(folderSVG)
     folderSubtitleContainer.appendChild(folderSubtitle)
     foldersContainer.appendChild(folderContent)
@@ -89,7 +85,6 @@ export function createInit(){
     tasksContainer.appendChild(newTaskBtn)
     
   })();
-  
 
   //add event listener to form buttons that displays appropriate modal
   const formBtn = document.querySelectorAll('.addBtn');
@@ -104,4 +99,30 @@ export function createInit(){
   selectFolder(); 
   
   return {folderInit, taskInit}
+}
+
+//initialize folders array
+export function initFolderArray(folder){
+  let folderArray;
+
+  const savedFolders = JSON.parse(localStorage.getItem("folders"))
+  Array.isArray(savedFolders) ? folderArray = savedFolders : folderArray = new Array()
+  let folderListItem = document.querySelector('[data-folder]');
+  let folderTitle = folderListItem.dataset.folder
+  folderArray.push({folderTitle})
+  console.table(folderArray);
+  console.log(folderArray);
+  localStorage.setItem("folders", JSON.stringify(folderArray))
+  return {folderArray, folderTitle}
+}
+
+
+
+//initialze tasks array
+function initTaskArray(){
+  let tasksArray;
+
+  const savedTasks = JSON.parse(localStorage.getItem("tasks"))
+  
+  Array.isArray(savedTasks) ? tasksArray = savedTasks : tasksArray = new Array()
 }
