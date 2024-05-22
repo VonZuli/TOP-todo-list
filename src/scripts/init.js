@@ -34,7 +34,7 @@ export function initDOM(){
     folderContent.id = 'folder-content'
     defaultFolder.classList.add('folder-container')
     defaultListItem.textContent = "General"
-    defaultListItem.setAttribute('data-folder', 'default')
+    defaultListItem.setAttribute('data-folder', 'general')
     folderCounter.classList.add('folder-counter')
     folderCounter.textContent = 0
     
@@ -86,6 +86,8 @@ export function initDOM(){
     
   })();
 
+
+
   //add event listener to form buttons that displays appropriate modal
   const formBtn = document.querySelectorAll('.addBtn');
   formBtn.forEach(btn => {
@@ -101,20 +103,33 @@ export function initDOM(){
   return {folderInit, taskInit}
 }
 
-//initialize folders array
-export function initFolderArray(folder){
-  let folderArray;
 
-  const savedFolders = JSON.parse(localStorage.getItem("folders"))
-  Array.isArray(savedFolders) ? folderArray = savedFolders : folderArray = new Array()
-  let folderListItem = document.querySelector('[data-folder]');
-  let folderTitle = folderListItem.dataset.folder
-  folderArray.push({folderTitle})
-  console.table(folderArray);
-  console.log(folderArray);
-  localStorage.setItem("folders", JSON.stringify(folderArray))
-  return {folderArray, folderTitle}
-}
+//initialize folders array
+export let folderArray;
+export function initFolderArray(){
+  const savedFolders = JSON.parse(localStorage.getItem("folders"));
+    if (!localStorage.getItem("folders")) {
+      folderArray = new Array()
+      let folderListItem = document.querySelector('[data-folder]');
+      let folderTitle = folderListItem.dataset.folder
+      folderArray.push({folderTitle})
+      localStorage.setItem("folders", JSON.stringify(folderArray))
+      console.log(folderArray);
+      return {folderArray, folderTitle}
+    }else{
+      console.log(savedFolders);
+      folderArray = savedFolders
+    }
+};
+
+
+//local storage structure
+// folderArray.push([{folderTitle},{"tasksArray": ["task1", "task2", "task3"]}])
+
+// localStorage.setItem("folders", JSON.stringify(folderArray))
+// export function addToFolderArray(){
+
+// }
 
 
 

@@ -1,6 +1,6 @@
 //#region imports
 import { addTask } from "./tasks";
-import { initFolderArray } from "./init";
+// import { folderArray } from "./init";
 //#endregion imports
 
 //user enters folder data
@@ -26,23 +26,35 @@ export function addFolder() {
   const listItem = document.createElement('li')
   const folderNameInput = document.querySelector("#title")
 
-  let userInput = folderNameInput.value.toLowerCase()
+  let folderTitle = folderNameInput.value.toLowerCase()
 
   folderContainer.classList.add('folder-container')
   folderCounter.classList.add('folder-counter')
   folderCounter.textContent = 0
   listItem.textContent = folderNameInput.value
-  listItem.setAttribute('data-folder', userInput)
-  
-  localStorage.setItem(userInput, JSON.stringify("taskArray"))
-  
+  listItem.setAttribute('data-folder', folderTitle)
+  // folderArray.push({folderTitle})
+  // localStorage.setItem("folders", JSON.stringify(folderArray))
+
   folderList.appendChild(folderContainer)
   folderContainer.appendChild(listItem)
   folderContainer.appendChild(folderCounter)
   
-
+  // addToFolderArray();
   selectFolder();
 }
+// function addToFolderArray() {
+//   const savedFolders = JSON.parse(localStorage.getItem("folders"));
+//   if (Array.isArray(savedFolders)) {
+//     folderArray = savedFolders
+//   }else{
+//     folderArray = new Array()
+//   }
+//   folderArray.push({folderTitle})
+//   console.log(folderArray);
+//   console.table(folderArray);
+//   localStorage.setItem("folders", JSON.stringify(folderArray))
+// }
 
 export function selectFolder(){
   const selectedFolder = document.querySelectorAll(".folder-container")

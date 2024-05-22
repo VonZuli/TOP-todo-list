@@ -22,6 +22,7 @@ footer();
 
 
 
+
 //create sign in function
 //add clock svg to due date when task approaches X amount of time left
 
