@@ -1,6 +1,6 @@
 //#region imports
 import { addTask } from "./tasks";
-// import { folderArray } from "./init";
+import { folderArray } from "./init";
 //#endregion imports
 
 //user enters folder data
@@ -29,31 +29,45 @@ export function addFolder() {
   let folderTitle = folderNameInput.value.toLowerCase()
 
   folderContainer.classList.add('folder-container')
+  folderContainer.setAttribute('data-folder', folderTitle)
+
   folderCounter.classList.add('folder-counter')
+  folderCounter.setAttribute('data-folder', folderTitle)
   folderCounter.textContent = 0
+
   listItem.textContent = folderNameInput.value
   listItem.setAttribute('data-folder', folderTitle)
-  // folderArray.push({folderTitle})
-  // localStorage.setItem("folders", JSON.stringify(folderArray))
 
+  folderArray.push({folderTitle})
+  localStorage.setItem("folders", JSON.stringify(folderArray))
+  console.log(folderArray);
+  
   folderList.appendChild(folderContainer)
   folderContainer.appendChild(listItem)
   folderContainer.appendChild(folderCounter)
   
   // addToFolderArray();
+
+  //add check for duplicate folder names
   selectFolder();
 }
 // function addToFolderArray() {
 //   const savedFolders = JSON.parse(localStorage.getItem("folders"));
-//   if (Array.isArray(savedFolders)) {
-//     folderArray = savedFolders
-//   }else{
-//     folderArray = new Array()
-//   }
-//   folderArray.push({folderTitle})
-//   console.log(folderArray);
-//   console.table(folderArray);
-//   localStorage.setItem("folders", JSON.stringify(folderArray))
+  
+//   savedFolders.forEach((folder)=>{
+//     const folderItem = document.querySelector("#folder-content > ul")
+//     console.log(folder);
+//     // folderItem.appendChild(folder);
+//   })
+//   // if (Array.isArray(savedFolders)) {
+//   //   folderArray = savedFolders
+//   // }else{
+//   //   folderArray = new Array()
+//   // }
+//   // folderArray.push({folderTitle})
+//   // console.log(folderArray);
+//   // console.table(folderArray);
+//   // localStorage.setItem("folders", JSON.stringify(folderArray))
 // }
 
 export function selectFolder(){

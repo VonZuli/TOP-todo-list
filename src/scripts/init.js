@@ -17,10 +17,10 @@ export function initDOM(){
     //folders section declarations
     const folderSection = document.querySelector('.folders-section')
     const foldersContainer = document.createElement('div')
-    const folderSubtitleContainer = document.createElement('div')
+    const foldersSubtitleContainer = document.createElement('div')
     
-    const folderSubtitle = document.createElement('h2')
-    const folderContent = document.createElement('div')
+    const foldersSubtitle = document.createElement('h2')
+    const foldersContent = document.createElement('div')
     const folderList = document.createElement('ul')
     const newFolderBtn = document.createElement('button')
     const defaultFolder = document.createElement('div')
@@ -29,22 +29,32 @@ export function initDOM(){
 
     //create folders section
     foldersContainer.classList.add('container')
-    folderSubtitle.textContent = 'Folders'
-    folderSubtitleContainer.id = 'folder-subtitle'
-    folderContent.id = 'folder-content'
-    defaultFolder.classList.add('folder-container')
+
+    foldersSubtitle.textContent = 'Folders'
+    foldersSubtitleContainer.id = 'folder-subtitle'
+    foldersContent.id = 'folder-content'
+
+  
+
     defaultListItem.textContent = "General"
-    defaultListItem.setAttribute('data-folder', 'general')
+    let defaultName = defaultListItem.textContent
+
+    defaultFolder.classList.add('folder-container')
+    defaultFolder.setAttribute('data-folder', defaultName)
+
+    defaultListItem.setAttribute('data-folder', defaultName)
+
     folderCounter.classList.add('folder-counter')
+    folderCounter.setAttribute('data-folder', defaultName)
     folderCounter.textContent = 0
     
     //append folderSection
     folderSection.appendChild(foldersContainer)
-    foldersContainer.appendChild(folderSubtitleContainer)
-    folderSubtitleContainer.appendChild(folderSVG)
-    folderSubtitleContainer.appendChild(folderSubtitle)
-    foldersContainer.appendChild(folderContent)
-    folderContent.appendChild(folderList)
+    foldersContainer.appendChild(foldersSubtitleContainer)
+    foldersSubtitleContainer.appendChild(folderSVG)
+    foldersSubtitleContainer.appendChild(foldersSubtitle)
+    foldersContainer.appendChild(foldersContent)
+    foldersContent.appendChild(folderList)
     folderList.appendChild(defaultFolder)
     defaultFolder.appendChild(defaultListItem)
     defaultFolder.appendChild(folderCounter)
@@ -108,16 +118,18 @@ export function initDOM(){
 export let folderArray;
 export function initFolderArray(){
   const savedFolders = JSON.parse(localStorage.getItem("folders"));
+
     if (!localStorage.getItem("folders")) {
       folderArray = new Array()
+
       let folderListItem = document.querySelector('[data-folder]');
       let folderTitle = folderListItem.dataset.folder
+
       folderArray.push({folderTitle})
       localStorage.setItem("folders", JSON.stringify(folderArray))
-      console.log(folderArray);
+
       return {folderArray, folderTitle}
     }else{
-      console.log(savedFolders);
       folderArray = savedFolders
     }
 };
