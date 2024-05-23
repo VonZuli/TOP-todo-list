@@ -1,5 +1,5 @@
 import { add, forEach } from "lodash"
-
+import { folderArray } from "./init";
 import { addFolder } from "./folders";
 import { addTask } from "./tasks"
 
@@ -37,8 +37,10 @@ export function createModal(e) {
         const modalFormTitle = document.createElement('h1');
         const createNewForm = document.createElement('form');
         const formFieldContainer = document.createElement('div');
+        const errorMsgDisplay = document.createElement("div")
         formFieldContainer.id = "formFieldContainer"
-        
+        errorMsgDisplay.id = "errorMsgDisplay"
+   
         // logic to call function depending on button pressed
         if(folderBtn === e){
           createFolderForm(createNewForm);
@@ -52,6 +54,7 @@ export function createModal(e) {
         modalContent.appendChild(modalClose);
         modalContent.appendChild(createNewForm);
         createNewForm.appendChild(formFieldContainer)
+        formFieldContainer.appendChild(errorMsgDisplay)
 
         // append addBtn to modal
         let addBtn = createFormObject.input.generateInput(1,6);
@@ -102,8 +105,26 @@ export function createModal(e) {
       addBtn.addEventListener('click', (e)=>{
           e.preventDefault()
           if (e.target.dataset.addType === 'folder') {
-            addFolder()
-            document.querySelector('#new-modal').remove();
+            const formValidation = (() =>{
+              const folderNameInput = document.querySelector("#title")
+              const savedFolders = JSON.parse(localStorage.getItem("folders"));
+              const errorMsg = document.querySelector("#errorMsgDisplay")
+              let userInput = folderNameInput.value;
+              if (userInput === "") {
+                errorMsg.style.visibility = "visible";
+                errorMsg.textContent = "Folder name cannot be empty."
+                return console.log("error thrown!");
+              } else if(userInput.length < 3){
+                errorMsg.style.visibility = "visible";
+                errorMsg.textContent = "Folder name must be longer than 2 characters."
+                return console.log("error thrown!");
+              } else if (userInput === userInput){
+                folderArray.push({folderTitle:userInput})
+                localStorage.setItem("folders", JSON.stringify(folderArray))
+                document.querySelector('#new-modal').remove();
+                addFolder(userInput);
+              }  
+            })();
           }
           if (e.target.dataset.addType === 'task') {
             addTask()

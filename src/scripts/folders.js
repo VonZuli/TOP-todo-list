@@ -1,6 +1,6 @@
 //#region imports
 import { addTask } from "./tasks";
-import { folderArray } from "./init";
+// import { folderArray } from "./init";
 //#endregion imports
 
 //user enters folder data
@@ -19,14 +19,14 @@ let highPriority = document.querySelector("#high-priority")
 let taskNotes = document.querySelector("#notes")
 let taskCheckbox = document.querySelector(".completedChk")
 
-export function addFolder() {
+export function addFolder(userInput) {
   const folderList = document.querySelector("#folder-content > ul")
   const folderContainer = document.createElement('div')
   const folderCounter = document.createElement('div')
   const listItem = document.createElement('li')
-  const folderNameInput = document.querySelector("#title")
+  // const folderNameInput = document.querySelector("#title")
 
-  let folderTitle = folderNameInput.value.toLowerCase()
+  let folderTitle = userInput
 
   folderContainer.classList.add('folder-container')
   folderContainer.setAttribute('data-folder', folderTitle)
@@ -35,12 +35,8 @@ export function addFolder() {
   folderCounter.setAttribute('data-folder', folderTitle)
   folderCounter.textContent = 0
 
-  listItem.textContent = folderNameInput.value
+  listItem.textContent = folderTitle
   listItem.setAttribute('data-folder', folderTitle)
-
-  folderArray.push({folderTitle})
-  localStorage.setItem("folders", JSON.stringify(folderArray))
-  console.log(folderArray);
   
   folderList.appendChild(folderContainer)
   folderContainer.appendChild(listItem)
@@ -49,6 +45,9 @@ export function addFolder() {
   // addToFolderArray();
 
   //add check for duplicate folder names
+
+
+  //adds event listener for each folder added
   selectFolder();
 }
 // function addToFolderArray() {
@@ -100,6 +99,43 @@ function displayFolder(e) {
 
 }
 
+// function checkTitleDuplicates(userInput) {
+//   const savedFolders = JSON.parse(localStorage.getItem("folders"));
+//   for (const folder of savedFolders) {
+//     if (folder.folderTitle === userInput){
+//       console.log(folder.folderTitle === userInput);
+//       console.log(folder.folderTitle);
+//       console.log(userInput);
+//       const error = document.querySelector("#errorDisplay")
+//       error.style.visibility = "visible";
+//       error.textContent = "Folder already exists, enter unique folder name."
+//     } else{
+//       console.log(folder);
+//       // console.log(folderTitle);
+//       console.log(userInput);
+//       folderArray.push({folderTitle:userInput})
+//       console.log(folderArray);
+//       localStorage.setItem("folders", JSON.stringify(folderArray))
+//     }
+//   }
+
+//   // savedFolders.forEach(folder =>{
+//   //   if (folder.folderTitle === userInput) {
+//   //     //append to modal error message
+//   //     console.log(folder.folderTitle === userInput);
+//   //     console.log(folder.folderTitle);
+//   //     console.log(userInput);
+//   //     const error = document.querySelector("#errorDisplay")
+//   //     error.style.visibility = "visible";
+//   //     error.textContent = "Folder already exists, enter unique folder name."
+//   //   } else{
+//   //     console.log(folder.folderTitle);
+//   //     console.log(userInput);
+//   //     folderArray.push({folderTitle:userInput})
+//   //     localStorage.setItem("folders", JSON.stringify(folderArray))
+//   //   }
+//   // })
+// }
 
 
 /*
