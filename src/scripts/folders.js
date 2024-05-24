@@ -3,9 +3,7 @@ import { addTask } from "./tasks";
 // import { folderArray } from "./init";
 //#endregion imports
 
-//user enters folder data
-//user clicks add
-//user data is appended to Folders list
+
 
 // let taskFolderObject = {}
 
@@ -42,6 +40,7 @@ export function addFolder(userInput) {
   folderContainer.appendChild(listItem)
   folderContainer.appendChild(folderCounter)
   //adds event listener to folder-container class elements
+
   selectFolder(); 
 }
 
@@ -62,14 +61,6 @@ function displayFolder(e) {
   //modify tasks subtitle h2 to display "folder name + tasks"
   const tasksSubtitle = document.querySelector("#tasks-subtitle > h2")
   tasksSubtitle.textContent = `${taskHeader} Tasks`
- 
-  
-  //add active/hover styling to folders
-    //selected folder width expands out to show delete/edit opt
-  
-  //Tasks section is updated with tasks assigned to that folder
-    //display tasks associated with selected folder
-
 }
 
 

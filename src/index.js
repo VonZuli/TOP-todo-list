@@ -20,13 +20,6 @@ initFolderArray();
 footer();
 
 
-
-
-
-//create sign in function
-//add clock svg to due date when task approaches X amount of time left
-
-//initialize folders array
 //push the default list item title dataset to folders array
 //IIFE gets invoked immediately and returns the result. You can't call it later. If you want to call it later, create a normal function.
 
