@@ -9,22 +9,22 @@ import { addTask } from "./tasks";
 
 // let taskFolderObject = {}
 
-let taskTitle = document.querySelector("#title");
-let taskDesc = document.querySelector("#desc")
-let taskDueDate = document.querySelector("#dueDate")
-let taskPriority
-let lowPriority = document.querySelector("#low-priority")
-let medPriority = document.querySelector("#med-priority")
-let highPriority = document.querySelector("#high-priority")
-let taskNotes = document.querySelector("#notes")
-let taskCheckbox = document.querySelector(".completedChk")
+// let taskTitle = document.querySelector("#title");
+// let taskDesc = document.querySelector("#desc")
+// let taskDueDate = document.querySelector("#dueDate")
+// let taskPriority
+// let lowPriority = document.querySelector("#low-priority")
+// let medPriority = document.querySelector("#med-priority")
+// let highPriority = document.querySelector("#high-priority")
+// let taskNotes = document.querySelector("#notes")
+// let taskCheckbox = document.querySelector(".completedChk")
 
 export function addFolder(userInput) {
   const folderList = document.querySelector("#folder-content > ul")
   const folderContainer = document.createElement('div')
   const folderCounter = document.createElement('div')
   const listItem = document.createElement('li')
-  // const folderNameInput = document.querySelector("#title")
+  
 
   let folderTitle = userInput
 
@@ -42,32 +42,9 @@ export function addFolder(userInput) {
   folderContainer.appendChild(listItem)
   folderContainer.appendChild(folderCounter)
   
-  // addToFolderArray();
-
-  //add check for duplicate folder names
-
-
   //adds event listener for each folder added
   selectFolder();
 }
-// function addToFolderArray() {
-//   const savedFolders = JSON.parse(localStorage.getItem("folders"));
-  
-//   savedFolders.forEach((folder)=>{
-//     const folderItem = document.querySelector("#folder-content > ul")
-//     console.log(folder);
-//     // folderItem.appendChild(folder);
-//   })
-//   // if (Array.isArray(savedFolders)) {
-//   //   folderArray = savedFolders
-//   // }else{
-//   //   folderArray = new Array()
-//   // }
-//   // folderArray.push({folderTitle})
-//   // console.log(folderArray);
-//   // console.table(folderArray);
-//   // localStorage.setItem("folders", JSON.stringify(folderArray))
-// }
 
 export function selectFolder(){
   const selectedFolder = document.querySelectorAll(".folder-container")
@@ -77,8 +54,8 @@ export function selectFolder(){
     displayFolder(e)
   }))
 }
-//user clicks child of Folder header
 
+//user clicks child of Folder header
 function displayFolder(e) {
   const tasksSection = document.querySelector(".tasks-section")
   tasksSection.style.visibility = "visible"
@@ -88,9 +65,6 @@ function displayFolder(e) {
   tasksSubtitle.textContent = `${taskHeader} Tasks`
  
   
-  // listItem.innerHTML = localStorage.getItem
-  // ('taskFolderObject')
-  // tasksList.appendChild(listItem)
   //add active/hover styling to folders
     //selected folder width expands out to show delete/edit opt
   
@@ -98,44 +72,6 @@ function displayFolder(e) {
     //display tasks associated with selected folder
 
 }
-
-// function checkTitleDuplicates(userInput) {
-//   const savedFolders = JSON.parse(localStorage.getItem("folders"));
-//   for (const folder of savedFolders) {
-//     if (folder.folderTitle === userInput){
-//       console.log(folder.folderTitle === userInput);
-//       console.log(folder.folderTitle);
-//       console.log(userInput);
-//       const error = document.querySelector("#errorDisplay")
-//       error.style.visibility = "visible";
-//       error.textContent = "Folder already exists, enter unique folder name."
-//     } else{
-//       console.log(folder);
-//       // console.log(folderTitle);
-//       console.log(userInput);
-//       folderArray.push({folderTitle:userInput})
-//       console.log(folderArray);
-//       localStorage.setItem("folders", JSON.stringify(folderArray))
-//     }
-//   }
-
-//   // savedFolders.forEach(folder =>{
-//   //   if (folder.folderTitle === userInput) {
-//   //     //append to modal error message
-//   //     console.log(folder.folderTitle === userInput);
-//   //     console.log(folder.folderTitle);
-//   //     console.log(userInput);
-//   //     const error = document.querySelector("#errorDisplay")
-//   //     error.style.visibility = "visible";
-//   //     error.textContent = "Folder already exists, enter unique folder name."
-//   //   } else{
-//   //     console.log(folder.folderTitle);
-//   //     console.log(userInput);
-//   //     folderArray.push({folderTitle:userInput})
-//   //     localStorage.setItem("folders", JSON.stringify(folderArray))
-//   //   }
-//   // })
-// }
 
 
 /*

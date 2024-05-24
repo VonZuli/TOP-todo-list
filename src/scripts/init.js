@@ -96,8 +96,6 @@ export function initDOM(){
     
   })();
 
-
-
   //add event listener to form buttons that displays appropriate modal
   const formBtn = document.querySelectorAll('.addBtn');
   formBtn.forEach(btn => {
@@ -137,13 +135,6 @@ export function initFolderArray(){
 
 //local storage structure
 // folderArray.push([{folderTitle},{"tasksArray": ["task1", "task2", "task3"]}])
-
-// localStorage.setItem("folders", JSON.stringify(folderArray))
-// export function addToFolderArray(){
-
-// }
-
-
 
 //initialze tasks array
 function initTaskArray(){

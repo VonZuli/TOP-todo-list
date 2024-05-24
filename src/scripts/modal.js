@@ -1,4 +1,4 @@
-import { add, forEach } from "lodash"
+import _, { add, forEach, map } from "lodash"
 import { folderArray } from "./init";
 import { addFolder } from "./folders";
 import { addTask } from "./tasks"
@@ -110,19 +110,28 @@ export function createModal(e) {
               const savedFolders = JSON.parse(localStorage.getItem("folders"));
               const errorMsg = document.querySelector("#errorMsgDisplay")
               let userInput = folderNameInput.value;
+              
+              const folderExists = savedFolders.map(a =>{
+                return a.folderTitle
+              });
+             
               if (userInput === "") {
                 errorMsg.style.visibility = "visible";
                 errorMsg.textContent = "Folder name cannot be empty."
-                return console.log("error thrown!");
-              } else if(userInput.length < 3){
+                return console.log("form error thrown!");
+              } else if(userInput.length < 3) {
                 errorMsg.style.visibility = "visible";
                 errorMsg.textContent = "Folder name must be longer than 2 characters."
-                return console.log("error thrown!");
-              } else if (userInput === userInput){
+                return console.log("form error thrown!");
+              } else if(folderExists.includes(userInput)){
+                errorMsg.style.visibility = "visible";
+                errorMsg.textContent = `Folder with title "${userInput}" already exists.`
+                return console.log("form error thrown!");
+              } else {
                 folderArray.push({folderTitle:userInput})
                 localStorage.setItem("folders", JSON.stringify(folderArray))
                 document.querySelector('#new-modal').remove();
-                addFolder(userInput);
+                return addFolder(userInput);
               }  
             })();
           }
