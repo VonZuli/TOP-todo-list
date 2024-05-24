@@ -78,8 +78,9 @@ export function createModal(e) {
             `${createFormObject.label.generateLabel(0,6)}
              ${createFormObject.input.generateInput(0,0,0)}
             `;
+         
         };
-
+        
         // creates task form
         function createTaskForm(newForm){
           modalFormTitle.textContent = "Create new task";
@@ -100,9 +101,13 @@ export function createModal(e) {
            ${createFormObject.input.generateInput(4,1,3)}
           `;
         };
+
+        //set input focus
+        document.querySelector("input").focus()
       }
       createForm();
 
+      
       addBtn.addEventListener('click', (e)=>{
           e.preventDefault()
           if (e.target.dataset.addType === 'folder') {

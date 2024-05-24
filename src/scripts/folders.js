@@ -41,9 +41,8 @@ export function addFolder(userInput) {
   folderList.appendChild(folderContainer)
   folderContainer.appendChild(listItem)
   folderContainer.appendChild(folderCounter)
-  
-  //adds event listener for each folder added
-  selectFolder();
+  //adds event listener to folder-container class elements
+  selectFolder(); 
 }
 
 export function selectFolder(){

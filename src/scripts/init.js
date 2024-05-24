@@ -61,6 +61,7 @@ export function initDOM(){
     newFolderBtn.id = 'newFolder'
     newFolderBtn.classList.add('addBtn')
     foldersContainer.appendChild(newFolderBtn)
+    
   })();
   
   //create tasks DOM
@@ -103,8 +104,8 @@ export function initDOM(){
     })
   });
   
-  //adds event listener to folder-container class elements
-  selectFolder(); 
+  
+  
   
   return {folderInit, taskInit}
 }
@@ -123,7 +124,8 @@ export function initFolderArray(){
       let folderTaskCount = document.querySelector('.folder-counter')
       folderArray.push({folderTitle, folderTaskCount:0})
       localStorage.setItem("folders", JSON.stringify(folderArray))
-
+      //adds event listener to folder-container class elements
+      selectFolder(); 
       return {folderArray, folderTitle}
     }else{
       folderArray = savedFolders
@@ -155,6 +157,8 @@ export function initFolderArray(){
           folderCounter.textContent = 0
           folderContainer.appendChild(folderCounter)
         })
+        //adds event listener to folder-container class elements
+        selectFolder(); 
       })();
     }
 };
