@@ -148,7 +148,6 @@ export function initFolderArray(){
           const listItem = document.createElement('li')
           listItem.setAttribute('data-folder', item)
           listItem.textContent = item
-          console.log(folderContainer);
           folderContainer.appendChild(listItem)
 
           folderCounter.classList.add('folder-counter')
@@ -159,10 +158,6 @@ export function initFolderArray(){
       })();
     }
 };
-
-// function renderFolderSection(){
-
-// }
 
 //local storage structure
 // folderArray.push([{folderTitle},{"tasksArray": ["task1", "task2", "task3"]}])

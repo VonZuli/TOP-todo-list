@@ -13,6 +13,7 @@ module.exports = {
    modal: './src/scripts/modal.js',
    folder: './src/scripts/folders.js',
    tasks: './src/scripts/tasks.js',
+   validation: './src/scripts/validation.js'
   },
   devtool: 'inline-source-map',
   devServer: {
