@@ -10,7 +10,7 @@ export function initDOM(){
  
   //create folders DOM
   let folderInit = (() =>{
-
+    
     const folderSVG = new Image();
     folderSVG.src = imagepath('./svg/folder.svg');
  
@@ -33,8 +33,6 @@ export function initDOM(){
     foldersSubtitle.textContent = 'Folders'
     foldersSubtitleContainer.id = 'folder-subtitle'
     foldersContent.id = 'folder-content'
-
-  
 
     defaultListItem.textContent = "General"
     let defaultName = defaultListItem.textContent
@@ -122,16 +120,49 @@ export function initFolderArray(){
 
       let folderListItem = document.querySelector('[data-folder]');
       let folderTitle = folderListItem.dataset.folder
-
-      folderArray.push({folderTitle})
+      let folderTaskCount = document.querySelector('.folder-counter')
+      folderArray.push({folderTitle, folderTaskCount:0})
       localStorage.setItem("folders", JSON.stringify(folderArray))
 
       return {folderArray, folderTitle}
     }else{
       folderArray = savedFolders
+      //call function to render DOM with localstorage data
+      let renderFolderSection = (()=>{
+        const foldersObj = savedFolders.map(folderItem =>{
+          // console.log(folderItem.folderTitle);
+          return folderItem.folderTitle
+        });
+
+        const folderList = document.querySelector("#folder-content > ul")
+        folderList.innerHTML = ""
+
+        foldersObj.forEach(item=>{
+          const folderContainer = document.createElement("div")
+          const folderCounter = document.createElement("div")
+
+          folderContainer.classList.add('folder-container')
+          folderContainer.setAttribute('data-folder', item)
+  
+          folderList.appendChild(folderContainer)
+          const listItem = document.createElement('li')
+          listItem.setAttribute('data-folder', item)
+          listItem.textContent = item
+          console.log(folderContainer);
+          folderContainer.appendChild(listItem)
+
+          folderCounter.classList.add('folder-counter')
+          folderCounter.setAttribute('data-folder', item)
+          folderCounter.textContent = 0
+          folderContainer.appendChild(folderCounter)
+        })
+      })();
     }
 };
 
+// function renderFolderSection(){
+
+// }
 
 //local storage structure
 // folderArray.push([{folderTitle},{"tasksArray": ["task1", "task2", "task3"]}])

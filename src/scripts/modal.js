@@ -109,10 +109,11 @@ export function createModal(e) {
               const folderNameInput = document.querySelector("#title")
               const savedFolders = JSON.parse(localStorage.getItem("folders"));
               const errorMsg = document.querySelector("#errorMsgDisplay")
+
               let userInput = folderNameInput.value;
-              
-              const folderExists = savedFolders.map(a =>{
-                return a.folderTitle
+
+              const folderExists = savedFolders.map(folderItem =>{
+                return folderItem.folderTitle
               });
              
               if (userInput === "") {
@@ -128,7 +129,7 @@ export function createModal(e) {
                 errorMsg.textContent = `Folder with title "${userInput}" already exists.`
                 return console.log("form error thrown!");
               } else {
-                folderArray.push({folderTitle:userInput})
+                folderArray.push({folderTitle:userInput, folderTaskCount:0})
                 localStorage.setItem("folders", JSON.stringify(folderArray))
                 document.querySelector('#new-modal').remove();
                 return addFolder(userInput);
