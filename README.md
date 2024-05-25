@@ -1,4 +1,5 @@
 **# TOP-todo-list**
+
 Todo list project from The Odin Project.(WIP)
 
 The application in this project is designed to assist in organizing a users tasks in an intuitive and simple way.
