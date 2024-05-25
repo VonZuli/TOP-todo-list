@@ -47,14 +47,14 @@ export function addFolder(userInput) {
 export function selectFolder(){
   const selectedFolder = document.querySelectorAll(".folder-container")
   selectedFolder.forEach((folderDiv)=>
-    folderDiv.addEventListener('click', (e)=>{
-    e.preventDefault();
-    displayFolder(e)
+    folderDiv.addEventListener('click', ()=>{
+        document.querySelector(".active")?.classList.remove("active")
+        folderDiv.classList.add("active")
   }))
 }
 
 //user clicks child of Folder header
-function displayFolder(e) {
+function displayFolderContents(e) {
   const tasksSection = document.querySelector(".tasks-section")
   tasksSection.style.visibility = "visible"
   let taskHeader = e.target.firstChild.textContent;
@@ -62,7 +62,6 @@ function displayFolder(e) {
   const tasksSubtitle = document.querySelector("#tasks-subtitle > h2")
   tasksSubtitle.textContent = `${taskHeader} Tasks`
 }
-
 
 /*
 Task Name:

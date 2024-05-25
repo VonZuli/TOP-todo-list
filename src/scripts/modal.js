@@ -161,7 +161,7 @@ let createFormObject = {
       }else if(type === this.type[4]){
         return `<div>
                   <div>
-                    <input ${typeAttr}=${type} ${idAttr}=low-${id} ${nameAttr}=${name}>
+                    <input checked="checked" ${typeAttr}=${type} ${idAttr}=low-${id} ${nameAttr}=${name}>
                     <label for=low-${this.id[val3]}>Low</label>
                   </div>
                   <div>

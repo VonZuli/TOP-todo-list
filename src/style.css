@@ -60,40 +60,35 @@ body{
   display: flex;
   flex-direction: row;
   flex-wrap: none;
-  /* min-height: 85vh; */
-  /* min-height: 100vh; */
-  /* justify-content: center; */
   align-content: flex-start;
   padding: 1em 1em 5em;
 }
   .folders-section{
     display: flex;
     flex-direction: column;
-    /* justify-content: flex-start; */
-    flex: 1 2 20%;
     margin-right: 20px;
     max-width: 20%;
     min-width: 225px;
-
   }
     .folders-section > .container{
       padding: 10px;
       border: 2px solid rgb(95, 158, 160);
       border-radius: 20px;
+      flex-basis: 50%;
     }
   .tasks-section{
     display: flex;
     flex-direction: column;
-    flex: 3 2 80%;
     visibility: hidden;
     max-width: fit-content;
     margin-right: 20px;
   }
-  .tasks-section > .container{
-    border: 2px solid cadetblue;
-    border-radius: 20px;
-    padding: 10px;
-  }
+    .tasks-section > .container{
+      border: 2px solid cadetblue;
+      border-radius: 20px;
+      padding: 10px;
+      flex-basis: 50%;
+    }
 #newFolder{
   padding: 5px;
 }
@@ -268,13 +263,26 @@ body{
       list-style-type: none;
       max-width: fit-content;
     }
-    .folder-container > *{
-      padding: 5px;
+    .folder-container{
+      padding: 0.2em;
       margin: 2px;
+    }
+    .folder-container > *{
+      /* padding: 0.2em; */
       text-align: center;
       align-items: center;
     }
+
+    .folder-container.active{
+      border: 2px solid aliceblue;
+      border-radius: 5px;
+      margin: 0;
+      background-color: rgba(95, 158, 160, 0.308);
+    }
     .folder-counter{
+      display: flex;
+      justify-content: center;
+      align-items: center;
       background-color: cadetblue;
       border-radius: 50%;
       width: 30px;
