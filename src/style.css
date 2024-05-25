@@ -11,23 +11,41 @@
 *::after {
   box-sizing: border-box;
   margin: 0;
+  padding: 0;
   font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
   /* overflow-x: hidden; */
+}
+html{
+  height: 100%
+}
+#page-container{
+  position: relative;
+  margin: 0 auto;
+  width: 100%;
+  height: auto !important;
+  height: 100%;
+  min-height: 100%;
 }
 header{
   display: flex;
   flex-direction: row;
   min-height: 50px;
   margin: 10px 0 10px 0;
+  padding: 1em;
+  border-bottom: 6px double cadetblue;
   align-items: center;
   flex-basis: 100%;
 }
 footer{
+  position: absolute;
+  width: 100%;
+  bottom: 0;
   background-color: cadetblue;
   margin: 20px 0 0 0;
   padding: 5px;
   min-height: 50px;
   text-align: center;
+  align-content: center;
 }
 body{
   display: flex;
@@ -36,16 +54,17 @@ body{
   color:aliceblue;
   width: 80%;
   margin: 0 auto;
-  min-height: 85vh;
+  height: 100%;
 }
 .content{
   display: flex;
   flex-direction: row;
   flex-wrap: none;
-  min-height: 85vh;
+  /* min-height: 85vh; */
   /* min-height: 100vh; */
   /* justify-content: center; */
   align-content: flex-start;
+  padding: 1em 1em 5em;
 }
   .folders-section{
     display: flex;
@@ -61,7 +80,6 @@ body{
       padding: 10px;
       border: 2px solid rgb(95, 158, 160);
       border-radius: 20px;
-      
     }
   .tasks-section{
     display: flex;
@@ -76,7 +94,12 @@ body{
     border-radius: 20px;
     padding: 10px;
   }
-  
+#newFolder{
+  padding: 5px;
+}
+#newTask{
+  padding: 5px;
+}
 /*#endregion html*/
 /*#region modal*/
 .modal{
@@ -265,7 +288,8 @@ body{
 /*#region tasks*/
 #tasks-subtitle{
   margin: 0 0 10px 0;
-  /* border-bottom: 2px dotted cadetblue; */
+  padding-bottom: 0.5em;
+  border-bottom: 2px dotted cadetblue;
 }
 #tasks-content{
   display: flex;

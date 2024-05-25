@@ -16,5 +16,7 @@ Project To Do:
   //clean up code & refactor
 
 
-Future Project Implementations/Ideas:
+Future Project Features/Ideas:
   //Add widgets for calendar and countdown to nearest due dates
+  //Add Pagination to folders so section doesn't grow into scrollable list
+  //Add keyword search feature 
