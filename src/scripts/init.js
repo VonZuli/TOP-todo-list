@@ -25,6 +25,11 @@ export function initDOM(){
     const newFolderBtn = document.createElement('button')
     const defaultFolder = document.createElement('div')
     const defaultListItem = document.createElement('li')
+    const counterContainer = document.createElement('div')
+    const deleteContainer = document.createElement('div')
+    const animationContainer = document.createElement('div')
+    
+    const folderDelete = document.createElement('div')
     const folderCounter = document.createElement('div')
 
     //create folders section
@@ -36,13 +41,14 @@ export function initDOM(){
 
     defaultListItem.textContent = "General"
     let defaultName = defaultListItem.textContent
-
+    animationContainer.classList.add("animation-container")
     defaultFolder.classList.add('folder-container')
     defaultFolder.setAttribute('data-folder', defaultName)
-
+    // folderDelete.textContent = "🗑"
     defaultListItem.setAttribute('data-folder', defaultName)
-
+    counterContainer.classList.add('counter-container')
     folderCounter.classList.add('folder-counter')
+    deleteContainer.classList.add('delete-container')
     folderCounter.setAttribute('data-folder', defaultName)
     folderCounter.textContent = 0
     
@@ -55,7 +61,11 @@ export function initDOM(){
     foldersContent.appendChild(folderList)
     folderList.appendChild(defaultFolder)
     defaultFolder.appendChild(defaultListItem)
-    defaultFolder.appendChild(folderCounter)
+    defaultFolder.appendChild(animationContainer)
+    animationContainer.appendChild(counterContainer)
+    animationContainer.appendChild(deleteContainer)
+    counterContainer.appendChild(folderCounter)
+    deleteContainer.appendChild(folderDelete)
     
     newFolderBtn.textContent = 'Add Folder ➕'
     newFolderBtn.id = 'newFolder'
@@ -140,22 +150,32 @@ export function initFolderArray(){
         folderList.innerHTML = ""
 
         foldersObj.forEach(item=>{
-          const folderContainer = document.createElement("div")
+          const folderContainer = document.createElement('div')
+          const counterContainer = document.createElement('div')
           const folderCounter = document.createElement("div")
+          const deleteContainer = document.createElement('div')
+          const folderDelete = document.createElement('div')
+          const animationContainer = document.createElement('div')
 
           folderContainer.classList.add('folder-container')
           folderContainer.setAttribute('data-folder', item)
-  
+          counterContainer.classList.add('counter-container')
+          animationContainer.classList.add("animation-container")
           folderList.appendChild(folderContainer)
           const listItem = document.createElement('li')
           listItem.setAttribute('data-folder', item)
           listItem.textContent = item
+          deleteContainer.classList.add('delete-container')
           folderContainer.appendChild(listItem)
-
+          // folderDelete.textContent = "🗑"
           folderCounter.classList.add('folder-counter')
           folderCounter.setAttribute('data-folder', item)
           folderCounter.textContent = 0
-          folderContainer.appendChild(folderCounter)
+          folderContainer.appendChild(animationContainer)
+          animationContainer.appendChild(counterContainer)
+          animationContainer.appendChild(deleteContainer)
+          counterContainer.appendChild(folderCounter)
+          deleteContainer.appendChild(folderDelete)
         })
         //adds event listener to folder-container class elements
         selectFolder(); 

@@ -20,7 +20,11 @@ import { addTask } from "./tasks";
 export function addFolder(userInput) {
   const folderList = document.querySelector("#folder-content > ul")
   const folderContainer = document.createElement('div')
+  const counterContainer = document.createElement('div')
   const folderCounter = document.createElement('div')
+  const deleteContainer = document.createElement('div')
+  const animationContainer = document.createElement('div')
+  const folderDelete = document.createElement('div')
   const listItem = document.createElement('li')
   
 
@@ -28,19 +32,24 @@ export function addFolder(userInput) {
 
   folderContainer.classList.add('folder-container')
   folderContainer.setAttribute('data-folder', folderTitle)
-
+  counterContainer.classList.add('counter-container')
   folderCounter.classList.add('folder-counter')
   folderCounter.setAttribute('data-folder', folderTitle)
   folderCounter.textContent = 0
-
+  deleteContainer.classList.add('delete-container')
   listItem.textContent = folderTitle
   listItem.setAttribute('data-folder', folderTitle)
-  
+  // folderDelete.textContent = "🗑"
+  animationContainer.classList.add("animation-container")
+  folderContainer.appendChild(animationContainer)
   folderList.appendChild(folderContainer)
   folderContainer.appendChild(listItem)
-  folderContainer.appendChild(folderCounter)
-  //adds event listener to folder-container class elements
+  animationContainer.appendChild(counterContainer)
+  counterContainer.appendChild(folderCounter)
+  folderContainer.appendChild(deleteContainer)
+  deleteContainer.appendChild(folderDelete)
 
+  //adds event listener to folder-container class elements
   selectFolder(); 
 }
 

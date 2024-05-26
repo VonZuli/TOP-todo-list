@@ -40,7 +40,8 @@ footer{
   position: absolute;
   width: 100%;
   bottom: 0;
-  background-color: cadetblue;
+  
+  background-image: radial-gradient(cadetblue, rgba(95, 158, 160, 0.308));
   margin: 20px 0 0 0;
   padding: 5px;
   min-height: 50px;
@@ -254,6 +255,8 @@ body{
       align-items: center;
       margin-bottom: 5px;
       cursor: pointer;
+      padding: 0.2em;
+      margin: 2px;
     }
     #folder-content > ul > .folder-container:hover{
       background-color: rgba(95, 158, 160, 0.308);
@@ -262,10 +265,6 @@ body{
     #folder-content > ul > div > li{
       list-style-type: none;
       max-width: fit-content;
-    }
-    .folder-container{
-      padding: 0.2em;
-      margin: 2px;
     }
     .folder-container > *{
       /* padding: 0.2em; */
@@ -279,18 +278,74 @@ body{
       margin: 0;
       background-color: rgba(95, 158, 160, 0.308);
     }
+    .counter-container{
+      /* display: flex;
+      flex-direction: row;
+      justify-content: flex-end; */
+      flex: 1;
+      border: 1px solid orange;
+      max-width: fit-content;
+    }
     .folder-counter{
       display: flex;
       justify-content: center;
       align-items: center;
-      background-color: cadetblue;
+      background: cadetblue;
+      background: -webkit-radial-gradient(25px 25px, circle, cadetblue, rgba(95, 158, 160, 0.308));
+      /* background: radial-gradient(25px 25px,circle, cadetblue, red); */
       border-radius: 50%;
       width: 30px;
       height: 30px;
-      align-content: center;
-      pointer-events: none;
+      /* pointer-events: none; */
     }
+    
+    /* @-webkit-keyframes slide{
 
+      0% {transform: translateX(0%) };
+      100% {
+        transform: translateX(-100%);
+      };
+    }
+    @keyframes slide{
+
+      0% {transform: translateX(0%) };
+      100% {
+        transform: translateX(-100%);
+      };
+    } */
+    /* @keyframes roll {
+      0%   { right: 0px; }
+      100% { right: 40%; }
+    } */
+    /* .folder-container:hover .animation-container{
+      -webkit-animation: slide 800ms linear 1s;
+      animation: slide 800ms linear 1s;
+      -webkit-transition: flex 1s ease;
+      transition: flex 1s ease;
+      justify-content: flex-start
+    } */
+    #folder-content > ul > div > div:hover .hovered{
+      flex: auto;
+    }
+    /* .folder-container:hover .animation-container:hover .hovered{
+      flex: auto;
+    } */
+    .delete-container{
+      flex: 0;
+      font-size: 40px;
+      transition: flex 1s;
+      border: 1px solid green;
+      /* visibility: hidden; */
+    }
+    .animation-container{
+      display: flex;
+      width: 200px;
+      justify-content: flex-end;
+      border: 1px solid blue;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      height: 200px;
+    }
 /*#endregion folders*/
 
 /*#region tasks*/
