@@ -49,6 +49,7 @@ export function initDOM(){
     counterContainer.classList.add('counter-container')
     folderCounter.classList.add('folder-counter')
     deleteContainer.classList.add('delete-container')
+    deleteContainer.classList.add('hovered')
     folderCounter.setAttribute('data-folder', defaultName)
     folderCounter.textContent = 0
     
@@ -132,8 +133,10 @@ export function initFolderArray(){
       let folderListItem = document.querySelector('[data-folder]');
       let folderTitle = folderListItem.dataset.folder
       let folderTaskCount = document.querySelector('.folder-counter')
+
       folderArray.push({folderTitle, folderTaskCount:0})
       localStorage.setItem("folders", JSON.stringify(folderArray))
+
       //adds event listener to folder-container class elements
       selectFolder(); 
       return {folderArray, folderTitle}
@@ -161,22 +164,25 @@ export function initFolderArray(){
           folderContainer.setAttribute('data-folder', item)
           counterContainer.classList.add('counter-container')
           animationContainer.classList.add("animation-container")
-          folderList.appendChild(folderContainer)
           const listItem = document.createElement('li')
           listItem.setAttribute('data-folder', item)
           listItem.textContent = item
           deleteContainer.classList.add('delete-container')
-          folderContainer.appendChild(listItem)
+          deleteContainer.classList.add('hovered')
           // folderDelete.textContent = "🗑"
           folderCounter.classList.add('folder-counter')
           folderCounter.setAttribute('data-folder', item)
           folderCounter.textContent = 0
+          
+          folderList.appendChild(folderContainer)
+          folderContainer.appendChild(listItem)
           folderContainer.appendChild(animationContainer)
           animationContainer.appendChild(counterContainer)
           animationContainer.appendChild(deleteContainer)
           counterContainer.appendChild(folderCounter)
           deleteContainer.appendChild(folderDelete)
         })
+
         //adds event listener to folder-container class elements
         selectFolder(); 
       })();

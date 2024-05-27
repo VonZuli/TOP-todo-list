@@ -32,21 +32,25 @@ export function addFolder(userInput) {
 
   folderContainer.classList.add('folder-container')
   folderContainer.setAttribute('data-folder', folderTitle)
+
   counterContainer.classList.add('counter-container')
   folderCounter.classList.add('folder-counter')
   folderCounter.setAttribute('data-folder', folderTitle)
   folderCounter.textContent = 0
-  deleteContainer.classList.add('delete-container')
+
+  
   listItem.textContent = folderTitle
   listItem.setAttribute('data-folder', folderTitle)
   // folderDelete.textContent = "🗑"
   animationContainer.classList.add("animation-container")
-  folderContainer.appendChild(animationContainer)
+  deleteContainer.classList.add('delete-container')
+  deleteContainer.classList.add('hovered')
   folderList.appendChild(folderContainer)
   folderContainer.appendChild(listItem)
+  folderContainer.appendChild(animationContainer)
   animationContainer.appendChild(counterContainer)
   counterContainer.appendChild(folderCounter)
-  folderContainer.appendChild(deleteContainer)
+  animationContainer.appendChild(deleteContainer)
   deleteContainer.appendChild(folderDelete)
 
   //adds event listener to folder-container class elements

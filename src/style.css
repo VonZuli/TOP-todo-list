@@ -37,7 +37,7 @@ header{
   flex-basis: 100%;
 }
 footer{
-  position: absolute;
+  position: relative;
   width: 100%;
   bottom: 0;
   
@@ -264,7 +264,12 @@ body{
     }
     #folder-content > ul > div > li{
       list-style-type: none;
-      max-width: fit-content;
+      max-width: 100px;
+      min-width: fit-content;
+      margin-right: 6px;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
     }
     .folder-container > *{
       /* padding: 0.2em; */
@@ -275,76 +280,44 @@ body{
     .folder-container.active{
       border: 2px solid aliceblue;
       border-radius: 5px;
-      margin: 0;
       background-color: rgba(95, 158, 160, 0.308);
     }
     .counter-container{
-      /* display: flex;
+      display: flex;
       flex-direction: row;
-      justify-content: flex-end; */
+      justify-content: flex-end;
+      align-items: center;
       flex: 1;
-      border: 1px solid orange;
       max-width: fit-content;
     }
     .folder-counter{
       display: flex;
       justify-content: center;
       align-items: center;
-      background: cadetblue;
       background: -webkit-radial-gradient(25px 25px, circle, cadetblue, rgba(95, 158, 160, 0.308));
-      /* background: radial-gradient(25px 25px,circle, cadetblue, red); */
+      background: radial-gradient(25px 25px,circle, cadetblue, rgba(95, 158, 160, 0.308));
       border-radius: 50%;
       width: 30px;
       height: 30px;
       /* pointer-events: none; */
     }
-    
-    /* @-webkit-keyframes slide{
-
-      0% {transform: translateX(0%) };
-      100% {
-        transform: translateX(-100%);
-      };
-    }
-    @keyframes slide{
-
-      0% {transform: translateX(0%) };
-      100% {
-        transform: translateX(-100%);
-      };
-    } */
-    /* @keyframes roll {
-      0%   { right: 0px; }
-      100% { right: 40%; }
-    } */
-    /* .folder-container:hover .animation-container{
-      -webkit-animation: slide 800ms linear 1s;
-      animation: slide 800ms linear 1s;
-      -webkit-transition: flex 1s ease;
-      transition: flex 1s ease;
-      justify-content: flex-start
-    } */
-    #folder-content > ul > div > div:hover .hovered{
-      flex: auto;
-    }
-    /* .folder-container:hover .animation-container:hover .hovered{
-      flex: auto;
-    } */
     .delete-container{
       flex: 0;
       font-size: 40px;
       transition: flex 1s;
-      border: 1px solid green;
+ 
       /* visibility: hidden; */
+    }
+    .animation-container:hover .delete-container.hovered{
+      flex: auto;
     }
     .animation-container{
       display: flex;
-      width: 200px;
-      justify-content: flex-end;
-      border: 1px solid blue;
       flex-direction: row;
       flex-wrap: nowrap;
-      height: 200px;
+      justify-content: flex-end;
+ 
+      width: 60px
     }
 /*#endregion folders*/
 
@@ -463,9 +436,9 @@ li > .taskDetails > *{
 .calendarSVG{
   width: 20px;
 }
-.taskTitle{
+/* .taskTitle{
 
-}
+} */
 .taskDesc{
   font-family:Arial, Helvetica, sans-serif;
   font-size: smaller;
@@ -476,9 +449,9 @@ li > .taskDetails > *{
   font-family:Arial, Helvetica, sans-serif;
   font-size: smaller;
 }
-.taskPriority{
+/* .taskPriority{
 
-}
+} */
 .taskPriority.low-prio{
   color: rgb(0, 255, 0);
 }
@@ -488,31 +461,12 @@ li > .taskDetails > *{
 .taskPriority.high-prio{
   color:red;
 }
-.taskNotes{
-  /* flex-basis: 100%; */
-}
+/* .taskNotes{
+  flex-basis: 100%;
+} */
 
 /*#endregion tasks*/
 
 /*#region extras*/
-/* .widgets{
-  display: flex;
-  flex-direction: column;
-  border: 2px solid red;
-  border-radius: 20px;
-  flex-basis: 30%;
-  padding: 10px;
-}
-.countdown{
-  border: 2px solid green;
-  border-radius: 20px;
-  flex-basis: 30%;
-  margin: 5px;
-}
-.calendar{
-  border: 2px solid blue;
-  border-radius: 20px;
-  flex-basis: 30%;
-  margin: 5px;
-} */
+
 /*#endregion extras*/
