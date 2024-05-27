@@ -1,5 +1,6 @@
 //#region imports
 import { addTask } from "./tasks";
+import { imagepath } from "../index";
 // import { folderArray } from "./init";
 //#endregion imports
 
@@ -18,18 +19,21 @@ import { addTask } from "./tasks";
 // let taskCheckbox = document.querySelector(".completedChk")
 
 export function addFolder(userInput) {
+
+  const trashSVG = new Image();
+  trashSVG.src = imagepath('./svg/trash.svg');
   const folderList = document.querySelector("#folder-content > ul")
   const folderContainer = document.createElement('div')
   const counterContainer = document.createElement('div')
   const folderCounter = document.createElement('div')
   const deleteContainer = document.createElement('div')
   const animationContainer = document.createElement('div')
-  const folderDelete = document.createElement('div')
   const listItem = document.createElement('li')
   
-
   let folderTitle = userInput
-
+  
+  trashSVG.classList.add('deleteBtn')
+  trashSVG.setAttribute('data-folder', folderTitle)
   folderContainer.classList.add('folder-container')
   folderContainer.setAttribute('data-folder', folderTitle)
 
@@ -41,7 +45,7 @@ export function addFolder(userInput) {
   
   listItem.textContent = folderTitle
   listItem.setAttribute('data-folder', folderTitle)
-  // folderDelete.textContent = "🗑"
+  
   animationContainer.classList.add("animation-container")
   deleteContainer.classList.add('delete-container')
   deleteContainer.classList.add('hovered')
@@ -51,10 +55,11 @@ export function addFolder(userInput) {
   animationContainer.appendChild(counterContainer)
   counterContainer.appendChild(folderCounter)
   animationContainer.appendChild(deleteContainer)
-  deleteContainer.appendChild(folderDelete)
+  deleteContainer.appendChild(trashSVG)
 
   //adds event listener to folder-container class elements
   selectFolder(); 
+  displayDeleteBtn();
 }
 
 export function selectFolder(){
@@ -66,6 +71,29 @@ export function selectFolder(){
   }))
 }
 
+export function displayDeleteBtn() {
+  const hoveredEl = document.querySelectorAll('.animation-container')
+
+  hoveredEl.forEach((el)=>{
+    el.addEventListener('mouseenter', (e)=>{
+      e.target.lastChild.lastChild.style.display = "flex"
+    })  
+  })
+  hoveredEl.forEach((el)=>{
+    el.addEventListener('mouseleave', (e)=>{
+      e.target.lastChild.lastChild.style.display = "none"
+    })
+  })
+}
+
+export function deleteFolder(){
+  const deleteBtn = document.querySelector(".deleteBtn")
+  deleteBtn.addEventListener('click',(e)=>{
+    console.log(deleteBtn);
+    console.log(e.target);
+    console.log("delete");
+  })
+}
 //user clicks child of Folder header
 function displayFolderContents(e) {
   const tasksSection = document.querySelector(".tasks-section")

@@ -1,6 +1,6 @@
 //#region imports
 import {createModal as modal} from './modal'
-import {selectFolder} from './folders'
+import {selectFolder, displayDeleteBtn, deleteFolder} from './folders'
 import { imagepath } from "../index";
 import { addTask } from "./tasks";
 import { initArray } from "./todo"
@@ -12,8 +12,9 @@ export function initDOM(){
   let folderInit = (() =>{
     
     const folderSVG = new Image();
+    const trashSVG = new Image();
     folderSVG.src = imagepath('./svg/folder.svg');
- 
+    trashSVG.src = imagepath('./svg/trash.svg');
     //folders section declarations
     const folderSection = document.querySelector('.folders-section')
     const foldersContainer = document.createElement('div')
@@ -29,7 +30,7 @@ export function initDOM(){
     const deleteContainer = document.createElement('div')
     const animationContainer = document.createElement('div')
     
-    const folderDelete = document.createElement('div')
+    // const folderDelete = document.createElement('img')
     const folderCounter = document.createElement('div')
 
     //create folders section
@@ -44,7 +45,8 @@ export function initDOM(){
     animationContainer.classList.add("animation-container")
     defaultFolder.classList.add('folder-container')
     defaultFolder.setAttribute('data-folder', defaultName)
-    // folderDelete.textContent = "🗑"
+    trashSVG.classList.add('deleteBtn')
+    trashSVG.setAttribute('data-folder', defaultName)
     defaultListItem.setAttribute('data-folder', defaultName)
     counterContainer.classList.add('counter-container')
     folderCounter.classList.add('folder-counter')
@@ -66,7 +68,7 @@ export function initDOM(){
     animationContainer.appendChild(counterContainer)
     animationContainer.appendChild(deleteContainer)
     counterContainer.appendChild(folderCounter)
-    deleteContainer.appendChild(folderDelete)
+    deleteContainer.appendChild(trashSVG)
     
     newFolderBtn.textContent = 'Add Folder ➕'
     newFolderBtn.id = 'newFolder'
@@ -139,6 +141,8 @@ export function initFolderArray(){
 
       //adds event listener to folder-container class elements
       selectFolder(); 
+      displayDeleteBtn();
+      deleteFolder();
       return {folderArray, folderTitle}
     }else{
       folderArray = savedFolders
@@ -153,11 +157,12 @@ export function initFolderArray(){
         folderList.innerHTML = ""
 
         foldersObj.forEach(item=>{
+          const trashSVG = new Image();
+          trashSVG.src = imagepath('./svg/trash.svg');
           const folderContainer = document.createElement('div')
           const counterContainer = document.createElement('div')
           const folderCounter = document.createElement("div")
           const deleteContainer = document.createElement('div')
-          const folderDelete = document.createElement('div')
           const animationContainer = document.createElement('div')
 
           folderContainer.classList.add('folder-container')
@@ -169,7 +174,8 @@ export function initFolderArray(){
           listItem.textContent = item
           deleteContainer.classList.add('delete-container')
           deleteContainer.classList.add('hovered')
-          // folderDelete.textContent = "🗑"
+          trashSVG.classList.add('deleteBtn')
+          trashSVG.setAttribute('data-folder', item)
           folderCounter.classList.add('folder-counter')
           folderCounter.setAttribute('data-folder', item)
           folderCounter.textContent = 0
@@ -180,11 +186,13 @@ export function initFolderArray(){
           animationContainer.appendChild(counterContainer)
           animationContainer.appendChild(deleteContainer)
           counterContainer.appendChild(folderCounter)
-          deleteContainer.appendChild(folderDelete)
+          deleteContainer.appendChild(trashSVG)
         })
 
         //adds event listener to folder-container class elements
         selectFolder(); 
+        displayDeleteBtn();
+        deleteFolder();
       })();
     }
 };

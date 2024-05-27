@@ -302,11 +302,27 @@ body{
       /* pointer-events: none; */
     }
     .delete-container{
+      display: flex;
+      justify-content: center;
+      align-items: center;
       flex: 0;
       font-size: 40px;
       transition: flex 1s;
- 
-      /* visibility: hidden; */
+      
+    }
+    @keyframes trashFadeIn {
+      100% {opacity:100%}
+      50.02% {opacity:50.02%}
+      50.01% {opacity:50.01%}
+      50% {opacity:50%}
+      25% {opacity:25%}
+      0% {opacity:0%}
+    }
+    .delete-container > img {
+      display: none;
+      max-width: 20px;
+      max-height: 20px;
+      animation: trashFadeIn 800ms ease-in;
     }
     .animation-container:hover .delete-container.hovered{
       flex: auto;
@@ -316,7 +332,6 @@ body{
       flex-direction: row;
       flex-wrap: nowrap;
       justify-content: flex-end;
- 
       width: 60px
     }
 /*#endregion folders*/
