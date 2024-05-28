@@ -1,18 +1,18 @@
 //#region imports
 import {createModal as modal} from './modal'
-import {selectFolder, displayDeleteBtn, deleteFolder} from './folders'
 import { imagepath } from "../index";
-import { savedFolders } from '../index';
+import { savedFoldersObj } from '../index';
 import { addTask } from "./tasks";
 import { initArray } from "./todo"
 import { render } from "./render";
+import {saveFolders} from "./saveFolders"
 //#endregion imports
 
 export function initDOM(){
  
   //create folders DOM
   let folderInit = (() =>{
-    
+    // let savedFoldersObj;
     const folderSVG = new Image();
     const trashSVG = new Image();
     folderSVG.src = imagepath('./svg/folder.svg');
@@ -126,7 +126,7 @@ export function initDOM(){
 //initialize folders array
 export let folderArray;
 export function initFolderArray(){
-
+  // const savedFoldersObj = JSON.parse(localStorage.getItem("folders"));
 
     if (!localStorage.getItem("folders")) {
       folderArray = new Array()
@@ -138,15 +138,11 @@ export function initFolderArray(){
 
 
       folderArray.push({folderTitle, folderTaskCount:+count})
-      localStorage.setItem("folders", JSON.stringify(folderArray))
+      saveFolders();
 
-      //adds event listener to folder-container class elements
-      selectFolder(); 
-      displayDeleteBtn();
-      deleteFolder();
       return {folderArray, folderTitle}
     }else{
-      folderArray = savedFolders
+      folderArray = savedFoldersObj
       //call function to render DOM with localstorage data
       render();
     }

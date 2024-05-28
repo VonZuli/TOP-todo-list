@@ -1,52 +1,16 @@
 //#region imports
 import { addTask } from "./tasks";
-import { imagepath } from "../index";
 import { render } from "./render";
-// import { folderArray } from "./init";
 //#endregion imports
 
 export function addFolder(userInput) {
 
-  const trashSVG = new Image();
-  trashSVG.src = imagepath('./svg/trash.svg');
-  const folderList = document.querySelector("#folder-content > ul")
-  const folderContainer = document.createElement('div')
-  const counterContainer = document.createElement('div')
-  const folderCounter = document.createElement('div')
-  const deleteContainer = document.createElement('div')
-  const animationContainer = document.createElement('div')
-  const listItem = document.createElement('li')
-  
-  let folderTitle = userInput
-  
-  trashSVG.classList.add('deleteBtn')
-  trashSVG.setAttribute('data-folder', folderTitle)
-  folderContainer.classList.add('folder-container')
-  folderContainer.setAttribute('data-folder', folderTitle)
-
-  counterContainer.classList.add('counter-container')
-  folderCounter.classList.add('folder-counter')
-  folderCounter.setAttribute('data-folder', folderTitle)
-  folderCounter.textContent = 0
-
-  
-  listItem.textContent = folderTitle
-  listItem.setAttribute('data-folder', folderTitle)
-  
-  animationContainer.classList.add("animation-container")
-  deleteContainer.classList.add('delete-container')
-  deleteContainer.classList.add('hovered')
-  folderList.appendChild(folderContainer)
-  folderContainer.appendChild(listItem)
-  folderContainer.appendChild(animationContainer)
-  animationContainer.appendChild(counterContainer)
-  counterContainer.appendChild(folderCounter)
-  animationContainer.appendChild(deleteContainer)
-  deleteContainer.appendChild(trashSVG)
+  render(userInput);
 
   //adds event listener to folder-container class elements
   selectFolder(); 
   displayDeleteBtn();
+  deleteFolder();
 }
 
 export function selectFolder(){

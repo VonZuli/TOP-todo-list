@@ -1,14 +1,13 @@
 import { addFolder } from "./folders";
 import { folderArray } from "./init";
-
+// import { savedFoldersObj } from '../index';
 export const formValidation = () =>{
   const folderNameInput = document.querySelector("#title")
-  const savedFolders = JSON.parse(localStorage.getItem("folders"));
   const errorMsg = document.querySelector("#errorMsgDisplay")
-
+  const savedFoldersObj = JSON.parse(localStorage.getItem("folders"));
   let userInput = folderNameInput.value;
-
-  const folderExists = savedFolders.map(folderItem =>{
+  console.log(savedFoldersObj);
+  const folderExists = savedFoldersObj.map(folderItem =>{
     return folderItem.folderTitle
   });
  

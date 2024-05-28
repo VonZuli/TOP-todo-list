@@ -1,16 +1,18 @@
-import { savedFolders } from "../index";
+import { savedFoldersObj } from '../index';
 import { imagepath } from "../index";
 import {selectFolder, displayDeleteBtn, deleteFolder} from './folders'
-
-export function render(){
-  const foldersObj = savedFolders.map(folderItem =>{
-    return folderItem.folderTitle
-  });
-
+export function render(userInput){
+  console.log(userInput);
+  // const foldersObj = savedFoldersObj.map(folderItem =>{
+  //   return folderItem.folderTitle
+  // });
+  const savedFoldersObj = JSON.parse(localStorage.getItem("folders"));
   const folderList = document.querySelector("#folder-content > ul")
   folderList.innerHTML = ""
 
-  foldersObj.forEach(item=>{
+  savedFoldersObj.forEach(folder=>{
+    console.log(folder);
+    let folderTitle = folder.folderTitle
     const trashSVG = new Image();
     trashSVG.src = imagepath('./svg/trash.svg');
     const folderContainer = document.createElement('div')
@@ -19,20 +21,24 @@ export function render(){
     const deleteContainer = document.createElement('div')
     const animationContainer = document.createElement('div')
     const listItem = document.createElement('li')
+    
 
     folderContainer.classList.add('folder-container')
-    folderContainer.setAttribute('data-folder', item)
-    counterContainer.classList.add('counter-container')
+    folderContainer.setAttribute('data-folder', folderTitle)
+    listItem.setAttribute('data-folder', folderTitle)
+  
+
     animationContainer.classList.add("animation-container")
-    listItem.setAttribute('data-folder', item)
-    listItem.textContent = item
+    counterContainer.classList.add('counter-container')
+    folderCounter.classList.add('folder-counter')
+    folderCounter.setAttribute('data-folder', folderTitle)
     deleteContainer.classList.add('delete-container')
     deleteContainer.classList.add('hovered')
     trashSVG.classList.add('deleteBtn')
-    trashSVG.setAttribute('data-folder', item)
-    folderCounter.classList.add('folder-counter')
-    folderCounter.setAttribute('data-folder', item)
-    folderCounter.textContent = 0
+    trashSVG.setAttribute('data-folder', folderTitle)
+    
+    listItem.textContent = folderTitle
+    folderCounter.textContent = +0
     
     folderList.appendChild(folderContainer)
     folderContainer.appendChild(listItem)
@@ -42,6 +48,9 @@ export function render(){
     counterContainer.appendChild(folderCounter)
     deleteContainer.appendChild(trashSVG)
   })
+
+    
+  
 
   //adds event listener to folder-container class elements
   selectFolder(); 

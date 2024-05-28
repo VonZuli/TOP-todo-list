@@ -1,6 +1,3 @@
-import _, { add, forEach, map } from "lodash"
-
-
 import { addTask } from "./tasks"
 import { formValidation } from "./validation";
 

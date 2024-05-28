@@ -14,7 +14,8 @@ module.exports = {
    folder: './src/scripts/folders.js',
    tasks: './src/scripts/tasks.js',
    validation: './src/scripts/validation.js',
-   render: './src/scripts/render.js'
+   render: './src/scripts/render.js',
+   saveFolders:'./src/scripts/saveFolders.js'
   },
   devtool: 'inline-source-map',
   devServer: {
