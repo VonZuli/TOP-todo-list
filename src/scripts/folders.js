@@ -1,22 +1,9 @@
 //#region imports
 import { addTask } from "./tasks";
 import { imagepath } from "../index";
+import { render } from "./render";
 // import { folderArray } from "./init";
 //#endregion imports
-
-
-
-// let taskFolderObject = {}
-
-// let taskTitle = document.querySelector("#title");
-// let taskDesc = document.querySelector("#desc")
-// let taskDueDate = document.querySelector("#dueDate")
-// let taskPriority
-// let lowPriority = document.querySelector("#low-priority")
-// let medPriority = document.querySelector("#med-priority")
-// let highPriority = document.querySelector("#high-priority")
-// let taskNotes = document.querySelector("#notes")
-// let taskCheckbox = document.querySelector(".completedChk")
 
 export function addFolder(userInput) {
 
@@ -87,13 +74,29 @@ export function displayDeleteBtn() {
 }
 
 export function deleteFolder(){
-  const deleteBtn = document.querySelector(".deleteBtn")
-  deleteBtn.addEventListener('click',(e)=>{
-    console.log(deleteBtn);
-    console.log(e.target);
-    console.log("delete");
+  const deleteBtn = document.querySelectorAll(".deleteBtn")
+  const savedFolders = JSON.parse(localStorage.getItem("folders"))
+  const folderToDelete = document.querySelectorAll('.folder-container')
+
+
+  deleteBtn.forEach((btn)=>{
+    btn.addEventListener('click',(e)=>{
+      
+      // const dataFolders = document.querySelectorAll(".folder-container")
+      const storageObj = savedFolders.map(folderItem=>{
+        return folderItem.folderTitle
+      })
+      storageObj.forEach(obj=>{
+          if (obj === e.target.dataset.folder) {
+            console.log(obj);
+            console.log(e.target.dataset.folder);
+            console.log(folderToDelete);
+          } 
+      })
+    })
   })
 }
+
 //user clicks child of Folder header
 function displayFolderContents(e) {
   const tasksSection = document.querySelector(".tasks-section")
@@ -103,41 +106,3 @@ function displayFolderContents(e) {
   const tasksSubtitle = document.querySelector("#tasks-subtitle > h2")
   tasksSubtitle.textContent = `${taskHeader} Tasks`
 }
-
-/*
-Task Name:
-Description:
-Due Date:
-Prio:
-Notes:
-Completed:  add date when checked
-*/
-
-  // taskFolderObject = [
-  //   [userInput,
-  //     {"folder":userInput,
-  //      "tasks":[
-  //         {taskTitle,
-  //         taskDesc,
-  //         taskDueDate,
-  //         taskPriority,
-  //         taskNotes,
-  //         taskCheckbox
-  //         },
-  //         {}
-  //       ]
-  //     }
-  //   ],
-  //   [],
-  //   []
-  // ]
-
-  // Object(taskFolderObject, userInput, {
-  //   taskTitle: 'test',
-  //   description: 'testdesc',
-  //   dueDate: 'somedate',
-  //   priority: 'high',
-  //   notes: 'oooo so many notes',
-  //   completed: true
-  // })
-  //insert task objects here.

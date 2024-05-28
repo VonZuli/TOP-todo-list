@@ -12,7 +12,7 @@ const images = require.context('../src/assets/images', true)
 export const imagepath = (name) => images(name, true)
 // import { folder } from './assets/images/svg/folder.svg';
 //#endregion imports
-
+export const savedFolders = JSON.parse(localStorage.getItem("folders"));
 //import calls
 header();
 initDOM();
