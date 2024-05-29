@@ -1,14 +1,21 @@
+//#region imports
 import { addFolder } from "./folders";
+import { generateId } from "./generateID";
 import { folderArray } from "./init";
-// import { savedFoldersObj } from '../index';
+//#endregion imports
+
 export const formValidation = () =>{
   const folderNameInput = document.querySelector("#title")
   const errorMsg = document.querySelector("#errorMsgDisplay")
   const savedFoldersObj = JSON.parse(localStorage.getItem("folders"));
   let userInput = folderNameInput.value;
-  console.log(savedFoldersObj);
+  let folderTaskCount = document.querySelector('.folder-counter')
+  let count = folderTaskCount.textContent
+  let folderId = generateId();
+
+  //change the lower case function to regex later
   const folderExists = savedFoldersObj.map(folderItem =>{
-    return folderItem.folderTitle
+    return folderItem.folderTitle.toLowerCase()
   });
  
   if (userInput === "") {
@@ -19,12 +26,16 @@ export const formValidation = () =>{
     errorMsg.style.visibility = "visible";
     errorMsg.textContent = "Folder name must be longer than 2 characters."
     return console.log("form error thrown!");
-  } else if(folderExists.includes(userInput)){
+  } else if(folderExists.includes(userInput.toLowerCase())){
     errorMsg.style.visibility = "visible";
     errorMsg.textContent = `Folder with title "${userInput}" already exists.`
     return console.log("form error thrown!");
   } else {
-    folderArray.push({folderTitle:userInput, folderTaskCount:0})
+    folderArray.push({
+      folderId,
+      folderTitle:userInput, 
+      folderTaskCount:+count
+    })
     localStorage.setItem("folders", JSON.stringify(folderArray))
     document.querySelector('#new-modal').remove();
     return addFolder(userInput);

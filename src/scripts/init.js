@@ -1,12 +1,17 @@
 //#region imports
-import {createModal as modal} from './modal'
+import { createModal as modal } from './modal'
 import { imagepath } from "../index";
 import { savedFoldersObj } from '../index';
-import { addTask } from "./tasks";
-import { initArray } from "./todo"
 import { render } from "./render";
-import {saveFolders} from "./saveFolders"
+import { saveFolders } from './saveFolders';
+import { generateId } from './generateID';
+import { selectFolder, 
+         displayDeleteBtn, 
+         deleteFolder } from './folders'
 //#endregion imports
+
+//initialize folders array
+export let folderArray;
 
 export function initDOM(){
  
@@ -34,6 +39,7 @@ export function initDOM(){
     
     // const folderDelete = document.createElement('img')
     const folderCounter = document.createElement('div')
+    const folderId = generateId()
 
     //create folders section
     foldersContainer.classList.add('container')
@@ -46,15 +52,15 @@ export function initDOM(){
     let defaultName = defaultListItem.textContent
     animationContainer.classList.add("animation-container")
     defaultFolder.classList.add('folder-container')
-    defaultFolder.setAttribute('data-folder', defaultName)
+    defaultFolder.setAttribute('data-folder', folderId)
     trashSVG.classList.add('deleteBtn')
-    trashSVG.setAttribute('data-folder', defaultName)
-    defaultListItem.setAttribute('data-folder', defaultName)
+    trashSVG.setAttribute('data-folder', folderId)
+    defaultListItem.setAttribute('data-folder', folderId)
     counterContainer.classList.add('counter-container')
     folderCounter.classList.add('folder-counter')
     deleteContainer.classList.add('delete-container')
     deleteContainer.classList.add('hovered')
-    folderCounter.setAttribute('data-folder', defaultName)
+    folderCounter.setAttribute('data-folder', folderId)
     folderCounter.textContent = 0
     
     //append folderSection
@@ -77,6 +83,27 @@ export function initDOM(){
     newFolderBtn.classList.add('addBtn')
     foldersContainer.appendChild(newFolderBtn)
     
+    function initFolderArray(folderId, folderTitle, count){
+        if (!localStorage.getItem("folders")) {
+          folderArray = new Array()
+          folderArray.push({
+            folderId, 
+            folderTitle, 
+            folderTaskCount:+count
+          })
+          saveFolders(folderArray)
+        }else{
+          folderArray = savedFoldersObj
+          //call function to render DOM with localstorage data
+          render()
+        }
+    };
+    initFolderArray(folderId, defaultName, folderCounter.textContent);
+
+    //adds event listeners to elements on init
+    selectFolder(); 
+    displayDeleteBtn();
+    deleteFolder();
   })();
   
   //create tasks DOM
@@ -118,35 +145,12 @@ export function initDOM(){
       modal(e.target)
     })
   });
-
   return {folderInit, taskInit}
 }
 
 
-//initialize folders array
-export let folderArray;
-export function initFolderArray(){
-  // const savedFoldersObj = JSON.parse(localStorage.getItem("folders"));
-
-    if (!localStorage.getItem("folders")) {
-      folderArray = new Array()
-
-      let folderListItem = document.querySelector('[data-folder]');
-      let folderTitle = folderListItem.dataset.folder
-      let folderTaskCount = document.querySelector('.folder-counter')
-      let count = folderTaskCount.textContent
 
 
-      folderArray.push({folderTitle, folderTaskCount:+count})
-      saveFolders();
-
-      return {folderArray, folderTitle}
-    }else{
-      folderArray = savedFoldersObj
-      //call function to render DOM with localstorage data
-      render();
-    }
-};
 
 //local storage structure
 // folderArray.push([{folderTitle},{"tasksArray": ["task1", "task2", "task3"]}])

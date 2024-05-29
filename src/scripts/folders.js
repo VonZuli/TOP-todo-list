@@ -1,16 +1,24 @@
 //#region imports
-import { addTask } from "./tasks";
+import { folderArray } from "./init";
 import { render } from "./render";
+// import { folderArray } from "./init";
+import { saveFolders } from "./saveFolders"
 //#endregion imports
 
-export function addFolder(userInput) {
+// export function createFolder(){
 
-  render(userInput);
+//   console.log(folderArray);
+  
+// }
 
-  //adds event listener to folder-container class elements
+export function addFolder() {
+  // createFolder()
+  render();
+  //adds event listener to folder-container new class elements
   selectFolder(); 
   displayDeleteBtn();
   deleteFolder();
+  saveFolders();
 }
 
 export function selectFolder(){
@@ -40,25 +48,20 @@ export function displayDeleteBtn() {
 export function deleteFolder(){
   const deleteBtn = document.querySelectorAll(".deleteBtn")
   const savedFolders = JSON.parse(localStorage.getItem("folders"))
-  const folderToDelete = document.querySelectorAll('.folder-container')
+  // const folderToDelete = document.querySelectorAll('.folder-container')
 
 
   deleteBtn.forEach((btn)=>{
-    btn.addEventListener('click',(e)=>{
-      
-      // const dataFolders = document.querySelectorAll(".folder-container")
-      const storageObj = savedFolders.map(folderItem=>{
-        return folderItem.folderTitle
-      })
-      storageObj.forEach(obj=>{
-          if (obj === e.target.dataset.folder) {
-            console.log(obj);
-            console.log(e.target.dataset.folder);
-            console.log(folderToDelete);
-          } 
-      })
+    btn.addEventListener('click',(e) =>{
+      return removeFolder(e.target.dataset.folder)
     })
   })
+  function removeFolder(folderToDelete){
+    // console.log(folderToDelete);
+    folderArray.filter((folder)=>{
+      console.log(folder);
+    })
+  }
 }
 
 //user clicks child of Folder header

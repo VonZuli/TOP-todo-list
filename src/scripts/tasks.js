@@ -1,5 +1,6 @@
 import { forEach } from "lodash";
 import { imagepath } from "../index";
+import { generateId } from "./generateID";
 
 export function addTask() {
 
@@ -21,12 +22,9 @@ export function addTask() {
   let highPriority = document.querySelector("#high-priority")
   let taskPrioritySelection = ""
   
-  let generateTaskId = () => {
-    const taskId = Math.random().toString(16).slice(2);
-    return taskId
-  }
+
  
-  let taskId = generateTaskId()
+  let taskId = generateId()
 
   taskPriority.forEach((priority)=>{
     if (priority.checked === true) {
