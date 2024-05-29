@@ -1,7 +1,6 @@
 //#region imports
 import { createModal as modal } from './modal'
 import { imagepath } from "../index";
-import { savedFoldersObj } from '../index';
 import { render } from "./render";
 import { saveFolders } from './saveFolders';
 import { generateId } from './generateID';
@@ -17,11 +16,12 @@ export function initDOM(){
  
   //create folders DOM
   let folderInit = (() =>{
-    // let savedFoldersObj;
+
     const folderSVG = new Image();
     const trashSVG = new Image();
     folderSVG.src = imagepath('./svg/folder.svg');
     trashSVG.src = imagepath('./svg/trash.svg');
+
     //folders section declarations
     const folderSection = document.querySelector('.folders-section')
     const foldersContainer = document.createElement('div')
@@ -50,18 +50,20 @@ export function initDOM(){
 
     defaultListItem.textContent = "General"
     let defaultName = defaultListItem.textContent
-    animationContainer.classList.add("animation-container")
+
     defaultFolder.classList.add('folder-container')
     defaultFolder.setAttribute('data-folder', folderId)
-    trashSVG.classList.add('deleteBtn')
-    trashSVG.setAttribute('data-folder', folderId)
     defaultListItem.setAttribute('data-folder', folderId)
+    animationContainer.classList.add("animation-container")
     counterContainer.classList.add('counter-container')
     folderCounter.classList.add('folder-counter')
-    deleteContainer.classList.add('delete-container')
-    deleteContainer.classList.add('hovered')
     folderCounter.setAttribute('data-folder', folderId)
     folderCounter.textContent = 0
+    deleteContainer.classList.add('delete-container')
+    deleteContainer.classList.add('hovered')
+    trashSVG.classList.add('deleteBtn')
+    trashSVG.setAttribute('data-folder', folderId)
+    trashSVG.addEventListener('click', deleteFolder(folderId))
     
     //append folderSection
     folderSection.appendChild(foldersContainer)
@@ -77,15 +79,16 @@ export function initDOM(){
     animationContainer.appendChild(deleteContainer)
     counterContainer.appendChild(folderCounter)
     deleteContainer.appendChild(trashSVG)
-    
+  
     newFolderBtn.textContent = 'Add Folder ➕'
     newFolderBtn.id = 'newFolder'
     newFolderBtn.classList.add('addBtn')
     foldersContainer.appendChild(newFolderBtn)
     
     function initFolderArray(folderId, folderTitle, count){
+      const savedFoldersObj = JSON.parse(localStorage.getItem("folders"));
         if (!localStorage.getItem("folders")) {
-          folderArray = new Array()
+          folderArray = new Array();
           folderArray.push({
             folderId, 
             folderTitle, 
@@ -97,13 +100,14 @@ export function initDOM(){
           //call function to render DOM with localstorage data
           render()
         }
+        
     };
     initFolderArray(folderId, defaultName, folderCounter.textContent);
-
+    
     //adds event listeners to elements on init
-    selectFolder(); 
     displayDeleteBtn();
     deleteFolder();
+    selectFolder(); 
   })();
   
   //create tasks DOM

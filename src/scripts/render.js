@@ -1,16 +1,19 @@
 //#region imports
 import { imagepath } from "../index";
+import { selectFolder, 
+         displayDeleteBtn,
+         deleteFolder } from './folders.js'
 import { folderArray } from "./init";
+import { saveFolders } from "./saveFolders";
 //#endregion imports  
 
 export function render(){
-    
-  const savedFoldersObj = JSON.parse(localStorage.getItem("folders"));
+  
   const folderList = document.querySelector("#folder-content > ul")
   
   folderList.innerHTML = ""
 
-  savedFoldersObj.forEach(folder=>{
+  folderArray.forEach(folder=>{
     
     let folderTitle = folder.folderTitle
     const trashSVG = new Image();
@@ -27,7 +30,8 @@ export function render(){
     folderContainer.classList.add('folder-container')
     folderContainer.setAttribute('data-folder', folderId)
     listItem.setAttribute('data-folder', folderId)
-  
+    
+    
     animationContainer.classList.add("animation-container")
     counterContainer.classList.add('counter-container')
     folderCounter.classList.add('folder-counter')
@@ -36,7 +40,7 @@ export function render(){
     deleteContainer.classList.add('hovered')
     trashSVG.classList.add('deleteBtn')
     trashSVG.setAttribute('data-folder', folderId)
-    
+    trashSVG.addEventListener('click', deleteFolder(folderId))
     listItem.textContent = folderTitle
     folderCounter.textContent = +0
     
@@ -48,4 +52,10 @@ export function render(){
     counterContainer.appendChild(folderCounter)
     deleteContainer.appendChild(trashSVG)
   })
+
+  //adds event listener to folder-container new class elements
+  selectFolder(); 
+  displayDeleteBtn();
+  
+  saveFolders();
 };

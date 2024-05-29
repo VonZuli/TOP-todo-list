@@ -1,7 +1,6 @@
 //#region imports
 import { folderArray } from "./init";
 import { render } from "./render";
-// import { folderArray } from "./init";
 import { saveFolders } from "./saveFolders"
 //#endregion imports
 
@@ -12,13 +11,7 @@ import { saveFolders } from "./saveFolders"
 // }
 
 export function addFolder() {
-  // createFolder()
   render();
-  //adds event listener to folder-container new class elements
-  selectFolder(); 
-  displayDeleteBtn();
-  deleteFolder();
-  saveFolders();
 }
 
 export function selectFolder(){
@@ -45,23 +38,25 @@ export function displayDeleteBtn() {
   })
 }
 
-export function deleteFolder(){
-  const deleteBtn = document.querySelectorAll(".deleteBtn")
-  const savedFolders = JSON.parse(localStorage.getItem("folders"))
-  // const folderToDelete = document.querySelectorAll('.folder-container')
-
-
-  deleteBtn.forEach((btn)=>{
-    btn.addEventListener('click',(e) =>{
-      return removeFolder(e.target.dataset.folder)
-    })
-  })
-  function removeFolder(folderToDelete){
-    // console.log(folderToDelete);
-    folderArray.filter((folder)=>{
-      console.log(folder);
-    })
+export const deleteFolder = (folderToDelete)=>{
+  return () => {
+    removeFolder(folderToDelete)
+    render()
   }
+}
+function removeFolder(folderToDelete) {
+  // let folderArray = folderArray.filter(folder=>{
+  //     console.log(folderToDelete);
+  //     console.log(folder.folderId);
+  //     return folderToDelete !== folder.folderId
+  // })
+  const index = folderArray.findIndex(folder => 
+    folder.folderId === folderToDelete);
+    if (index > -1) {
+      folderArray.splice(index, 1);
+    }
+  console.log(folderArray);
+  saveFolders();
 }
 
 //user clicks child of Folder header
