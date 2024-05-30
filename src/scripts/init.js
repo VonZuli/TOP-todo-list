@@ -18,10 +18,12 @@ export function initDOM(){
   let folderInit = (() =>{
 
     const folderSVG = new Image();
-    const trashSVG = new Image();
+    const deleteSVG = new Image();
+    const editSVG = new Image()
     folderSVG.src = imagepath('./svg/folder.svg');
-    trashSVG.src = imagepath('./svg/trash.svg');
-
+    deleteSVG.src = imagepath('./svg/delete.svg');
+    editSVG.src = imagepath('./svg/edit.svg')
+    
     //folders section declarations
     const folderSection = document.querySelector('.folders-section')
     const foldersContainer = document.createElement('div')
@@ -33,37 +35,41 @@ export function initDOM(){
     const newFolderBtn = document.createElement('button')
     const defaultFolder = document.createElement('div')
     const defaultListItem = document.createElement('li')
-    const counterContainer = document.createElement('div')
-    const deleteContainer = document.createElement('div')
     const animationContainer = document.createElement('div')
-    
-    // const folderDelete = document.createElement('img')
+    const counterContainer = document.createElement('div')
+    const editContainer = document.createElement('div')
+    const deleteContainer = document.createElement('div')
     const folderCounter = document.createElement('div')
+    
     const folderId = generateId()
-
+    
     //create folders section
     foldersContainer.classList.add('container')
-
+    
     foldersSubtitle.textContent = 'Folders'
     foldersSubtitleContainer.id = 'folder-subtitle'
     foldersContent.id = 'folder-content'
-
+    
     defaultListItem.textContent = "General"
     let defaultName = defaultListItem.textContent
-
+    
     defaultFolder.classList.add('folder-container')
     defaultFolder.setAttribute('data-folder', folderId)
     defaultListItem.setAttribute('data-folder', folderId)
     animationContainer.classList.add("animation-container")
     counterContainer.classList.add('counter-container')
+    editContainer.classList.add('edit-container')
+    deleteContainer.classList.add('delete-container')
+    deleteContainer.classList.add('hovered')
     folderCounter.classList.add('folder-counter')
     folderCounter.setAttribute('data-folder', folderId)
     folderCounter.textContent = 0
-    deleteContainer.classList.add('delete-container')
-    deleteContainer.classList.add('hovered')
-    trashSVG.classList.add('deleteBtn')
-    trashSVG.setAttribute('data-folder', folderId)
-    trashSVG.addEventListener('click', deleteFolder(folderId))
+    editSVG.classList.add('editBtn')
+    editSVG.setAttribute('data-folder', folderId)
+    // editSVG.addEventListener('click', editFolder(folderId))
+    deleteSVG.classList.add('deleteBtn')
+    deleteSVG.setAttribute('data-folder', folderId)
+    deleteSVG.addEventListener('click', deleteFolder(folderId))
     
     //append folderSection
     folderSection.appendChild(foldersContainer)
@@ -76,10 +82,12 @@ export function initDOM(){
     defaultFolder.appendChild(defaultListItem)
     defaultFolder.appendChild(animationContainer)
     animationContainer.appendChild(counterContainer)
+    animationContainer.appendChild(editContainer)
     animationContainer.appendChild(deleteContainer)
     counterContainer.appendChild(folderCounter)
-    deleteContainer.appendChild(trashSVG)
-  
+    editContainer.appendChild(editSVG)
+    deleteContainer.appendChild(deleteSVG)
+    
     newFolderBtn.textContent = 'Add Folder ➕'
     newFolderBtn.id = 'newFolder'
     newFolderBtn.classList.add('addBtn')

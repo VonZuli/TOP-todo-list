@@ -228,16 +228,6 @@ body{
   max-width: 50px;
   max-height: 50px;
 }
-/* #folder-subtitle > .svg-container{
-  width: 40px;
-  height: 40px;
-  padding: 10px;
-  background-color: red;
-  background: url('./assets/images/svg/folder.svg');
-  background-repeat: no-repeat;
-  background-size: contain;
-} */
-
 #folder-content{
   display: flex;
   flex-direction: column;
@@ -246,17 +236,17 @@ body{
 }
   #folder-content > ul{
     padding: 0;
-    margin: 0 0 10px 0;
+    margin: 0 0 8px 0;
   }
     #folder-content > ul > .folder-container{
       display: flex;
       flex-direction: row;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 5px;
+      margin-bottom: 7px;
       cursor: pointer;
       padding: 0.2em;
-      margin: 2px;
+      border: transparent
     }
     #folder-content > ul > .folder-container:hover{
       background-color: rgba(95, 158, 160, 0.308);
@@ -278,9 +268,10 @@ body{
     }
 
     .folder-container.active{
-      border: 2px solid aliceblue;
+      /* border: 2px solid  */
       border-radius: 5px;
       background-color: rgba(95, 158, 160, 0.308);
+      box-shadow: 0 0 0 2px aliceblue;
     }
     .counter-container{
       display: flex;
@@ -297,8 +288,8 @@ body{
       background: -webkit-radial-gradient(25px 25px, circle, cadetblue, rgba(95, 158, 160, 0.308));
       background: radial-gradient(25px 25px,circle, cadetblue, rgba(95, 158, 160, 0.308));
       border-radius: 50%;
-      width: 30px;
-      height: 30px;
+      width: 25px;
+      height: 25px;
       /* pointer-events: none; */
     }
     .delete-container{
@@ -307,8 +298,7 @@ body{
       align-items: center;
       flex: 0;
       font-size: 40px;
-      transition: flex 1s;
-      
+      transition: flex 1s; 
     }
     @keyframes trashFadeIn {
       100% {opacity:100%}
@@ -332,7 +322,59 @@ body{
       flex-direction: row;
       flex-wrap: nowrap;
       justify-content: flex-end;
-      width: 60px
+      margin: 5px;
+      /* width: 60px */
+    }
+    .edit-container{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex: 1;
+      font-size: 40px;
+      margin: 2px;
+    }
+    .edit-container > img {
+      display: flex;
+      max-width: 20px;
+      max-height: 20px;
+    }
+
+    .tooltip {
+      position: relative;
+      display: inline-block;
+      /* border-bottom: 1px dotted black; */
+    }
+    
+    .tooltip .tooltipText {
+      visibility: hidden;
+      width: 120px;
+      background-color:rgba(0, 0, 0, 0.733);
+      color: #fff;
+      text-align: center;
+      border-radius: 6px;
+      padding: 5px 0px;
+      white-space: nowrap;
+      position: absolute;
+      z-index: 1;
+      bottom: 150%;
+      left: 50%;
+      margin-left: -60px;
+      font-size: small;
+    }
+    
+    .tooltip .tooltipText::after {
+      content: "";
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      margin-left: -5px;
+      border-width: 5px;
+      border-style: solid;
+      border-color: rgba(0, 0, 0, 0.733) transparent transparent transparent;
+    }
+    
+    .tooltip:hover .tooltipText {
+      visibility: visible;
     }
 /*#endregion folders*/
 

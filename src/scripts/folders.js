@@ -4,23 +4,24 @@ import { render } from "./render";
 import { saveFolders } from "./saveFolders"
 //#endregion imports
 
-// export function createFolder(){
-
-//   console.log(folderArray);
-  
-// }
-
 export function addFolder() {
+  console.log(folderArray);
   render();
 }
 
 export function selectFolder(){
   const selectedFolder = document.querySelectorAll(".folder-container")
   selectedFolder.forEach((folderDiv)=>
-    folderDiv.addEventListener('click', ()=>{
+    folderDiv.addEventListener('click', (e)=>{
+      e.preventDefault()
         document.querySelector(".active")?.classList.remove("active")
         folderDiv.classList.add("active")
-  }))
+        // document.querySelector(".editBtn").style.display = "none"
+        // if (folderDiv.classList.contains("active")) 
+        // document.querySelector(".editBtn").style.display = "flex"
+
+    })
+  )
 }
 
 export function displayDeleteBtn() {
@@ -29,11 +30,13 @@ export function displayDeleteBtn() {
   hoveredEl.forEach((el)=>{
     el.addEventListener('mouseenter', (e)=>{
       e.target.lastChild.lastChild.style.display = "flex"
+      e.target.lastChild.lastChild.style.margin = "2px"
     })  
   })
   hoveredEl.forEach((el)=>{
     el.addEventListener('mouseleave', (e)=>{
       e.target.lastChild.lastChild.style.display = "none"
+      e.target.lastChild.lastChild.style.margin = "0"
     })
   })
 }
@@ -45,11 +48,6 @@ export const deleteFolder = (folderToDelete)=>{
   }
 }
 function removeFolder(folderToDelete) {
-  // let folderArray = folderArray.filter(folder=>{
-  //     console.log(folderToDelete);
-  //     console.log(folder.folderId);
-  //     return folderToDelete !== folder.folderId
-  // })
   const index = folderArray.findIndex(folder => 
     folder.folderId === folderToDelete);
     if (index > -1) {
@@ -57,6 +55,31 @@ function removeFolder(folderToDelete) {
     }
   console.log(folderArray);
   saveFolders();
+}
+
+// export function editFolder(e) {
+//   // const editBtn = e.target;
+//   // const folderToEdit = editBtn.dataset.folder;
+//   setEditing(folderToEdit);
+//   render();
+// }
+function setEditing(folderToEdit) {
+  folder.forEach(folder=>{
+    if (folder.folderId === folderToEdit) {
+      folder.isEditing = true
+    }
+  })
+  saveFolders()
+}
+
+function updateFolder(folderId, newFolderTitle){
+  folderArray.forEach(folder=>{
+    if (folder.folderId === folderId) {
+      folder.folderTitle = newFolderTitle
+      folder.isEditing = false;
+    }
+  })
+  saveFolders()
 }
 
 //user clicks child of Folder header
