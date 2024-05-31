@@ -30,7 +30,7 @@ export function displayDeleteBtn() {
   hoveredEl.forEach((el)=>{
     el.addEventListener('mouseenter', (e)=>{
       e.target.lastChild.lastChild.style.display = "flex"
-      e.target.lastChild.lastChild.style.margin = "2px"
+      e.target.lastChild.lastChild.style.marginLeft = "1px"
     })  
   })
   hoveredEl.forEach((el)=>{
@@ -57,14 +57,16 @@ function removeFolder(folderToDelete) {
   saveFolders();
 }
 
-// export function editFolder(e) {
-//   // const editBtn = e.target;
-//   // const folderToEdit = editBtn.dataset.folder;
-//   setEditing(folderToEdit);
-//   render();
-// }
+export function editFolder(e) {
+  const editBtn = e.target;
+  const folderToEdit = editBtn.dataset.folder;
+  console.log(folderToEdit);
+  setEditing(folderToEdit);
+  render();
+}
 function setEditing(folderToEdit) {
-  folder.forEach(folder=>{
+  folderArray.forEach(folder=>{
+    console.log(folder);
     if (folder.folderId === folderToEdit) {
       folder.isEditing = true
     }
@@ -72,6 +74,17 @@ function setEditing(folderToEdit) {
   saveFolders()
 }
 
+export function onUpdate(e){
+const saveBtn = e.target;
+console.log(saveBtn);
+const folderId = saveBtn.dataset.folder
+console.log(folderId);
+const textbox = document.querySelector(`#edit-folderTitle-${folderId}`)
+console.log(textbox);
+const newFolderTitle = textbox.value
+updateFolder(folderId, newFolderTitle)
+render();
+}
 function updateFolder(folderId, newFolderTitle){
   folderArray.forEach(folder=>{
     if (folder.folderId === folderId) {

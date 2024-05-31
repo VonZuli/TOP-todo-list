@@ -6,7 +6,9 @@ import { saveFolders } from './saveFolders';
 import { generateId } from './generateID';
 import { selectFolder, 
          displayDeleteBtn, 
-         deleteFolder } from './folders'
+         deleteFolder,
+         editFolder,
+         onUpdate } from './folders'
 //#endregion imports
 
 //initialize folders array
@@ -66,7 +68,7 @@ export function initDOM(){
     folderCounter.textContent = 0
     editSVG.classList.add('editBtn')
     editSVG.setAttribute('data-folder', folderId)
-    // editSVG.addEventListener('click', editFolder(folderId))
+    editSVG.addEventListener('click', editFolder)
     deleteSVG.classList.add('deleteBtn')
     deleteSVG.setAttribute('data-folder', folderId)
     deleteSVG.addEventListener('click', deleteFolder(folderId))
@@ -80,6 +82,7 @@ export function initDOM(){
     foldersContent.appendChild(folderList)
     folderList.appendChild(defaultFolder)
     defaultFolder.appendChild(defaultListItem)
+    
     defaultFolder.appendChild(animationContainer)
     animationContainer.appendChild(counterContainer)
     animationContainer.appendChild(editContainer)
@@ -95,7 +98,8 @@ export function initDOM(){
     
     function initFolderArray(folderId, folderTitle, count){
       const savedFoldersObj = JSON.parse(localStorage.getItem("folders"));
-        if (!localStorage.getItem("folders")) {
+
+        if (!localStorage.getItem("folders") || savedFoldersObj.length < 1) {
           folderArray = new Array();
           folderArray.push({
             folderId, 

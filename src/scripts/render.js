@@ -6,7 +6,8 @@ import {
   selectFolder, 
   displayDeleteBtn,
   deleteFolder, 
-  editFolder
+  editFolder,
+  onUpdate
 } from './folders.js'
 //#endregion imports  
 
@@ -17,14 +18,14 @@ export function render(){
   folderList.innerHTML = ""
 
   folderArray.forEach(folder=>{
-    if (folder.isEditing === true){
 
-    }
     let folderTitle = folder.folderTitle
     const deleteSVG = new Image();
     const editSVG = new Image()
+    
     deleteSVG.src = imagepath('./svg/delete.svg');
     editSVG.src = imagepath('./svg/edit.svg')
+    
     const folderContainer = document.createElement('div')
     const animationContainer = document.createElement('div')
     const counterContainer = document.createElement('div')
@@ -35,7 +36,7 @@ export function render(){
     const tooltipEdit = document.createElement('span')
     const tooltipDel = document.createElement('span')
     const folderId = folder.folderId
-    
+
     folderContainer.classList.add('folder-container')
     folderContainer.setAttribute('data-folder', folderId)
     listItem.setAttribute('data-folder', folderId)
@@ -55,15 +56,40 @@ export function render(){
     folderCounter.setAttribute('data-folder', folderId)
     editSVG.classList.add('editBtn')
     editSVG.setAttribute('data-folder', folderId)
-    // editSVG.addEventListener('click', editFolder(folderId))
+    editSVG.setAttribute("tabindex", "0")
+    editSVG.addEventListener('click', editFolder)
     deleteSVG.classList.add('deleteBtn')
     deleteSVG.setAttribute('data-folder', folderId)
+    deleteSVG.setAttribute("tabindex", "1")
     deleteSVG.addEventListener('click', deleteFolder(folderId))
     listItem.textContent = folderTitle
     folderCounter.textContent = +0
     
     folderList.appendChild(folderContainer)
-    folderContainer.appendChild(listItem)
+    if (folder.isEditing === true){
+      const editingContainer = document.createElement('div')
+      const editingTxt = document.createElement("input")
+      const saveEditBtn = document.createElement("button")
+      editingContainer.classList.add("editing-container")
+      editingTxt.setAttribute("type","text")
+      editingTxt.setAttribute("id", `edit-folderTitle-${folderId}`)
+      editingTxt.setAttribute("autofocus", "")
+      editingTxt.classList.add("editFolderInput")
+      editingTxt.focus()
+      editingTxt.select()
+      saveEditBtn.classList.add("saveEditBtn")
+      editingTxt.setAttribute("value", folderTitle)
+      saveEditBtn.setAttribute("data-folder", folderId)
+      saveEditBtn.textContent = "Save?"
+      saveEditBtn.id = folderId;
+      saveEditBtn.addEventListener('click', onUpdate)
+      folderContainer.appendChild(editingContainer)
+      editingContainer.appendChild(editingTxt)
+      editingContainer.appendChild(saveEditBtn)
+     
+    }else{
+      folderContainer.appendChild(listItem)
+    }
     folderContainer.appendChild(animationContainer)
     animationContainer.appendChild(counterContainer)
     animationContainer.appendChild(editContainer)

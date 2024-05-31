@@ -40,7 +40,6 @@ footer{
   position: relative;
   width: 100%;
   bottom: 0;
-  
   background-image: radial-gradient(cadetblue, rgba(95, 158, 160, 0.308));
   margin: 20px 0 0 0;
   padding: 5px;
@@ -72,7 +71,7 @@ body{
     min-width: 225px;
   }
     .folders-section > .container{
-      padding: 10px;
+      padding: 5px;
       border: 2px solid rgb(95, 158, 160);
       border-radius: 20px;
       flex-basis: 50%;
@@ -90,12 +89,24 @@ body{
       padding: 10px;
       flex-basis: 50%;
     }
-#newFolder{
-  padding: 5px;
+/* #newFolder{
+  padding: 5px;   
+  margin: 5px;
+  border-radius: 5px;
+} */
+button{
+  padding: 5px;   
+  margin: 5px;
+  border-radius: 5px;
 }
-#newTask{
-  padding: 5px;
+button:focus{ 
+  outline: none !important;
+  border: 1px solid cadetblue;
+  box-shadow: 0 0 10px cadetblue;
 }
+/* #newTask{
+  padding: 5px;
+} */
 /*#endregion html*/
 /*#region modal*/
 .modal{
@@ -232,7 +243,6 @@ body{
   display: flex;
   flex-direction: column;
   flex-wrap: nowrap;
-  margin-bottom: 5px;
 }
   #folder-content > ul{
     padding: 0;
@@ -266,7 +276,6 @@ body{
       text-align: center;
       align-items: center;
     }
-
     .folder-container.active{
       /* border: 2px solid  */
       border-radius: 5px;
@@ -292,12 +301,14 @@ body{
       height: 25px;
       /* pointer-events: none; */
     }
+    .animation-container:hover .delete-container.hovered{
+      flex: auto;
+    }
     .delete-container{
       display: flex;
       justify-content: center;
       align-items: center;
       flex: 0;
-      font-size: 40px;
       transition: flex 1s; 
     }
     @keyframes trashFadeIn {
@@ -313,9 +324,6 @@ body{
       max-width: 20px;
       max-height: 20px;
       animation: trashFadeIn 800ms ease-in;
-    }
-    .animation-container:hover .delete-container.hovered{
-      flex: auto;
     }
     .animation-container{
       display: flex;
@@ -337,14 +345,13 @@ body{
       display: flex;
       max-width: 20px;
       max-height: 20px;
+      
     }
-
     .tooltip {
       position: relative;
       display: inline-block;
       /* border-bottom: 1px dotted black; */
     }
-    
     .tooltip .tooltipText {
       visibility: hidden;
       width: 120px;
@@ -361,7 +368,6 @@ body{
       margin-left: -60px;
       font-size: small;
     }
-    
     .tooltip .tooltipText::after {
       content: "";
       position: absolute;
@@ -372,9 +378,32 @@ body{
       border-style: solid;
       border-color: rgba(0, 0, 0, 0.733) transparent transparent transparent;
     }
-    
     .tooltip:hover .tooltipText {
       visibility: visible;
+    }
+    .editing-container{
+      display: flex;
+      align-items: center;
+    }
+    .editFolderInput{
+        color: cadetblue;
+        width: 70px;
+        text-align: start;
+        background: transparent;
+        border: none;
+        border-bottom: solid 1px aliceblue;
+        padding: 2px 4px;
+        margin: 2px;
+    }
+    .updateCheck{
+      width: 20px;
+    }
+    .saveEditBtn{
+      width: min-content;
+      padding:0px 2px;
+      font-size: small;
+      white-space: nowrap;
+      margin: 0px 0px 0px 2px;
     }
 /*#endregion folders*/
 
