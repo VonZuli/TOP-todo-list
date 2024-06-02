@@ -1,5 +1,5 @@
 import { addTask } from "./tasks"
-import { formValidation } from "./validation";
+import { folderValidation } from "./validation";
 
 export function createModal(e) {
   
@@ -75,7 +75,7 @@ export function createModal(e) {
             `${createFormObject.label.generateLabel(0,6)}
              ${createFormObject.input.generateInput(0,0,0)}
             `;
-         
+
         };
         
         // creates task form
@@ -103,12 +103,12 @@ export function createModal(e) {
         document.querySelector("input").focus()
       }
       createForm();
-
+      document.querySelector('input').setAttribute('autofocus', '')
       
       addBtn.addEventListener('click', (e)=>{
           e.preventDefault()
           if (e.target.dataset.addType === 'folder') {
-            formValidation();
+            folderValidation();
           }
           if (e.target.dataset.addType === 'task') {
             addTask()

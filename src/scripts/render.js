@@ -61,7 +61,7 @@ export function render(){
     deleteSVG.classList.add('deleteBtn')
     deleteSVG.setAttribute('data-folder', folderId)
     deleteSVG.setAttribute("tabindex", "1")
-    deleteSVG.addEventListener('click', deleteFolder(folderId))
+    deleteSVG.addEventListener('click', deleteFolder(folderId, folderTitle))
     listItem.textContent = folderTitle
     folderCounter.textContent = +0
     

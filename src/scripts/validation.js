@@ -4,7 +4,7 @@ import { generateId } from "./generateID";
 import { folderArray } from "./init";
 //#endregion imports
 
-export const formValidation = () =>{
+export const folderValidation = () =>{
   const folderNameInput = document.querySelector("#title")
   const errorMsg = document.querySelector("#errorMsgDisplay")
   const savedFoldersObj = JSON.parse(localStorage.getItem("folders"));
@@ -41,3 +41,7 @@ export const formValidation = () =>{
     return addFolder(userInput);
   }  
 };
+
+export const loginValidation = (username)=>{
+  // const usernameInput =
+}

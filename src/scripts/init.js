@@ -15,7 +15,38 @@ import { selectFolder,
 export let folderArray;
 
 export function initDOM(){
- 
+  
+  //check if user is logged in and then display the correct data for that user
+  //else show noLoginInit and quote div
+  let nologinInit = (()=>{
+
+    const content = document.querySelector(".content")
+    const quoteContainer = document.createElement("div")
+    const quoteEl = document.createElement("p")
+    const authorEl = document.createElement("p")
+
+    quoteContainer.classList.add("quote-container")
+    randomQuote();
+    quoteEl.classList.add("quote")
+    authorEl.classList.add("quote-author")
+    
+    async function randomQuote() {
+      try {
+        const response = await fetch('https://api.quotable.io/random')
+        const quote = await response.json()
+         // Output the quote and author name
+        quoteEl.textContent = quote.content;
+        console.log(quoteEl.textContent.split(" ").length);
+        authorEl.textContent = `- ${quote.author}`
+      } catch (error) {
+        console.log('Something went wrong!', error);
+      }
+    }
+    content.appendChild(quoteContainer);
+    quoteContainer.appendChild(quoteEl);
+    quoteContainer.appendChild(authorEl);
+  })();
+  
   //create folders DOM
   let folderInit = (() =>{
 

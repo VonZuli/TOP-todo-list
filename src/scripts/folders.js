@@ -41,11 +41,55 @@ export function displayDeleteBtn() {
   })
 }
 
-export const deleteFolder = (folderToDelete)=>{
+export const deleteFolder = (folderToDelete, folderTitle)=>{
   return () => {
+    handleDelete();
+}
+function handleDelete(){
+  const body = document.querySelector('body')
+  const dialog = document.createElement('dialog')
+  const dialogContent = document.createElement('div')
+  const msgContainer = document.createElement('div')
+  const text = document.createElement('p')
+  const span = document.createElement('span')
+  const controlContainer = document.createElement("div")
+  const confirmBtn = document.createElement('button')
+  const cancelBtn = document.createElement('button')
+  
+  dialog.classList.add('confirmDelete_dialog')
+  dialog.setAttribute('autofocus', '')
+  dialogContent.classList.add('dialog-content')
+  msgContainer.classList.add('dialogMsg-container')
+  text.classList.add('deleteMsg')
+  span.classList.add('deleteMsg_span')
+  controlContainer.classList.add('dialog-controls')
+  confirmBtn.classList.add('confirmDelete_btn')
+  confirmBtn.addEventListener('mouseup', ()=>{
+    document.querySelector('.confirmDelete_dialog').remove()
     removeFolder(folderToDelete)
     render()
-  }
+  })
+  cancelBtn.classList.add('cancelDelete_btn')
+  cancelBtn.addEventListener('click',()=>{
+    document.querySelector('.confirmDelete_dialog').remove()
+  })
+
+  const dialogText = `Are you sure you want to delete the folder named ${folderTitle}?`
+  const spanText = "This process is irreversible"
+  text.textContent = dialogText
+  span.textContent = spanText.toUpperCase()
+  confirmBtn.textContent = "Confirm"
+  cancelBtn.textContent = "Cancel"
+
+  dialog.appendChild(dialogContent)
+  dialogContent.appendChild(msgContainer)
+  msgContainer.appendChild(text)
+  msgContainer.appendChild(span)
+  dialogContent.appendChild(controlContainer)
+  controlContainer.appendChild(confirmBtn)
+  controlContainer.appendChild(cancelBtn)
+  body.appendChild(dialog)
+}
 }
 function removeFolder(folderToDelete) {
   const index = folderArray.findIndex(folder => 
@@ -76,12 +120,10 @@ function setEditing(folderToEdit) {
 
 export function onUpdate(e){
 const saveBtn = e.target;
-console.log(saveBtn);
 const folderId = saveBtn.dataset.folder
-console.log(folderId);
 const textbox = document.querySelector(`#edit-folderTitle-${folderId}`)
-console.log(textbox);
 const newFolderTitle = textbox.value
+
 updateFolder(folderId, newFolderTitle)
 render();
 }
