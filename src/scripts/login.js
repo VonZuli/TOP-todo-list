@@ -56,12 +56,12 @@ export function login() {
 
   viewPasswordSVG.addEventListener('click', (e)=>{
     switch (true) {
-      case e.target.src===eyeOpenSVG:
+      case e.target.src === eyeOpenSVG:
         viewPasswordSVG.src = eyeCloseSVG
         passwordInput.removeAttribute("type")
         passwordInput.setAttribute("type", "text")
         break;
-      case e.target.src===eyeCloseSVG:
+      case e.target.src === eyeCloseSVG:
         viewPasswordSVG.src = eyeOpenSVG
         passwordInput.removeAttribute("type")
         passwordInput.setAttribute("type", "password")
@@ -69,20 +69,6 @@ export function login() {
       default:
         break;
     }
-    
-  //  if (e.target.src === eyeOpenSVG.src) {
-  //   console.log(e.target.src);
-  //   console.log(eyeOpenSVG);
-  //   console.log(e.target.src === eyeCloseSVG.src);
-  //   eyeOpenSVG.src = eyeCloseSVG.src
-  //   passwordInput.removeAttribute("type")
-  //   passwordInput.setAttribute("type", "text")
-  //  } else if(e.target.src === eyeOpenSVG.src){
-  //   console.log(e.target.src === eyeOpenSVG.src);
-  //   eyeOpenSVG.src = eyeOpenSVG.src
-  //   passwordInput.removeAttribute("type")
-  //   passwordInput.setAttribute("type", "password")
-  //  }
   })
   passwordGroup.classList.add("password-group")
   errorContainer.classList.add('error-container')
