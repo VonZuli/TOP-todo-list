@@ -16,7 +16,7 @@ export function createHeader() {
   loginBtn.innerHTML = 'Login'
   loginBtn.classList.add('loginBtn')
   loginSVG.classList.add('loginSVG')
-  loginBtn.addEventListener('click', login)
+  loginBtn.addEventListener('click', login())
 
 
   header.appendChild(title)
