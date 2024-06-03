@@ -1,6 +1,7 @@
 //imports
 import {imagepath} from '..'
 import { loginValidation } from './validation'
+import {registration} from './registration'
 
 export function login() {
 
@@ -29,6 +30,11 @@ export function login() {
   const errorMsg = document.createElement('p')
 
   signupLink.href = '#'
+  signupLink.addEventListener('click', (e)=>{
+    e.preventDefault()
+    dialog.remove()
+    registration()
+  })
   const linkText = 'here.'
   signupLink.textContent = linkText
   noAccount.textContent = `Don't have an account? Click `

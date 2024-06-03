@@ -16,11 +16,19 @@ export function createHeader() {
   loginBtn.innerHTML = 'Login'
   loginBtn.classList.add('loginBtn')
   loginSVG.classList.add('loginSVG')
-  loginBtn.addEventListener('click', login())
+  loginBtn.addEventListener('click', login)
 
 
   header.appendChild(title)
   header.appendChild(loginBtn)
   loginBtn.append(loginSVG)
+}
+
+export function createRegistrationHeader(){
+  const header = document.querySelector('header')
+  const title = document.createElement('h1')
+
+  title.textContent = "Let's get stuff done!"
+  header.appendChild(title)
 }
 

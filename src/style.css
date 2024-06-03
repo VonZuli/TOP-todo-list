@@ -748,5 +748,49 @@ li > .taskDetails > *{
 /*#endregion tasks*/
 
 /*#region extras*/
-
+.reg-content{
+  display: flex;
+  flex-direction: column;
+  flex-wrap: none;
+  align-content: center;
+  padding: 1em 1em 5em;
+}
+.registration_section{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-self: center;
+  margin-right: 20px;
+  max-width: 50%;
+  min-width: 225px;
+}
+.reg-form-container{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 5px;
+  border: 2px solid var(--secondary-color);
+  border-radius: var(--container-radius);
+}
+.reg-form-container > h2{
+  padding: 20px;
+  color: var(--text-color);
+  text-align: center;
+}
+.reg-form-container > img{
+  width: 100px;
+  margin: 5px;
+  border: solid 5px var(--secondary-color);
+  border-radius: var(--container-radius);
+}
+.registration_form > input{
+  border-radius: var(--btn-radius);
+  height: 30px;
+  font-size: medium;
+  padding: 5px;
+  margin: 6px 5px;
+  max-width: fit-content;
+  align-self: center;
+}
 /*#endregion extras*/
