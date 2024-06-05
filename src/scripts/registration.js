@@ -3,8 +3,9 @@ import { imagepath } from "..";
 import { createFooter as footer } from "./footer"
 import { createHeader  as header } from "./header"
 import { noLogin } from "./init"
+import { registrationValidation } from "./validation";
 
-
+//builds registration page
 export function registration(){
   const userPlusSVG = new Image()
   userPlusSVG.src = imagepath('./svg/user-plus.svg')
@@ -49,12 +50,6 @@ export function registration(){
     }
   }
 
-  // const formArray = new Array(regFormObj)
-  // console.log(formArray);
-  // console.table(formArray);
-  // console.log(regFormObj);
-  // console.table(regFormObj);
-
   const submitBtn = document.createElement('button')
   const footerEl = document.createElement('footer')
 
@@ -70,7 +65,7 @@ export function registration(){
 
   registrationMsg.textContent = "Welcome! Please input your information below and press submit."
   submitBtn.textContent = "Submit"
-  
+  submitBtn.setAttribute("type", "submit")
 
 
   pageContainer.innerHTML = ""
@@ -93,9 +88,10 @@ export function registration(){
       const fieldContainer =document.createElement('div')
       const errorMsg = document.createElement('p')
 
-      errorMsg.classList.add('error-msg')
-      errorMsg.textContent = "Test"
-
+      errorMsg.classList.add('error-msg')  
+      errorMsg.classList.add(regFormObj[key].class.split('_')[0])
+      errorMsg.setAttribute('data-error', regFormObj[key].class.split('_')[0])
+      errorMsg.innerHTML = ""
       fieldContainer.appendChild(formField)
       fieldContainer.appendChild(errorMsg)
 
@@ -111,5 +107,18 @@ export function registration(){
 
   pageContainer.appendChild(footerEl)
   footer()
-  
+
+  function handleRegistration(e){
+    e.preventDefault()
+    const formFields = document.querySelectorAll('input')
+    const userInfoObj = new Object()
+
+    formFields.forEach(field=>{
+      userInfoObj[field.className.split('_')[0]] = field.value
+    })
+    // let userInfoArr = new Array(userInfoObj)
+    // console.log(userInfoArr);
+    registrationValidation(userInfoObj)
+  }
+  submitBtn.addEventListener('click', handleRegistration)
 }

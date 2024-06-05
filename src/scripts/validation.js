@@ -1,4 +1,5 @@
 //#region imports
+import { isBoolean } from "lodash";
 import { addFolder } from "./folders";
 import { generateId } from "./generateID";
 import { folderArray } from "./init";
@@ -84,3 +85,40 @@ export const loginValidation = (username, password)=>{
     errorMsg.innerHTML += "Password can contain special characters."
   }
 }
+
+export function registrationValidation(userInfoObj){
+  const errorMsgs = document.querySelectorAll('.error-msg')
+  const errorArr = new Array()
+  console.log([...errorMsgs]);
+  Object.entries(userInfoObj).forEach(val =>{
+    const checkBlanks = ((str) => {
+      const validStr =/^(?![\s-])[\w\s-]+$/.exec(str);
+      const blanksArr = new Array(!!validStr, val[0])
+      return blanksArr
+    })(val[1])
+    
+    if(!checkBlanks[0]){
+      checkBlanks.filter((_,i) => {
+        return i&1
+      }).map(i=>{
+        errorArr.push(i)
+      });
+    }
+    
+    [...errorMsgs].filter(i=>{
+      if (errorArr.includes(i.dataset.error)){
+        return i
+      }
+    }).map(i=>{
+      i.innerHTML = "Fields cannot contain blank spaces."
+    })
+    console.log(errorArr);
+  })
+}
+
+      // if (errorArr.includes(element.dataset.error)){
+      //   errorMsgs.forEach(i=>{
+      //     const errorMsg = document.querySelector('.error-msg')
+      //     i.innerHTML = "Fields cannot contain blank spaces."
+      //   })
+      // };

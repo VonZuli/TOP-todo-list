@@ -82,15 +82,17 @@ export function login() {
 
   loginControls.classList.add('login-controls')
   loginBtn.classList.add("sign-in_btn")
-  loginBtn.setAttribute('type', 'button')
-  loginBtn.setAttribute("form", "login")
   loginBtn.textContent = "Sign In" 
-  loginBtn.addEventListener('click', (e)=>{
-    e.preventDefault();
-    e.stopImmediatePropagation();
-    loginValidation(usernameInput.value, passwordInput.value);
-    return false;
-  })
+  
+  loginBtn.setAttribute('type', 'submit')
+  loginBtn.setAttribute("form", "login")
+  function handleLogin(e){
+    e.preventDefault()
+    loginValidation(usernameInput.value, passwordInput.value)
+    //log the user in
+  }
+  loginBtn.addEventListener('click', handleLogin)
+
   cancelBtn.classList.add("cancel_btn")
   cancelBtn.setAttribute('type', 'button')
   cancelBtn.textContent = "Cancel" 
