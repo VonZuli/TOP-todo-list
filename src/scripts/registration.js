@@ -114,7 +114,7 @@ export function registration(){
     const userInfoObj = new Object()
 
     formFields.forEach(field=>{
-      userInfoObj[field.className.split('_')[0]] = field.value
+      userInfoObj[field.className.split('_')[0]] = field.value.trim()
     })
     // let userInfoArr = new Array(userInfoObj)
     // console.log(userInfoArr);
