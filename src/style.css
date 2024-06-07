@@ -784,13 +784,29 @@ li > .taskDetails > *{
   border: solid 5px var(--secondary-color);
   border-radius: var(--container-radius);
 }
-.registration_form > input{
+.registration_form{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+form * input{
   border-radius: var(--btn-radius);
   height: 30px;
   font-size: medium;
   padding: 5px;
-  margin: 6px 5px;
+  margin: 6px 5px 0px 5px;
   max-width: fit-content;
   align-self: center;
+}
+input[type="password"]{
+  margin-left: 30px;
+}
+.field-container > div > img{
+  margin-top: 6px;
+}
+.field-container > .error-msg {
+  min-height: 16px;
+  padding: 2px;
 }
 /*#endregion extras*/

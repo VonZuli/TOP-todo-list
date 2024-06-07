@@ -88,9 +88,8 @@ export const loginValidation = (username, password)=>{
 
 export function registrationValidation(userInfoObj){
   const errorMsgEl = document.querySelectorAll('.error-msg')
-  const errorArr = new Array()
-  // const errorArr = new Array().fill({"index":""},{"errorMsgs":{}})
-  
+  const errorArr = new Array().fill({"index":"","errorMsgs":[]})
+ 
   //loops over the object passed in the argument
   Object.entries(userInfoObj).forEach(val =>{
     //checks for leading or trailing blanks, works for emails
@@ -108,15 +107,16 @@ export function registrationValidation(userInfoObj){
         return index&1
         //maps over the index and pushes it to an array that contains inputs in error
       }).map(index =>{
-        const errorMsg = "Form fields cannot contain blank spaces or be empty."
-        errorArr.push({index, errorMsg})
+        const errorMsg = "Form fields cannot contain blank spaces or be empty. </br>"
+        errorArr.push({index, "errorMsgs":[errorMsg]})
+        
       });
     }
 
     //if the string value is an email validate it, push to array if invalid
     if (val[0]==="email") {
       const validEmail = ((str)=>{
-        const validEmailStr = /^(?!.*\s)[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.[a-zA-Z]{2,}$/
+        const validEmailStr = /^[a-z0-9!#$%&'*+/=?^_`{|}~.-]+@[a-z0-9.-]+\.[a-zA-Z]{2,}$/
         .exec(str)
         const notValidEmailArr = new Array(!!validEmailStr,val[0])
         return notValidEmailArr
@@ -129,25 +129,31 @@ export function registrationValidation(userInfoObj){
         }).map(index =>{
           //Push the values to an array along with an error message
           const errorMsg = "The email provided is not a valid email format."
-          errorArr.push({index, errorMsg})
+          errorArr.push({index, "errorMsgs":[errorMsg]})
         })
       }
     }
 
     const checkLength = ((str)=>{
       const lengthArr = new Array()
-      
+      if(val[0]==="fname" || val[0]==="lname"){
+        str.length < 2 || str.length > 20 ? lengthArr.push(!!str,val[0]): false
+        console.log(lengthArr);
+        return lengthArr
+      }
       if(val[0]==="username"){
         str.length < 4 || str.length > 20 ? lengthArr.push(!!str, val[0]) : false
-          // console.log(lengthArr);
-          // console.log(lengthArr[0])
+        console.log(lengthArr);
         return lengthArr
       }
       if(val[0]==="password"){
-        console.log(str, str.length);
         str.length < 8 ? lengthArr.push(!!str,val[0]) : false
+        console.log(lengthArr);
         return lengthArr
       }
+      // if (val[0]==="password-confirm" && val[1]!== ){
+
+      // }
     })(val[1]);
 
     if(checkLength){
@@ -156,46 +162,82 @@ export function registrationValidation(userInfoObj){
       }).map(index=>{
         let errorMsg = ""
         switch (index) {
+          case "fname":
+            errorMsg = "First name provided must be between 2 to 20 characters"
+            errorArr.forEach(i=>{
+              console.log(i.index);
+              console.log(i);
+              if (typeof i.index === undefined){
+                errorArr.push({index, "errorMsgs":[errorMsg]})
+              } else if(i.index === index){
+                i.errorMsgs.push(errorMsg)
+              }
+              // typeof i.index === undefined ? errorArr.push({index, "errorMsgs":[errorMsg]}) : i.index === index ? i.errorMsgs.push(errorMsg) : 
+            })
+            break;
+          case "lname":
+            errorMsg = "Last name provided must be between 2 to 20 characters"
+            errorArr.forEach(i=>{
+              if (typeof i.index === undefined){
+                errorArr.push({index, "errorMsgs":[errorMsg]})
+              } else if(i.index === index){
+                i.errorMsgs.push(errorMsg)
+              }
+            })
+            break;
           case "username":
             errorMsg = "Username must be between 4 to 20 characters."
-            errorArr.push({index, errorMsg})
+            errorArr.forEach(i=>{
+              if (typeof i.index === undefined){
+                errorArr.push({index, "errorMsgs":[errorMsg]})
+              } else if(i.index === index){
+                i.errorMsgs.push(errorMsg)
+              }
+            })
             break;
           case "password":
             errorMsg = "Minimum password length is 8 characters."
-            errorArr.push({index, errorMsg})
+            // </br> Password must contain 1 uppercase letter,</br> 1 lowercase letter and 1 number.</br>Password can contain special characters."
+            errorArr.forEach(i=>{
+              if (typeof i.index === undefined){
+                errorArr.push({index, "errorMsgs":[errorMsg]})
+              } else if(i.index === index){
+                i.errorMsgs.push(errorMsg)
+              }
+            })
             break;
           default:
             break;
         }
-
       })
     }
     //filter the errorMsgEl nodelist to search for matching data-attr
     [...errorMsgEl].filter(i=>{
+      
       errorArr.forEach(element=>{
         //if element matches then return an error message
         if (element.index===i.dataset.error){
           // console.table(errorArr);
           // console.log(element.index===i.dataset.error, element.index, i.dataset.error, i);
           i.innerHTML =""
-          return i.innerHTML += element.errorMsg
+          return i.innerHTML += element.errorMsgs.join("")
         }
       })
     })
+    
   }) //end of main loop
+  console.log(errorArr);
 }
 
-        // if (str.length < 4 || str.length > 20) {
-        //   const lengthArr = new Array(str,val[0])
-        //   console.log(lengthArr);
-        //   console.log(lengthArr[0])
-        //   console.log(!lengthArr[0])
-        //   return lengthArr
-        // }
 
-      //   if(val[0]==="password"){
-      //     if(str.length < 8){
-      //       // console.log("Password must be longer than 8 characters.");
-      //     }
-      //   }
-      // })(val[1]);
+        //regexWithoutLength = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])/
+
+        // const validPasswordLength = ((str, length = 8) =>{
+        //   console.log(str);
+        //   console.log(str.length < length);
+        //   return str.length < length
+        // })(val[1])
+        // const validPassword = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/gm.exec(str)
+        // validPasswordLength === true ? lengthArr.push(!!validPasswordLength, val[0]) : false
+        // const notValidPWLength = new Array(!!validPasswordLength, val[0])
+        // console.log(notValidPWLength);

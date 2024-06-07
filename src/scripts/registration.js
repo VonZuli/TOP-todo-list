@@ -8,6 +8,12 @@ import { registrationValidation } from "./validation";
 //builds registration page
 export function registration(){
   const userPlusSVG = new Image()
+  let viewPasswordSVG = new Image()
+  let viewConfirmSVG = new Image()
+  let eyeOpenSVG = imagepath('./svg/eye-open.svg')
+  let eyeCloseSVG = imagepath('./svg/eye-closed.svg')
+  viewPasswordSVG.src = eyeOpenSVG
+  viewConfirmSVG.src = eyeOpenSVG
   userPlusSVG.src = imagepath('./svg/user-plus.svg')
   const pageContainer = document.querySelector('#page-container')
   const headerEl = document.createElement('header')
@@ -59,7 +65,8 @@ export function registration(){
   formContainer.classList.add("reg-form-container")
   registrationMsg.classList.add("registration-msg")
   registrationForm.classList.add("registration_form")
-
+  viewPasswordSVG.classList.add("view-password")
+  viewConfirmSVG.classList.add("view-password")
   
   submitBtn.classList.add("submit_btn")
 
@@ -84,22 +91,63 @@ export function registration(){
     const form = document.querySelector('.registration_form')
 
     Object.keys(regFormObj).forEach(key=>{
+      const fieldContainer = document.createElement('div')
+      const passwordGroup = document.createElement('div')
       const formField = document.createElement('input')
-      const fieldContainer =document.createElement('div')
       const errorMsg = document.createElement('p')
 
+      fieldContainer.classList.add("field-container")
       errorMsg.classList.add('error-msg')  
       errorMsg.classList.add(regFormObj[key].class.split('_')[0])
       errorMsg.setAttribute('data-error', regFormObj[key].class.split('_')[0])
       errorMsg.innerHTML = ""
-      fieldContainer.appendChild(formField)
-      fieldContainer.appendChild(errorMsg)
+      key === "passwordInput" || key === "confirmPWInput" ? passwordGroup.classList.add("password-group") & fieldContainer.appendChild(passwordGroup) & passwordGroup.setAttribute('data-field', key.split('Input')[0]) & passwordGroup.appendChild(formField) : fieldContainer.appendChild(formField)
+      
+      if (passwordGroup.dataset.field === "password"){
+        passwordGroup.appendChild(viewPasswordSVG)
+        viewPasswordSVG.addEventListener('click', (e)=>{
+          switch (true) {
+            case e.target.src === eyeOpenSVG:
+              viewPasswordSVG.src = eyeCloseSVG
+              formField.removeAttribute("type")
+              formField.setAttribute("type", "text")
+              break;
+            case e.target.src === eyeCloseSVG:
+              viewPasswordSVG.src = eyeOpenSVG
+              formField.removeAttribute("type")
+              formField.setAttribute("type", "password")
+              break;
+            default:
+              break;
+          }
+        })
+      } 
+      if (passwordGroup.dataset.field === "confirmPW"){
+        passwordGroup.appendChild(viewConfirmSVG)
+        viewConfirmSVG.addEventListener('click', (e)=>{
+          switch (true) {
+            case e.target.src === eyeOpenSVG:
+              viewConfirmSVG.src = eyeCloseSVG
+              formField.removeAttribute("type")
+              formField.setAttribute("type", "text")
+              break;
+            case e.target.src === eyeCloseSVG:
+              viewConfirmSVG.src = eyeOpenSVG
+              formField.removeAttribute("type")
+              formField.setAttribute("type", "password")
+              break;
+            default:
+              break;
+          }
+        })
+      } 
 
       Object.entries(regFormObj[key]).forEach(([attr,val])=>{
         formField.setAttribute(attr,val)
       })
+      fieldContainer.appendChild(errorMsg)
       form.appendChild(fieldContainer)
-    })    
+    })   
   }
   buildForm()
 
