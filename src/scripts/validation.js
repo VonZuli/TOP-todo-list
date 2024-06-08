@@ -3,6 +3,7 @@ import { isBoolean } from "lodash";
 import { addFolder } from "./folders";
 import { generateId } from "./generateID";
 import { folderArray } from "./init";
+import { isValid } from "date-fns";
 //#endregion imports
 
 export const folderValidation = () =>{
@@ -70,10 +71,10 @@ export const loginValidation = (username, password)=>{
   if (!checkUserBlanks) {
     return errorMsg.innerHTML += "Username field cannot be empty.</br>"
   }
-  if (username.length < 4 || username.trim() < 4){
+  if (username.length < 3 || username.trim() < 4){
     return errorMsg.innerHTML += "Username must be at least 4 characters.</br>"
   }
-  if (username.length > 20 || username.trim() > 20 ) {
+  if (username.length > 24 || username.trim() > 20 ) {
     return errorMsg.innerHTML += "Username cannot exceed 20 characters.</br>"
   }
   if (!checkPWBlanks) {
@@ -87,145 +88,126 @@ export const loginValidation = (username, password)=>{
 }
 
 export function registrationValidation(userInfoObj){
-  const errorMsgEl = document.querySelectorAll('.error-msg')
-  const errorArr = new Array().fill({"index":"","errorMsgs":[]})
- 
-  //loops over the object passed in the argument
-  Object.entries(userInfoObj).forEach(val =>{
-    //checks for leading or trailing blanks, works for emails
-    const checkBlanks = ((str) => {
-      const validStr =/^(?![\s-])[\w\s-@.]+$/.exec(str);
-      //creates an array populated with the result of the regex test and the value that was tested and returns the array
-      const blanksArr = new Array(!!validStr, val[0])
-      return blanksArr
-    })(val[1])
+  // const errorMsgEl = document.querySelectorAll('.error-msg')
+  // const errorArr = new Array().fill({"index":"","errorMsgs":[]})
+  const errorArr = new Array()
+  const errorObj = new Object()
+  console.log(userInfoObj);
+  
+  for (const key in userInfoObj) {
+    const formField = key
+    const isValid = "isValid"
+    const userInput = "userInput"
+    const errorMsgsArr = "errorMsgsArr"
+    let errorMsg;
+    errorObj[formField] = {}
+    errorObj[formField][isValid] = true
+    errorObj[formField][userInput] = userInfoObj[key]
+    errorObj[formField][errorMsgsArr] = []
 
-    //checks if the value returned by the checksBlanks func is FALSE
-    if(!checkBlanks[0]){
-      //filters the array to return every other index of FALSE values
-      checkBlanks.filter((_,index) => {
-        return index&1
-        //maps over the index and pushes it to an array that contains inputs in error
-      }).map(index =>{
-        const errorMsg = "Form fields cannot contain blank spaces or be empty. </br>"
-        errorArr.push({index, "errorMsgs":[errorMsg]})
-        
-      });
-    }
+    // const validateFields = ((str =>{
+    const checkblanks = ((str=>{
+      const isValidStr =/^(?![\s-])[\w\s-@.]+$/.test(str);
+      errorMsg = "Form fields cannot contain special characters, blank spaces or be empty.</br>"
 
-    //if the string value is an email validate it, push to array if invalid
-    if (val[0]==="email") {
-      const validEmail = ((str)=>{
-        const validEmailStr = /^[a-z0-9!#$%&'*+/=?^_`{|}~.-]+@[a-z0-9.-]+\.[a-zA-Z]{2,}$/
-        .exec(str)
-        const notValidEmailArr = new Array(!!validEmailStr,val[0])
-        return notValidEmailArr
-      })(val[1]);
-      
-      //if the email is invalid filter over every other index returning FALSE values
-      if (!validEmail[0]) {
-        validEmail.filter((_,index)=>{
-          return index&1
-        }).map(index =>{
-          //Push the values to an array along with an error message
-          const errorMsg = "The email provided is not a valid email format."
-          errorArr.push({index, "errorMsgs":[errorMsg]})
-        })
+      if (isValidStr === false){
+        errorObj[key].isValid = isValidStr
+        errorObj[key].errorMsgsArr.push(errorMsg)
+        errorArr.push(errorObj)
       }
-    }
+    }))(userInfoObj[key])
 
-    const checkLength = ((str)=>{
-      const lengthArr = new Array()
-      if(val[0]==="fname" || val[0]==="lname"){
-        str.length < 2 || str.length > 20 ? lengthArr.push(!!str,val[0]): false
-        console.log(lengthArr);
-        return lengthArr
-      }
-      if(val[0]==="username"){
-        str.length < 4 || str.length > 20 ? lengthArr.push(!!str, val[0]) : false
-        console.log(lengthArr);
-        return lengthArr
-      }
-      if(val[0]==="password"){
-        str.length < 8 ? lengthArr.push(!!str,val[0]) : false
-        console.log(lengthArr);
-        return lengthArr
-      }
-      // if (val[0]==="password-confirm" && val[1]!== ){
+    if (key === "email"){
+      const checkEmail = (str=>{
+        const isValidEmail = /^[a-z0-9!#$%&'*+/=?^_`{|}~.-]+@[a-z0-9.-]+\.[a-zA-Z]{2,}$/.test(str)
+        errorMsg = "The email provided is not a valid email format.</br>"
 
-      // }
-    })(val[1]);
-
-    if(checkLength){
-      checkLength.filter((_,index)=>{
-        return index&1
-      }).map(index=>{
-        let errorMsg = ""
-        switch (index) {
-          case "fname":
-            errorMsg = "First name provided must be between 2 to 20 characters"
-            errorArr.forEach(i=>{
-              console.log(i.index);
-              console.log(i);
-              if (typeof i.index === undefined){
-                errorArr.push({index, "errorMsgs":[errorMsg]})
-              } else if(i.index === index){
-                i.errorMsgs.push(errorMsg)
-              }
-              // typeof i.index === undefined ? errorArr.push({index, "errorMsgs":[errorMsg]}) : i.index === index ? i.errorMsgs.push(errorMsg) : 
-            })
-            break;
-          case "lname":
-            errorMsg = "Last name provided must be between 2 to 20 characters"
-            errorArr.forEach(i=>{
-              if (typeof i.index === undefined){
-                errorArr.push({index, "errorMsgs":[errorMsg]})
-              } else if(i.index === index){
-                i.errorMsgs.push(errorMsg)
-              }
-            })
-            break;
-          case "username":
-            errorMsg = "Username must be between 4 to 20 characters."
-            errorArr.forEach(i=>{
-              if (typeof i.index === undefined){
-                errorArr.push({index, "errorMsgs":[errorMsg]})
-              } else if(i.index === index){
-                i.errorMsgs.push(errorMsg)
-              }
-            })
-            break;
-          case "password":
-            errorMsg = "Minimum password length is 8 characters."
-            // </br> Password must contain 1 uppercase letter,</br> 1 lowercase letter and 1 number.</br>Password can contain special characters."
-            errorArr.forEach(i=>{
-              if (typeof i.index === undefined){
-                errorArr.push({index, "errorMsgs":[errorMsg]})
-              } else if(i.index === index){
-                i.errorMsgs.push(errorMsg)
-              }
-            })
-            break;
-          default:
-            break;
+        if (isValidEmail === false){
+          errorObj[formField][isValid] = isValidEmail
+          errorObj[key].errorMsgsArr.push(errorMsg)
         }
-      })
+      })(userInfoObj[key])
     }
-    //filter the errorMsgEl nodelist to search for matching data-attr
-    [...errorMsgEl].filter(i=>{
-      
-      errorArr.forEach(element=>{
-        //if element matches then return an error message
-        if (element.index===i.dataset.error){
-          // console.table(errorArr);
-          // console.log(element.index===i.dataset.error, element.index, i.dataset.error, i);
-          i.innerHTML =""
-          return i.innerHTML += element.errorMsgs.join("")
+
+    if (key === "fname" || 
+        key === "lname" || 
+        key === "username" || 
+        key === "password" || 
+        key === "password-confirm") {
+          const checkLength = (str =>{            
+            if(key === "fname" || key === "lname"){
+              
+              const fnameErrorMsg = "First name provided must be between 2 to 20 characters.</br>"
+              const lnameErrorMsg = "Last name provided must be between 2 to 20 characters.</br>"
+
+              if (str.length < 2 || str.length > 20) {
+                errorObj[formField][isValid] = false
+                errorObj[key].errorMsgsArr.push(key === "fname" ? errorMsg = fnameErrorMsg : errorMsg = lnameErrorMsg)
+              }
+            }
+
+            if (key === "username") {
+              if (str.length < 3 || str.length > 24) {
+                errorMsg = "Username must be between 3 to 24 characters.</br>"
+                errorObj[formField][isValid] = false
+                errorObj[key].errorMsgsArr.push(errorMsg)
+              }
+            }
+
+            if(key === "password" || key === "password-confirm"){
+              if (str.length < 8 ){
+                errorMsg = "Minimum password length is 8 characters.</br>"
+                errorObj[formField][isValid] = false
+                errorObj[key].errorMsgsArr.push(errorMsg)
+              }
+            }
+          })(userInfoObj[key])
+    }
+    if (key === "fname"|| key === "lname" || key === "username") {
+      const checkSpecialChar = (str=>{
+        if (key === "fname" || key === "lname") {
+          const isValidName = /^[a-zA-Z]*$/.test(str)
+          if (isValidName === false) {
+            errorMsg = "Name must not contain numeric or special characters.</br>"
+            errorObj[formField][isValid] = isValidName
+            errorObj[key].errorMsgsArr.push(errorMsg)
+          }
         }
-      })
-    })
-    
-  }) //end of main loop
+        if (key === "username") {
+          const isValidChar = /^[a-zA-Z0-9\.\-\_]*$/.test(str)
+          const isValidSequence = /(?!.*[\.\-\_]{2})^[a-zA-Z0-9\.\-\_]/.test(str)
+          if (isValidChar === false) {
+            errorMsg = "Only special characters: ('.', '-', '_') are valid.</br>"
+            errorObj[formField][isValid] = isValidChar
+            errorObj[key].errorMsgsArr.push(errorMsg)
+          }
+          if (isValidSequence === false) {
+            errorMsg = "Username must not have sequential special characters.</br>"
+            errorObj[formField][isValid] = isValidSequence
+            errorObj[key].errorMsgsArr.push(errorMsg)
+          }
+        }
+      })(userInfoObj[key])
+    }
+    if (key === "password"|| key ==="password-confirm") {
+      const checkMatch = (str =>{
+        if (userInfoObj["password"] !== userInfoObj["password-confirm"]) {
+          errorMsg = "Passwords do not match.</br>"
+          errorObj[formField][isValid] = false;
+          errorObj[key].errorMsgsArr.push(errorMsg)
+        }
+      })(userInfoObj[key])
+
+      const validPassword = (str=>{
+        const isValidPassword = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])/.test(str)
+        errorMsg = "Password must contain 1 uppercase letter,</br> 1 lowercase letter and 1 number.</br> May contain special characters.</br>"
+        errorObj[formField][isValid] = isValidPassword
+        errorObj[key].errorMsgsArr.push(errorMsg)
+      })(userInfoObj[key])
+    }
+
+    console.log(errorObj);
+  }
   console.log(errorArr);
 }
 

@@ -799,10 +799,11 @@ form * input{
   max-width: fit-content;
   align-self: center;
 }
-input[type="password"]{
+.password-group > input{
   margin-left: 30px;
 }
 .field-container > div > img{
+  /* max-width: 30px; */
   margin-top: 6px;
 }
 .field-container > .error-msg {

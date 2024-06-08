@@ -27,31 +27,49 @@ export function registration(){
     emailInput: {
       "placeholder": "E-mail",
       "class":"email_text",
+      "aria-required": "true",
+      "aria-invalid": "false",
+      "aria-label": "E-mail input",
       "type":"email"
     },
     fnameInput: {
       "placeholder": "First name",
       "class":"fname_text",
+      "aria-required": "true",
+      "aria-invalid": "false",
+      "aria-label": "First name input",
       "type":"text"
     },
     lnameInput: {
       "placeholder": "Last name",
       "class":"lname_text",
+      "aria-required": "true",
+      "aria-invalid": "false",
+      "aria-label": "Last name input",
       "type":"text"
     },
     usernameInput:{
       "placeholder": "Username",
       "class":"username_text",
+      "aria-required": "true",
+      "aria-invalid": "false",
+      "aria-label": "User name input",
       "type":"text"
     },
     passwordInput:{
       "placeholder": "Password",
       "class":"password_text",
+      "aria-required": "true",
+      "aria-invalid": "false",
+      "aria-label": "Password input",
       "type":"password"
     },
     confirmPWInput:{
       "placeholder": "Confirm password",
       "class":"password-confirm",
+      "aria-required": "true",
+      "aria-invalid": "false",
+      "aria-label": "Confirm password input",
       "type":"password"
     }
   }
@@ -67,7 +85,7 @@ export function registration(){
   registrationForm.classList.add("registration_form")
   viewPasswordSVG.classList.add("view-password")
   viewConfirmSVG.classList.add("view-password")
-  
+
   submitBtn.classList.add("submit_btn")
 
   registrationMsg.textContent = "Welcome! Please input your information below and press submit."
