@@ -182,9 +182,10 @@ export function registration(){
     formFields.forEach(field=>{
       userInfoObj[field.className.split('_')[0]] = field.value.trim()
     })
-    // let userInfoArr = new Array(userInfoObj)
-    // console.log(userInfoArr);
+    // error array is returned from this function
     registrationValidation(userInfoObj)
+    
+    
   }
   submitBtn.addEventListener('click', handleRegistration)
 }

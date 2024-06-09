@@ -44,6 +44,7 @@ export const folderValidation = () =>{
   }  
 };
 
+// this section needs to be reworked to validate the login itself not the fields
 export const loginValidation = (username, password)=>{
 
   const errorMsg = document.querySelector('.error-msg')
@@ -92,7 +93,6 @@ export function registrationValidation(userInfoObj){
   // const errorArr = new Array().fill({"index":"","errorMsgs":[]})
   const errorArr = new Array()
   const errorObj = new Object()
-  console.log(userInfoObj);
   
   for (const key in userInfoObj) {
     const formField = key
@@ -108,12 +108,11 @@ export function registrationValidation(userInfoObj){
     // const validateFields = ((str =>{
     const checkblanks = ((str=>{
       const isValidStr =/^(?![\s-])[\w\s-@.]+$/.test(str);
-      errorMsg = "Form fields cannot contain special characters, blank spaces or be empty.</br>"
+      errorMsg = "Form fields cannot contain blank spaces or be empty.</br>"
 
       if (isValidStr === false){
         errorObj[key].isValid = isValidStr
         errorObj[key].errorMsgsArr.push(errorMsg)
-        errorArr.push(errorObj)
       }
     }))(userInfoObj[key])
 
@@ -129,40 +128,38 @@ export function registrationValidation(userInfoObj){
       })(userInfoObj[key])
     }
 
-    if (key === "fname" || 
-        key === "lname" || 
-        key === "username" || 
-        key === "password" || 
-        key === "password-confirm") {
-          const checkLength = (str =>{            
-            if(key === "fname" || key === "lname"){
-              
-              const fnameErrorMsg = "First name provided must be between 2 to 20 characters.</br>"
-              const lnameErrorMsg = "Last name provided must be between 2 to 20 characters.</br>"
+    if (key === "fname" || key === "lname" || key === "username" ||  key === "password" ||  key === "password-confirm") 
+    {
+      const checkLength = (str =>{            
+        if(key === "fname" || key === "lname"){
+          
+          const fnameErrorMsg = "First name provided must be between 2 to 20 characters.</br>"
+          const lnameErrorMsg = "Last name provided must be between 2 to 20 characters.</br>"
 
-              if (str.length < 2 || str.length > 20) {
-                errorObj[formField][isValid] = false
-                errorObj[key].errorMsgsArr.push(key === "fname" ? errorMsg = fnameErrorMsg : errorMsg = lnameErrorMsg)
-              }
-            }
+          if (str.length < 2 || str.length > 20) {
+            errorObj[formField][isValid] = false
+            errorObj[key].errorMsgsArr.push(key === "fname" ? errorMsg = fnameErrorMsg : errorMsg = lnameErrorMsg)
+          }
+        }
 
-            if (key === "username") {
-              if (str.length < 3 || str.length > 24) {
-                errorMsg = "Username must be between 3 to 24 characters.</br>"
-                errorObj[formField][isValid] = false
-                errorObj[key].errorMsgsArr.push(errorMsg)
-              }
-            }
+        if (key === "username") {
+          if (str.length < 3 || str.length > 24) {
+            errorMsg = "Username must be between 3 to 24 characters.</br>"
+            errorObj[formField][isValid] = false
+            errorObj[key].errorMsgsArr.push(errorMsg)
+          }
+        }
 
-            if(key === "password" || key === "password-confirm"){
-              if (str.length < 8 ){
-                errorMsg = "Minimum password length is 8 characters.</br>"
-                errorObj[formField][isValid] = false
-                errorObj[key].errorMsgsArr.push(errorMsg)
-              }
-            }
-          })(userInfoObj[key])
+        if(key === "password" || key === "password-confirm"){
+          if (str.length < 8 ){
+            errorMsg = "Minimum password length is 8 characters.</br>"
+            errorObj[formField][isValid] = false
+            errorObj[key].errorMsgsArr.push(errorMsg)
+          }
+        }
+      })(userInfoObj[key])
     }
+
     if (key === "fname"|| key === "lname" || key === "username") {
       const checkSpecialChar = (str=>{
         if (key === "fname" || key === "lname") {
@@ -189,37 +186,53 @@ export function registrationValidation(userInfoObj){
         }
       })(userInfoObj[key])
     }
+
     if (key === "password"|| key ==="password-confirm") {
-      const checkMatch = (str =>{
+      const validPassword = (str=>{
+        const isValidUpper = /(?=.*[A-Z])/.test(str)
+        const isValidLower = /(?=.*[a-z])/.test(str)
+        const isValidDigit = /(?=.*\d)/.test(str)
+        const isValidPassword = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])/.test(str)
+
+        if (isValidUpper === false) {
+          errorMsg = "Password must contain at least 1 uppercase letter.</br>"
+            errorObj[formField][isValid] = isValidUpper
+            errorObj[key].errorMsgsArr.push(errorMsg)
+        }
+        if (isValidLower === false) {
+          errorMsg = "Password must contain at least 1 lowercase letter.</br>"
+          errorObj[formField][isValid] = isValidLower
+          errorObj[key].errorMsgsArr.push(errorMsg)
+        }
+        if (isValidDigit === false) {
+          errorMsg = "Password must contain at least 1 number.</br>"
+          errorObj[formField][isValid] = isValidDigit
+          errorObj[key].errorMsgsArr.push(errorMsg)
+        }
+        if (isValidPassword === false) {
+          errorMsg= "Password may contain special characters.</br>"
+          errorObj[formField][isValid] = isValidPassword
+          errorObj[key].errorMsgsArr.push(errorMsg)
+        }
+        
+      })(userInfoObj[key])
+
+      const checkMatch = (() =>{
         if (userInfoObj["password"] !== userInfoObj["password-confirm"]) {
           errorMsg = "Passwords do not match.</br>"
           errorObj[formField][isValid] = false;
           errorObj[key].errorMsgsArr.push(errorMsg)
         }
       })(userInfoObj[key])
-
-      const validPassword = (str=>{
-        const isValidPassword = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])/.test(str)
-        errorMsg = "Password must contain 1 uppercase letter,</br> 1 lowercase letter and 1 number.</br> May contain special characters.</br>"
-        errorObj[formField][isValid] = isValidPassword
-        errorObj[key].errorMsgsArr.push(errorMsg)
-      })(userInfoObj[key])
     }
-
-    console.log(errorObj);
   }
+  
+  Object.entries(errorObj).filter((data)=>{
+    if (data[1].isValid === false){
+      errorArr.push(data)
+    }
+  })
+
   console.log(errorArr);
+  return errorArr
 }
-
-
-        //regexWithoutLength = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])/
-
-        // const validPasswordLength = ((str, length = 8) =>{
-        //   console.log(str);
-        //   console.log(str.length < length);
-        //   return str.length < length
-        // })(val[1])
-        // const validPassword = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/gm.exec(str)
-        // validPasswordLength === true ? lengthArr.push(!!validPasswordLength, val[0]) : false
-        // const notValidPWLength = new Array(!!validPasswordLength, val[0])
-        // console.log(notValidPWLength);
