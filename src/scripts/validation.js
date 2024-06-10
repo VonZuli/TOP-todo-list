@@ -89,8 +89,6 @@ export const loginValidation = (username, password)=>{
 }
 
 export function registrationValidation(userInfoObj){
-  // const errorMsgEl = document.querySelectorAll('.error-msg')
-  // const errorArr = new Array().fill({"index":"","errorMsgs":[]})
   const errorArr = new Array()
   const errorObj = new Object()
   
@@ -233,6 +231,22 @@ export function registrationValidation(userInfoObj){
     }
   })
 
-  console.log(errorArr);
-  return errorArr
+  //display the invalid user data as an error message
+  const displayErrors = (() =>{
+    console.log(errorArr);
+    const errorMsgDisplay = document.querySelectorAll(".error-msg");
+    
+
+    [...errorMsgDisplay].forEach(el =>{
+      errorArr.forEach(i=>{
+        if (i[0]===el.dataset.error) {
+          el.innerHTML = ""
+          el.innerHTML += i[1].errorMsgsArr.join("") 
+        }
+      })
+    }) 
+  })(errorArr)
+  
 }
+
+

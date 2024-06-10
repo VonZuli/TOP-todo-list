@@ -182,7 +182,7 @@ export function registration(){
     formFields.forEach(field=>{
       userInfoObj[field.className.split('_')[0]] = field.value.trim()
     })
-    // error array is returned from this function
+    
     registrationValidation(userInfoObj)
     
     
