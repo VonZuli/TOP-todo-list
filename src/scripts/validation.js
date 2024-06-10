@@ -4,6 +4,7 @@ import { addFolder } from "./folders";
 import { generateId } from "./generateID";
 import { folderArray } from "./init";
 import { isValid } from "date-fns";
+// import { bcrypt } from "..";
 //#endregion imports
 
 export const folderValidation = () =>{
@@ -163,7 +164,7 @@ export function registrationValidation(userInfoObj){
     if (key === "fname"|| key === "lname" || key === "username") {
       const checkSpecialChar = (str=>{
         if (key === "fname" || key === "lname") {
-          const isValidName = /^[a-zA-Z]*$/.test(str)
+          const isValidName = /^[a-zA-Z\-]*$/.test(str)
           if (isValidName === false) {
             errorMsg = "Name cannot contain blanks, numeric or special characters.</br>"
             errorObj[formField][isValid] = isValidName
@@ -232,8 +233,6 @@ export function registrationValidation(userInfoObj){
       errorArr.push(data)
     }
   })
-
-  //display the invalid user data as an error message
   const displayErrors = (() =>{
     const errorMsgDisplay = document.querySelectorAll(".error-msg");
     const formField = [...document.querySelectorAll("input")].filter(elem =>
@@ -255,9 +254,17 @@ export function registrationValidation(userInfoObj){
         })
       })
     }); 
-
   })(errorArr)
+  console.log(`Error message array has ${errorArr.length} errors`);
 
+  console.log(errorArr);
+
+  if (errorArr.length === 0){
+    let savedUsersObj = JSON.parse(localStorage.getItem("users"));
+    let userArr = savedUsersObj ? savedUsersObj : [];
+    userArr.push(userInfoObj)
+    localStorage.setItem("users", JSON.stringify(userArr))
+  }
 }
 
 

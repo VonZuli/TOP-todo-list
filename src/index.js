@@ -1,4 +1,5 @@
 //#region imports
+// const bcrypt = require('bcrypt');
 import _ from 'lodash';
 import './style.css'
 import {createHeader as header} from './scripts/header'
