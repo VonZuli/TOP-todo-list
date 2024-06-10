@@ -799,6 +799,9 @@ form * input{
   max-width: fit-content;
   align-self: center;
 }
+form * input.error{
+  border: 2px dashed red;
+}
 .password-group > input{
   margin-left: 30px;
 }

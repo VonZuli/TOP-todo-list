@@ -26,51 +26,57 @@ export function registration(){
   const regFormObj = {
     emailInput: {
       "placeholder": "E-mail",
-      "class":"email_text",
+      "class": "email_text",
       "aria-required": "true",
       "aria-invalid": "false",
       "aria-label": "E-mail input",
-      "type":"email"
+      "type": "email",
+      "data-error": "email"
     },
     fnameInput: {
       "placeholder": "First name",
-      "class":"fname_text",
+      "class": "fname_text",
       "aria-required": "true",
       "aria-invalid": "false",
       "aria-label": "First name input",
-      "type":"text"
+      "type": "text",
+      "data-error": "fname"
     },
     lnameInput: {
       "placeholder": "Last name",
-      "class":"lname_text",
+      "class": "lname_text",
       "aria-required": "true",
       "aria-invalid": "false",
       "aria-label": "Last name input",
-      "type":"text"
+      "type": "text",
+      "data-error": "lname"
     },
     usernameInput:{
       "placeholder": "Username",
-      "class":"username_text",
+      "class": "username_text",
       "aria-required": "true",
       "aria-invalid": "false",
       "aria-label": "User name input",
-      "type":"text"
+      "type": "text",
+      "data-error": "username"
     },
     passwordInput:{
       "placeholder": "Password",
-      "class":"password_text",
+      "class": "password_text",
       "aria-required": "true",
       "aria-invalid": "false",
       "aria-label": "Password input",
-      "type":"password"
+      "type": "password",
+      "data-error": "password"
     },
     confirmPWInput:{
       "placeholder": "Confirm password",
-      "class":"password-confirm",
+      "class": "password-confirm",
       "aria-required": "true",
       "aria-invalid": "false",
       "aria-label": "Confirm password input",
-      "type":"password"
+      "type": "password",
+      "data-error": "password-confirm"
     }
   }
 

@@ -107,7 +107,9 @@ export function registrationValidation(userInfoObj){
     const checkblanks = ((str=>{
       const isValidStr =/^(?![\s-])[\w\s-@.]+$/.test(str);
       errorMsg = "Form fields cannot contain blank spaces or be empty.</br>"
-
+      if (key === "password" || key === "password-confirm") {
+        return;
+      }
       if (isValidStr === false){
         errorObj[key].isValid = isValidStr
         errorObj[key].errorMsgsArr.push(errorMsg)
@@ -163,7 +165,7 @@ export function registrationValidation(userInfoObj){
         if (key === "fname" || key === "lname") {
           const isValidName = /^[a-zA-Z]*$/.test(str)
           if (isValidName === false) {
-            errorMsg = "Name must not contain numeric or special characters.</br>"
+            errorMsg = "Name cannot contain blanks, numeric or special characters.</br>"
             errorObj[formField][isValid] = isValidName
             errorObj[key].errorMsgsArr.push(errorMsg)
           }
@@ -190,7 +192,7 @@ export function registrationValidation(userInfoObj){
         const isValidUpper = /(?=.*[A-Z])/.test(str)
         const isValidLower = /(?=.*[a-z])/.test(str)
         const isValidDigit = /(?=.*\d)/.test(str)
-        const isValidPassword = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])/.test(str)
+        const isValidPassword = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\s).*$/.test(str)
 
         if (isValidUpper === false) {
           errorMsg = "Password must contain at least 1 uppercase letter.</br>"
@@ -233,20 +235,29 @@ export function registrationValidation(userInfoObj){
 
   //display the invalid user data as an error message
   const displayErrors = (() =>{
-    console.log(errorArr);
     const errorMsgDisplay = document.querySelectorAll(".error-msg");
-    
-
+    const formField = [...document.querySelectorAll("input")].filter(elem =>
+      elem.type === "text" || elem.type==="password" || elem.type==="email");
+    // const formField = [...document.querySelectorAll("input")].filter(elem =>
+    //   elem.type !== "button");
+      
     [...errorMsgDisplay].forEach(el =>{
       errorArr.forEach(i=>{
         if (i[0]===el.dataset.error) {
           el.innerHTML = ""
-          el.innerHTML += i[1].errorMsgsArr.join("") 
+          el.innerHTML += i[1].errorMsgsArr.join("")
         }
+
+        [...formField].forEach(input=>{
+          if (i[0] === input.dataset.error) {
+            input.classList.add("error")
+          }
+        })
       })
-    }) 
+    }); 
+
   })(errorArr)
-  
+
 }
 
 
