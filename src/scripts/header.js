@@ -4,7 +4,9 @@ import { login } from "./login"
 
 export function createHeader() {
   const loginSVG = new Image()
+  const titleSVG = new Image()
   loginSVG.src = imagepath('./svg/square-user.svg')
+  titleSVG.src = imagepath('./png/title-image_yl-dark.png')
   const loginBtn = document.createElement("button")
   // username = login()
   // let user = username;
@@ -19,7 +21,7 @@ export function createHeader() {
   loginBtn.addEventListener('click', login)
 
 
-  header.appendChild(title)
+  header.appendChild(titleSVG)
   header.appendChild(loginBtn)
   loginBtn.append(loginSVG)
 }

@@ -10,6 +10,7 @@
   --secondary-color: rgb(95, 158, 160);
   --error-color: rgb(255, 68, 68);
   --text-color: rgb(240, 248, 255);
+  --tertiary-color: rgb(255, 205, 130);
 
   --container-radius: 20px;
   --pop-up-border-radius: 10px; 
@@ -56,6 +57,11 @@ header{
   header > h1{
     margin:2px;
     padding: 2px;
+  }
+  header > img{
+    max-width: 1000px;
+    object-fit:cover;
+    aspect-ratio: 26/9;
   }
   .loginBtn{
     display: flex;

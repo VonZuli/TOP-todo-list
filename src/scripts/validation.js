@@ -49,43 +49,25 @@ export const folderValidation = () =>{
 export const loginValidation = (username, password)=>{
 
   const errorMsg = document.querySelector('.error-msg')
+  const userInfo = JSON.parse(localStorage.getItem("users"));
 
-  const checkUserBlanks = ((str) => {
-    const validStr =/^(?![\s-])[\w\s-]+$/.exec(str);
-    return !!validStr
-  })(username)
-
-  const checkPWBlanks = ((str) => {
-    const validStr =/^(?![\s-])[\w\s-]+$/.exec(str);
-    return !!validStr
-  })(password)
-
-  const checkPassword = ((str) => {
-    const validPassword = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/gm.exec(str)
-    return !!validPassword
-  })(password)
-
+  console.log(userInfo); 
+  console.log(`Username: ${username}, Password: ${password}`);
   errorMsg.innerHTML = "";
-
-  if (username === "" && password === ""){
+  
+  if (username === "" || password === ""){
     return errorMsg.innerHTML = "Username & Password fields cannot be empty.</br>"
-  } 
-  if (!checkUserBlanks) {
-    return errorMsg.innerHTML += "Username field cannot be empty.</br>"
-  }
-  if (username.length < 3 || username.trim() < 4){
-    return errorMsg.innerHTML += "Username must be at least 4 characters.</br>"
-  }
-  if (username.length > 24 || username.trim() > 20 ) {
-    return errorMsg.innerHTML += "Username cannot exceed 20 characters.</br>"
-  }
-  if (!checkPWBlanks) {
-    return errorMsg.innerHTML += "Password field cannot be empty.</br>"
-  }
-  if (!checkPassword) {
-    errorMsg.innerHTML += "Minimum password length is 8 characters.</br>"
-    errorMsg.innerHTML += "Password must contain 1 uppercase letter, <br> 1 lowercase letter and 1 number.<br>"
-    errorMsg.innerHTML += "Password can contain special characters."
+  } else {
+    userInfo.forEach(i=>{
+      console.log(i);
+      console.log(i.username);
+      console.log(i.password);
+      if (username === i.username && password === i.password) {
+        console.log(`Signing in... ${username}`);
+        //return the user object containing their folders
+        return i
+      }
+    })
   }
 }
 
@@ -237,8 +219,6 @@ export function registrationValidation(userInfoObj){
     const errorMsgDisplay = document.querySelectorAll(".error-msg");
     const formField = [...document.querySelectorAll("input")].filter(elem =>
       elem.type === "text" || elem.type==="password" || elem.type==="email");
-    // const formField = [...document.querySelectorAll("input")].filter(elem =>
-    //   elem.type !== "button");
       
     [...errorMsgDisplay].forEach(el =>{
       errorArr.forEach(i=>{

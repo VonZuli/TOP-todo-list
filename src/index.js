@@ -12,11 +12,11 @@ const images = require.context('../src/assets/images', true)
 export const imagepath = (name) => images(name, true)
 //#endregion imports
 
-export const savedFoldersObj = JSON.parse(localStorage.getItem("folders"));
+// export const savedFoldersObj = JSON.parse(localStorage.getItem("folders"));
 
 //create DOM structure and initialize app
 header();
-initDOM();
+// initDOM();
 noLogin();
-footer();
+// footer();
 saveFolders();
