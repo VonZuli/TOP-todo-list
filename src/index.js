@@ -18,5 +18,5 @@ export const imagepath = (name) => images(name, true)
 header();
 // initDOM();
 noLogin();
-// footer();
+footer();
 saveFolders();

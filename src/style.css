@@ -1,20 +1,19 @@
-/* @font-face {
-  font-family: 'MyFont';
-  src: url('./assets/fonts/donovan.ttf') format('truetype'),
-    url('./assets/fonts/Donovan.otf') format('opentype');
-  font-weight: 600;
-  font-style: normal;
-} */
+@font-face {
+  font-family: 'cinzel';
+  src: url('./assets/fonts/cinzel_variable.ttf') format('truetype');
+}
 :root{
   --primary-color: rgb(58, 57, 57);
   --secondary-color: rgb(95, 158, 160);
   --error-color: rgb(255, 68, 68);
   --text-color: rgb(240, 248, 255);
   --tertiary-color: rgb(255, 205, 130);
-
+  
   --container-radius: 20px;
   --pop-up-border-radius: 10px; 
   --btn-radius: 5px;
+
+  --header-font: 'cinzel'
 }
 /*#region html*/
 *,
@@ -48,8 +47,7 @@ header{
   flex-direction: row;
   justify-content: space-between;
   min-height: 50px;
-  margin: 10px 0 10px 0;
-  padding: 1em;
+  margin: 10px 0;
   border-bottom: 6px double var(--secondary-color);
   align-items: center;
   flex-basis: 100%;
@@ -169,15 +167,32 @@ header{
       }
 
 footer{
+  display: flex;
   position: relative;
   width: 100%;
   bottom: 0;
-  background-image: radial-gradient(var(--secondary-color), rgba(95, 158, 160, 0.308));
-  margin: 20px 0 0 0;
+  background-color: var(--secondary-color);
+  box-shadow: 0 0 10px var(--secondary-color);
   padding: 5px;
   min-height: 50px;
   text-align: center;
   align-content: center;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 1px solid var(--primary-color);
+  z-index: 1;
+}
+footer > img{
+  max-width: 200px;
+  padding: 0px 0px 0px 10px;
+  margin: 10px;
+}
+footer > h4{
+  padding: 0px 10px 0px 10px;
+  font-family: var(--header-font);
+  color: var(--tertiary-color);
+  font-weight: 400;
+  margin: 10px;
 }
 body{
   display: flex;
@@ -189,12 +204,123 @@ body{
   height: 100%;
 }
 .content{
-  display: flex;
-  flex-direction: row;
+  display: flex;  
+  flex-direction: column;
   flex-wrap: none;
   align-content: flex-start;
-  padding: 1em 1em 5em;
+  padding-left: 1em;
+  padding-right: 1em;
 }
+  .landing-section{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    border: 5px solid var(--secondary-color);
+    box-shadow: 0 0 10px var(--secondary-color);
+    position: relative;
+    /* height: 100vh; */
+   
+  }
+  .landing-section > *{
+    padding: 20px 20px;
+    margin: 4px;
+    font-family: var(--header-font);
+    z-index: 1;
+    text-wrap: balance;
+  }
+  /* .usp-header{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-family: var(--header-font);
+    font-size: xx-large;
+  } */
+  .landing-section::before{
+    content:"";
+    background-image: url('./assets/images/jpeg/hero-image.jpeg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    left: 0px;
+    opacity: 0.2;
+    
+  }
+ 
+  .sub-container > h1 > span{
+    font-size: 50px;
+    border-bottom: 2px solid var(--secondary-color);
+    font-family: var(--header-font);
+    color: var(--tertiary-color);
+  }
+  .sub-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 5px;
+    max-width: 300px;
+  }
+  .sub-container > *{
+    font-family: var(--header-font);
+    padding: 3px;
+    /* text-wrap: balance; */
+  }
+  .sub-container > h1{
+    align-items: center;
+    text-align: center;
+    font-size: xx-large;
+  }
+  .sub-container > h3{
+    color: var(--tertiary-color);
+    align-self: center;
+    border-bottom: 2px solid var(--secondary-color);
+  }
+  .sub-container.header{
+    align-self: center;
+    min-width: fit-content;
+    justify-content: center;
+    align-items: center;
+    text-wrap: wrap;
+  }
+  .sub-container.top{
+    align-self: flex-start;
+    margin-left: 50px;
+  }
+  .sub-container.mid{
+    align-self: flex-end;
+    margin-right: 50px;
+  }
+  .sub-container.bottom{
+    align-self: flex-start;
+    margin-left: 50px;
+    min-width: 330px;
+  }
+  /* .usp-content.bottom{
+    min-width: 200px
+  } */
+  .usp-content.intro{
+    margin-top: 10px;
+    padding: 5px;
+    max-width: 700px;
+    width: fit-content;
+    text-align: center;
+  }
+  .usp-content.intro > span{
+    font-family: var(--header-font);
+    color: var(--tertiary-color);
+    
+  }
+  .landing-section > * > span{
+    font-family: var(--header-font);
+    color: var(--tertiary-color);
+    
+  }
   .folders-section{
     display: flex;
     flex-direction: column;

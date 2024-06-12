@@ -213,31 +213,115 @@ function initTaskArray(){
 
 export function noLogin(){
   let nologinInit = (()=>{
-
-    const content = document.querySelector(".content")
-    const quoteContainer = document.createElement("div")
-    const quoteEl = document.createElement("p")
-    const authorEl = document.createElement("p")
-  
-    quoteContainer.classList.add("quote-container")
-    randomQuote();
-    quoteEl.classList.add("quote")
-    authorEl.classList.add("quote-author")
     
-    async function randomQuote() {
-      try {
-        const response = await fetch('https://api.quotable.io/random')
-        const quote = await response.json()
-         // Output the quote and author name
-        quoteEl.textContent = quote.content;
-        console.log(quoteEl.textContent.split(" ").length);
-        authorEl.textContent = `- ${quote.author}`
-      } catch (error) {
-        console.log('Something went wrong!', error);
-      }
-    }
-    content.appendChild(quoteContainer);
-    quoteContainer.appendChild(quoteEl);
-    quoteContainer.appendChild(authorEl);
+    const content = document.querySelector(".content")
+    const foldersSection = document.querySelector(".folders-section")
+    const tasksSection = document.querySelector(".tasks-section")
+    const landingSection = document.createElement("section")
+
+    const subContainerHeader = document.createElement("div")
+    const uspHeader = document.createElement("h1")
+    const uspContentIntro = document.createElement("p")
+    
+    const subContainerTop = document.createElement('div')
+    const uspTitleTop = document.createElement("h3")
+    const uspContentTop = document.createElement("p")  
+    
+    const subContainerMid = document.createElement('div')
+    const uspTitleMid = document.createElement("h3")
+    const uspContentMid = document.createElement("p")
+    
+    const subContainerBottom = document.createElement('div')
+    const uspTitleBottom = document.createElement("h3")
+    const uspContentBottom = document.createElement("p")
+    const footer = document.createElement("footer")
+    
+    content.innerHTML = ""
+   
+    landingSection.classList.add("landing-section")
+    uspHeader.classList.add("usp-header")
+
+    content.appendChild(landingSection)
+
+    content.appendChild(footer)
+
+    landingSection.appendChild(subContainerHeader)
+    landingSection.appendChild(subContainerTop)
+    landingSection.appendChild(subContainerMid)
+    landingSection.appendChild(subContainerBottom)
+
+    const subContainer = document.querySelectorAll(".landing-section > div");
+    [...subContainer].forEach(i=>{
+      i.classList.add("sub-container")
+    })
+    subContainerHeader.classList.add("header")
+    subContainerTop.classList.add("top")
+    subContainerMid.classList.add("mid")
+    subContainerBottom.classList.add("bottom")
+
+    subContainerHeader.appendChild(uspHeader)
+    subContainerHeader.appendChild(uspContentIntro)
+
+    subContainerTop.appendChild(uspTitleTop)
+    subContainerTop.appendChild(uspContentTop)
+
+    subContainerMid.appendChild(uspTitleMid)
+    subContainerMid.appendChild(uspContentMid)
+
+    subContainerBottom.appendChild(uspTitleBottom)
+    subContainerBottom.appendChild(uspContentBottom);
+    
+    const uspContent = document.querySelectorAll('p');
+    [...uspContent].forEach(i=>{
+      i.classList.add("usp-content")
+    })
+    uspContentIntro.classList.add("intro")
+    uspContentTop.classList.add("top")
+    uspContentMid.classList.add("mid")
+    uspContentBottom.classList.add("bottom")
+    
+    foldersSection.style.display = 'none'
+    tasksSection.style.display = 'none'
+
+    uspHeader.innerHTML = "Unlock the Magic of Productivity with</br> <span>Arcane Assignments</span>"
+
+    uspContentIntro.innerHTML = "Embark on a journey through your tasks with <span>Arcane Assignments</span>,</br> the ultimate wizardly task tracker that transforms mundane to-dos into enchanting quests!" 
+    
+    uspTitleTop.innerHTML = "Harness the power of arcane organization."
+    uspContentTop.innerHTML = "Let your productivity soar as you navigate through your magical list of assignments and tasks. With Arcane Assignments, every task becomes an opportunity to wield your wizardly prowess. Dive into a world where each item on your to-do list transforms into a mystical quest, designed to keep you focused and motivated."
+
+    uspTitleMid.innerHTML = "Designed for modern-day sorcerers."
+    uspContentMid.innerHTML = "Arcane Assignments offers a spellbinding interface, mystical reminders, and an enchanting experience that makes conquering your daily tasks feel like an epic adventure." 
+    
+    uspTitleBottom.innerHTML = "With Arcane Assignments, every task is a quest, every goal a spell to cast."
+    uspContentBottom.innerHTML = "Enter a realm where productivity meets magic, and let your wizardly willpower guide you to triumphant task completion."
+
+
+    
+  //   const content = document.querySelector(".content")
+  //   const quoteContainer = document.createElement("div")
+  //   const quoteEl = document.createElement("p")
+  //   const authorEl = document.createElement("p")
+  
+  //   quoteContainer.classList.add("quote-container")
+  //   randomQuote();
+  //   quoteEl.classList.add("quote")
+  //   authorEl.classList.add("quote-author")
+    
+  //   async function randomQuote() {
+  //     try {
+  //       const response = await fetch('https://api.quotable.io/random')
+  //       const quote = await response.json()
+  //        // Output the quote and author name
+  //       quoteEl.textContent = quote.content;
+  //       console.log(quoteEl.textContent.split(" ").length);
+  //       authorEl.textContent = `- ${quote.author}`
+  //     } catch (error) {
+  //       console.log('Something went wrong!', error);
+  //     }
+  //   }
+  //   content.appendChild(quoteContainer);
+  //   quoteContainer.appendChild(quoteEl);
+  //   quoteContainer.appendChild(authorEl);
   })();
 }
