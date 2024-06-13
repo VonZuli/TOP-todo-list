@@ -213,115 +213,79 @@ function initTaskArray(){
 
 export function noLogin(){
   let nologinInit = (()=>{
-    
+
     const content = document.querySelector(".content")
     const foldersSection = document.querySelector(".folders-section")
     const tasksSection = document.querySelector(".tasks-section")
-    const landingSection = document.createElement("section")
-
-    const subContainerHeader = document.createElement("div")
-    const uspHeader = document.createElement("h1")
-    const uspContentIntro = document.createElement("p")
-    
-    const subContainerTop = document.createElement('div')
-    const uspTitleTop = document.createElement("h3")
-    const uspContentTop = document.createElement("p")  
-    
-    const subContainerMid = document.createElement('div')
-    const uspTitleMid = document.createElement("h3")
-    const uspContentMid = document.createElement("p")
-    
-    const subContainerBottom = document.createElement('div')
-    const uspTitleBottom = document.createElement("h3")
-    const uspContentBottom = document.createElement("p")
-    const footer = document.createElement("footer")
+    const heroSection = document.createElement("section")
     
     content.innerHTML = ""
-   
-    landingSection.classList.add("landing-section")
-    uspHeader.classList.add("usp-header")
-
-    content.appendChild(landingSection)
-
-    content.appendChild(footer)
-
-    landingSection.appendChild(subContainerHeader)
-    landingSection.appendChild(subContainerTop)
-    landingSection.appendChild(subContainerMid)
-    landingSection.appendChild(subContainerBottom)
-
-    const subContainer = document.querySelectorAll(".landing-section > div");
-    [...subContainer].forEach(i=>{
-      i.classList.add("sub-container")
-    })
-    subContainerHeader.classList.add("header")
-    subContainerTop.classList.add("top")
-    subContainerMid.classList.add("mid")
-    subContainerBottom.classList.add("bottom")
-
-    subContainerHeader.appendChild(uspHeader)
-    subContainerHeader.appendChild(uspContentIntro)
-
-    subContainerTop.appendChild(uspTitleTop)
-    subContainerTop.appendChild(uspContentTop)
-
-    subContainerMid.appendChild(uspTitleMid)
-    subContainerMid.appendChild(uspContentMid)
-
-    subContainerBottom.appendChild(uspTitleBottom)
-    subContainerBottom.appendChild(uspContentBottom);
-    
-    const uspContent = document.querySelectorAll('p');
-    [...uspContent].forEach(i=>{
-      i.classList.add("usp-content")
-    })
-    uspContentIntro.classList.add("intro")
-    uspContentTop.classList.add("top")
-    uspContentMid.classList.add("mid")
-    uspContentBottom.classList.add("bottom")
-    
     foldersSection.style.display = 'none'
     tasksSection.style.display = 'none'
 
-    uspHeader.innerHTML = "Unlock the Magic of Productivity with</br> <span>Arcane Assignments</span>"
+    heroSection.classList.add("hero-section")
+    content.appendChild(heroSection)
 
-    uspContentIntro.innerHTML = "Embark on a journey through your tasks with <span>Arcane Assignments</span>,</br> the ultimate wizardly task tracker that transforms mundane to-dos into enchanting quests!" 
-    
-    uspTitleTop.innerHTML = "Harness the power of arcane organization."
-    uspContentTop.innerHTML = "Let your productivity soar as you navigate through your magical list of assignments and tasks. With Arcane Assignments, every task becomes an opportunity to wield your wizardly prowess. Dive into a world where each item on your to-do list transforms into a mystical quest, designed to keep you focused and motivated."
+    // const heroTitle = "Unlock the Magic of Productivity with "
+    // const heroTitleSpan = "Arcane Assignments"
+    // const heroContentText = "The ultimate wizardly task tracker that transforms mundane to-dos into enchanting quests!" 
 
-    uspTitleMid.innerHTML = "Designed for modern-day sorcerers."
-    uspContentMid.innerHTML = "Arcane Assignments offers a spellbinding interface, mystical reminders, and an enchanting experience that makes conquering your daily tasks feel like an epic adventure." 
-    
-    uspTitleBottom.innerHTML = "With Arcane Assignments, every task is a quest, every goal a spell to cast."
-    uspContentBottom.innerHTML = "Enter a realm where productivity meets magic, and let your wizardly willpower guide you to triumphant task completion."
+    let contentObj = {
+      hero:{
+        heroTitle: "Unlock the Magic of Productivity with ",
+        heroSpan: "Arcane Assignments",
+        heroContentText: "The ultimate wizardly task tracker that transforms mundane to-dos into enchanting quests!"
+      },
+      top:{
+        contentTopTitle: "Harness the power of arcane organization",
+        contentTopText: "Let your productivity soar as you navigate through your magical list of assignments and tasks. With Arcane Assignments, every task becomes an opportunity to wield your wizardly prowess. Dive into a world where each item on your to-do list transforms into a mystical quest, designed to keep you focused and motivated."
+      },
+      middle:{
+        contentMidTitle: "Designed for modern-day sorcerers.",
+        contentMidText: "Arcane Assignments offers a spellbinding interface, mystical reminders, and an enchanting experience that makes conquering your daily tasks feel like an epic adventure."
+      },
+      bottom:{
+        contentBottomTitle: "Embark on a journey through your tasks.",
+        contentBottomText: "With Arcane Assignments, every task is a quest, every goal a spell to cast. Enter a realm where productivity meets magic, and let your wizardly willpower guide you to triumphant task completion."
 
+      }
+    }
 
+    //factory function to create DOM elements
+    const createElem = (tag, attr, ...children)=>{
+      const el = document.createElement(tag)
+
+      for (const key in attr) {
+        el.setAttribute(key, attr[key])
+      }
+
+      children.forEach(child=>{
+        typeof child === "string" ? 
+        el.appendChild(document.createTextNode(child)) :
+        el.appendChild(child)
+      })
+      return el
+    }
+
+    Object.entries(contentObj).forEach(([key, value])=>{
+      key === "hero" ? heroSection.appendChild(
+        createElem("div", {class: `flex-wrapper ${key}-title`}, 
+          createElem("h1", {class:`${key}-title`}, value[Object.keys(value)[0]],
+          createElem("br",), 
+          createElem("span", {}, value[Object.keys(value)[1]])), 
+          createElem("h2", {class:`${key}-content`}, value[Object.keys(value)[2]]))
+        ):
+      content.appendChild(
+      createElem("div", {class: `flex-wrapper content-${key}`}, 
+        createElem("h3", {class:`title content-${key}`}, value[Object.keys(value)[0]]), 
+        createElem("p", {class: `text content-${key}`}, value[Object.keys(value)[1]])
+        )
+      )
+    })
+
+    const footer = createElem("footer",{})
+
+    content.appendChild(footer)
     
-  //   const content = document.querySelector(".content")
-  //   const quoteContainer = document.createElement("div")
-  //   const quoteEl = document.createElement("p")
-  //   const authorEl = document.createElement("p")
-  
-  //   quoteContainer.classList.add("quote-container")
-  //   randomQuote();
-  //   quoteEl.classList.add("quote")
-  //   authorEl.classList.add("quote-author")
-    
-  //   async function randomQuote() {
-  //     try {
-  //       const response = await fetch('https://api.quotable.io/random')
-  //       const quote = await response.json()
-  //        // Output the quote and author name
-  //       quoteEl.textContent = quote.content;
-  //       console.log(quoteEl.textContent.split(" ").length);
-  //       authorEl.textContent = `- ${quote.author}`
-  //     } catch (error) {
-  //       console.log('Something went wrong!', error);
-  //     }
-  //   }
-  //   content.appendChild(quoteContainer);
-  //   quoteContainer.appendChild(quoteEl);
-  //   quoteContainer.appendChild(authorEl);
   })();
 }
