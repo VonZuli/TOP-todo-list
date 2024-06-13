@@ -8,7 +8,8 @@ import { selectFolder,
          displayDeleteBtn, 
          deleteFolder,
          editFolder,
-         onUpdate } from './folders'
+         onUpdate } from './folders';
+import { createElem } from "./factory";
 //#endregion imports
 
 //initialize folders array
@@ -218,17 +219,15 @@ export function noLogin(){
     const foldersSection = document.querySelector(".folders-section")
     const tasksSection = document.querySelector(".tasks-section")
     const heroSection = document.createElement("section")
+    const arcaneCircleImg = new Image()
     
+
     content.innerHTML = ""
     foldersSection.style.display = 'none'
     tasksSection.style.display = 'none'
 
     heroSection.classList.add("hero-section")
     content.appendChild(heroSection)
-
-    // const heroTitle = "Unlock the Magic of Productivity with "
-    // const heroTitleSpan = "Arcane Assignments"
-    // const heroContentText = "The ultimate wizardly task tracker that transforms mundane to-dos into enchanting quests!" 
 
     let contentObj = {
       hero:{
@@ -238,38 +237,25 @@ export function noLogin(){
       },
       top:{
         contentTopTitle: "Harness the power of arcane organization",
-        contentTopText: "Let your productivity soar as you navigate through your magical list of assignments and tasks. With Arcane Assignments, every task becomes an opportunity to wield your wizardly prowess. Dive into a world where each item on your to-do list transforms into a mystical quest, designed to keep you focused and motivated."
+        contentTopText: "Let your productivity soar as you navigate through your magical list of assignments and tasks. With Arcane Assignments, every task becomes an opportunity to wield your wizardly prowess. Dive into a world where each item on your to-do list transforms into a mystical quest, designed to keep you focused and motivated.",
+        contentTopImg: imagepath("./jpeg/arcane-circle.png")
       },
       middle:{
         contentMidTitle: "Designed for modern-day sorcerers.",
-        contentMidText: "Arcane Assignments offers a spellbinding interface, mystical reminders, and an enchanting experience that makes conquering your daily tasks feel like an epic adventure."
+        contentMidText: "Arcane Assignments offers a spellbinding interface, mystical reminders, and an enchanting experience that makes conquering your daily tasks feel like an epic adventure.",
+        // contentMidImg: imagepath("./jpeg/arcane-circle.png")
       },
       bottom:{
         contentBottomTitle: "Embark on a journey through your tasks.",
-        contentBottomText: "With Arcane Assignments, every task is a quest, every goal a spell to cast. Enter a realm where productivity meets magic, and let your wizardly willpower guide you to triumphant task completion."
+        contentBottomText: "With Arcane Assignments, every task is a quest, every goal a spell to cast. Enter a realm where productivity meets magic, and let your wizardly willpower guide you to triumphant task completion.",
+        // contentBottomImg: imagepath("./jpeg/arcane-circle.png")
 
       }
     }
-
-    //factory function to create DOM elements
-    const createElem = (tag, attr, ...children)=>{
-      const el = document.createElement(tag)
-
-      for (const key in attr) {
-        el.setAttribute(key, attr[key])
-      }
-
-      children.forEach(child=>{
-        typeof child === "string" ? 
-        el.appendChild(document.createTextNode(child)) :
-        el.appendChild(child)
-      })
-      return el
-    }
-
+    // arcaneCircleImg.src = contentObj.top.contentTopImg
     Object.entries(contentObj).forEach(([key, value])=>{
       key === "hero" ? heroSection.appendChild(
-        createElem("div", {class: `flex-wrapper ${key}-title`}, 
+        createElem("div", {class: `flex-wrapper ${key}-container`}, 
           createElem("h1", {class:`${key}-title`}, value[Object.keys(value)[0]],
           createElem("br",), 
           createElem("span", {}, value[Object.keys(value)[1]])), 
@@ -277,12 +263,13 @@ export function noLogin(){
         ):
       content.appendChild(
       createElem("div", {class: `flex-wrapper content-${key}`}, 
+        createElem("img", {class:`content-image`,src: value[Object.keys(value)[2]]}),
         createElem("h3", {class:`title content-${key}`}, value[Object.keys(value)[0]]), 
         createElem("p", {class: `text content-${key}`}, value[Object.keys(value)[1]])
         )
       )
     })
-
+    
     const footer = createElem("footer",{})
 
     content.appendChild(footer)
