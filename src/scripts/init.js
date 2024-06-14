@@ -241,15 +241,14 @@ export function noLogin(){
         contentTopImg: imagepath("./jpeg/arcane-circle.png")
       },
       middle:{
-        contentMidTitle: "Designed for modern-day sorcerers.",
+        contentMidTitle: "Designed for modern-day sorcerers",
         contentMidText: "Arcane Assignments offers a spellbinding interface, mystical reminders, and an enchanting experience that makes conquering your daily tasks feel like an epic adventure.",
-        // contentMidImg: imagepath("./jpeg/arcane-circle.png")
+        contentMidImg: imagepath("./jpeg/wizard-on-horseback.jpg")
       },
       bottom:{
-        contentBottomTitle: "Embark on a journey through your tasks.",
+        contentBottomTitle: "Embark on a journey through your tasks",
         contentBottomText: "With Arcane Assignments, every task is a quest, every goal a spell to cast. Enter a realm where productivity meets magic, and let your wizardly willpower guide you to triumphant task completion.",
-        // contentBottomImg: imagepath("./jpeg/arcane-circle.png")
-
+        contentBottomImg: imagepath("./jpeg/misty-mountains.jpeg")
       }
     }
     // arcaneCircleImg.src = contentObj.top.contentTopImg
@@ -264,8 +263,9 @@ export function noLogin(){
       content.appendChild(
       createElem("div", {class: `flex-wrapper content-${key}`}, 
         createElem("img", {class:`content-image`,src: value[Object.keys(value)[2]]}),
+        createElem("div", {class:`flex-wrapper usp-text`},
         createElem("h3", {class:`title content-${key}`}, value[Object.keys(value)[0]]), 
-        createElem("p", {class: `text content-${key}`}, value[Object.keys(value)[1]])
+        createElem("p", {class: `text content-${key}`}, value[Object.keys(value)[1]]))
         )
       )
     })

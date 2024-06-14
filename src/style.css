@@ -287,9 +287,15 @@ body{
   .content-top{
     flex-direction: row;
   }
+  .content-middle{
+    flex-direction: row;
+  }
+  .content-bottom{
+    flex-direction: row;
+  }
   .title{
     align-self: center;
-    text-align: center;
+    text-align: left;
     color: var(--tertiary-color);
     border-bottom: 2px solid var(--secondary-color);
     font-size: 1.5em;
@@ -297,18 +303,27 @@ body{
     text-wrap:balance;
   }
   .text{
-    text-align: center;
-    align-self: center;
+    text-align:left;
+    align-self: flex-start;
     width: fit-content;
     max-width: 500px;
     min-width: 400px;
-    text-wrap:balance;
+    /* text-wrap:balance; */
+    /* margin-left: 20px; */
+  }
+  .text.content-middle{
+    /* margin: 0 0 0 20px ; */
+    padding-left: 10px;
   }
   .content-image{
     max-width: 200px;
     border: 4px solid var(--secondary-color);
     border-radius: 5px;
-    margin: 5px;
+    margin: 5px 20px 5px 5px;
+    box-shadow: 0 0 15px var(--secondary-color);
+  }
+  .usp-text{
+    
   }
   .folders-section{
     display: flex;
