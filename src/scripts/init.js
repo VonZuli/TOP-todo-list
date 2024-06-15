@@ -261,9 +261,9 @@ export function noLogin(){
           createElem("h2", {class:`${key}-content`}, value[Object.keys(value)[2]]))
         ):
       content.appendChild(
-      createElem("div", {class: `flex-wrapper content-${key}`}, 
+      createElem("div", {class: `flex-wrapper content-container content-${key}`}, 
         createElem("img", {class:`content-image`,src: value[Object.keys(value)[2]]}),
-        createElem("div", {class:`flex-wrapper usp-text`},
+        createElem("div", {class:`flex-wrapper usp-text-container`},
         createElem("h3", {class:`title content-${key}`}, value[Object.keys(value)[0]]), 
         createElem("p", {class: `text content-${key}`}, value[Object.keys(value)[1]]))
         )

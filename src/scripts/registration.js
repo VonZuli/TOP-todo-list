@@ -8,12 +8,14 @@ import { registrationValidation } from "./validation";
 //builds registration page
 export function registration(){
   const userPlusSVG = new Image()
+  const submitSVG = new Image()
   let viewPasswordSVG = new Image()
   let viewConfirmSVG = new Image()
   let eyeOpenSVG = imagepath('./svg/eye-open.svg')
   let eyeCloseSVG = imagepath('./svg/eye-closed.svg')
   viewPasswordSVG.src = eyeOpenSVG
   viewConfirmSVG.src = eyeOpenSVG
+  submitSVG.src = imagepath('./svg/submit-arrow.svg')
   userPlusSVG.src = imagepath('./svg/user-plus.svg')
   const pageContainer = document.querySelector('#page-container')
   const headerEl = document.createElement('header')
@@ -176,7 +178,7 @@ export function registration(){
   buildForm()
 
   registrationForm.appendChild(submitBtn)
-
+  submitBtn.appendChild(submitSVG)
   pageContainer.appendChild(footerEl)
   footer()
 

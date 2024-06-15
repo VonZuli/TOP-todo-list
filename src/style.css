@@ -26,8 +26,18 @@
   /* overflow-x:hidden; */
   font-family: var(--header-font);
 }
-a{
+button{
+  background-color: var(--secondary-color);
   color: var(--text-color);
+  border: none;
+  font-weight: 700;
+}
+button:hover{
+  box-shadow: 0 0 10px var(--secondary-color);
+}
+a{
+  color: var(--tertiary-color);
+  text-decoration: none;
 }
 a:hover{
   color: var(--secondary-color);
@@ -68,15 +78,15 @@ header{
     justify-content: center;
     align-items: center;
     margin: 2px 20px;
-    background-color: var(--secondary-color);
-    border: none;
+    
+
     
     font-weight: 700;
     font-size: 1.2em;
     width: 120px;
     height: 40px;
     padding: 10px;
-    color: var(--text-color);
+    
     outline: invert ;
   }
   .loginSVG{
@@ -163,6 +173,7 @@ header{
       .login-controls > button{
         width: fit-content;
         padding: 10px;
+
       }
     .error-container{
       /* width: 310px; */
@@ -255,7 +266,7 @@ body{
   .flex-wrapper{
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    /* justify-content: center; */
     align-items: center;
   }
   .flex-wrapper > h1{
@@ -279,52 +290,35 @@ body{
   }
   .content > div{
     align-self: center;
-    width: fit-content;
     padding: 5px;
     margin: 50px;
-    height: 200px;
+    height: 250px;
   }
-  .content-top{
+  .content-container{
     flex-direction: row;
+    justify-content: flex-start;
   }
-  .content-middle{
-    flex-direction: row;
-  }
-  .content-bottom{
-    flex-direction: row;
+  .usp-text-container{
+    padding: 10px;
+    max-width: 600px;
+    text-wrap: balance;
   }
   .title{
-    align-self: center;
-    text-align: left;
+    align-self: flex-start;
     color: var(--tertiary-color);
     border-bottom: 2px solid var(--secondary-color);
     font-size: 1.5em;
-    margin-bottom: 10px;
-    text-wrap:balance;
+    margin-bottom: 10px; 
   }
-  .text{
-    text-align:left;
-    align-self: flex-start;
-    width: fit-content;
-    max-width: 500px;
-    min-width: 400px;
-    /* text-wrap:balance; */
-    /* margin-left: 20px; */
-  }
-  .text.content-middle{
-    /* margin: 0 0 0 20px ; */
-    padding-left: 10px;
-  }
+
   .content-image{
     max-width: 200px;
     border: 4px solid var(--secondary-color);
     border-radius: 5px;
-    margin: 5px 20px 5px 5px;
+    margin: 5px;
     box-shadow: 0 0 15px var(--secondary-color);
   }
-  .usp-text{
-    
-  }
+
   .folders-section{
     display: flex;
     flex-direction: column;
@@ -913,6 +907,8 @@ li > .taskDetails > *{
   padding: 20px;
   color: var(--text-color);
   text-align: center;
+  max-width: 600px;
+  text-wrap:balance;
 }
 .reg-form-container > img{
   width: 100px;
@@ -949,4 +945,31 @@ form * input.error{
   min-height: 16px;
   padding: 2px;
 }
+.submit_btn{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  align-self: center;
+  width: 150px;
+  font-size: 1.2em;
+  padding: 10px;
+}
+.submit_btn > img{
+  max-width: 25px;
+  margin: 2px 2px 2px 5px;
+}
 /*#endregion extras*/
+
+@media screen and (max-width: 1080px){
+  .hero-section::before{
+
+    background-size: contain;
+
+  }
+  .hero-section{
+
+    height: fit-content
+   
+  }
+}
