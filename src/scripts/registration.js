@@ -2,8 +2,9 @@
 import { imagepath } from "..";
 import { createFooter as footer } from "./footer"
 import { createHeader  as header } from "./header"
-import { noLogin } from "./init"
+import { initHomepage } from "./init"
 import { registrationValidation } from "./validation";
+
 
 //builds registration page
 export function registration(){
@@ -107,7 +108,7 @@ export function registration(){
 
   pageContainer.appendChild(content)
   content.appendChild(section)
-  // noLogin()
+  // noLogin() initHomepage
   section.appendChild(formContainer)
 
   formContainer.appendChild(userPlusSVG)
@@ -181,7 +182,7 @@ export function registration(){
   submitBtn.appendChild(submitSVG)
   pageContainer.appendChild(footerEl)
   footer()
-
+  
   function handleRegistration(e){
     e.preventDefault()
     const formFields = document.querySelectorAll('input')

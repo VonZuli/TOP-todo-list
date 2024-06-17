@@ -26,6 +26,9 @@
   /* overflow-x:hidden; */
   font-family: var(--header-font);
 }
+input{
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
 button{
   background-color: var(--secondary-color);
   color: var(--text-color);
@@ -78,16 +81,11 @@ header{
     justify-content: center;
     align-items: center;
     margin: 2px 20px;
-    
-
-    
     font-weight: 700;
     font-size: 1.2em;
     width: 120px;
     height: 40px;
     padding: 10px;
-    
-    outline: invert ;
   }
   .loginSVG{
     max-width: 25px;
@@ -121,6 +119,7 @@ header{
     justify-content: center;
     align-items: center;
     width: 500px;
+    z-index: 1;
   }
     .login-container > img{
       width: 100px;
@@ -161,6 +160,15 @@ header{
         max-width: fit-content;
         align-self: center;
       }
+      .username_txt{
+        border-radius: var(--btn-radius);
+        height: 30px;
+        font-size: medium;
+        padding: 5px;
+        /* margin: 6px 5px 6px 30px; */
+        max-width: fit-content;
+        align-self: center;
+      }
       .view-password{
         width: 25px;
         cursor: pointer;
@@ -186,6 +194,7 @@ header{
         color: var(--error-color);
         font-size: smaller;
         line-height: 1.2em;
+        z-index: 1;
       }
 
 footer{
@@ -279,7 +288,10 @@ body{
     border-bottom: 2px solid var(--secondary-color);
     color: var(--tertiary-color);
   }
-
+  .hero_btn{
+    padding: 10px;
+    font-size: 1.3em;
+  }
   .hero-content{
     margin-top: 10px;
     padding: 5px;
@@ -883,25 +895,45 @@ li > .taskDetails > *{
   flex-direction: column;
   flex-wrap: none;
   align-content: center;
-  padding: 1em 1em 5em;
 }
+
+.registration_section::before{
+  content:"";
+  background-image: url('./assets/images/jpeg/hero-image.jpeg');
+  background-size: cover;
+  min-height: 540px;
+  background-repeat: no-repeat;
+  position:absolute;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  left: 0px;
+  opacity: 0.2;
+}
+
+
 .registration_section{
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-self: center;
-  margin-right: 20px;
-  max-width: 50%;
+  position: relative;
+  height: 100vh;
   min-width: 225px;
+  z-index: 1;
 }
 .reg-form-container{
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  align-self: center;
   padding: 5px;
+  max-width: fit-content;
   border: 2px solid var(--secondary-color);
   border-radius: var(--container-radius);
+  z-index: 1;
+  margin: 0px 20px;
+  background-color: rgba(54, 54, 54, 0.6);
 }
 .reg-form-container > h2{
   padding: 20px;
@@ -930,6 +962,7 @@ form * input{
   margin: 6px 5px 0px 5px;
   max-width: fit-content;
   align-self: center;
+
 }
 form * input.error{
   border: 2px dashed red;
@@ -963,13 +996,20 @@ form * input.error{
 
 @media screen and (max-width: 1080px){
   .hero-section::before{
-
-    background-size: contain;
-
+    background-size: 100%;
   }
   .hero-section{
-
     height: fit-content
-   
+  }
+  
+  .reg-content{
+    padding: 0px;
+  }
+  .registration_section{
+    height: 86.2vh;
+    justify-content: space-between;
+  }
+  .registration_section::before{
+    background-size: contain;
   }
 }

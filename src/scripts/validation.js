@@ -49,23 +49,24 @@ export const folderValidation = () =>{
 export const loginValidation = (username, password)=>{
 
   const errorMsg = document.querySelector('.error-msg')
-  const userInfo = JSON.parse(localStorage.getItem("users"));
+  const accounts = JSON.parse(localStorage.getItem("users"));
 
-  console.log(userInfo); 
+  console.log(accounts); 
   console.log(`Username: ${username}, Password: ${password}`);
   errorMsg.innerHTML = "";
   
   if (username === "" || password === ""){
     return errorMsg.innerHTML = "Username & Password fields cannot be empty.</br>"
   } else {
-    userInfo.forEach(i=>{
-      console.log(i);
-      console.log(i.username);
-      console.log(i.password);
-      if (username === i.username && password === i.password) {
+    // let matched = accounts.find(account => account.username === username)
+    accounts.forEach(i=>{
+      const validLogin = username === i.username && password === i.password
+      if (!validLogin){
+        errorMsg.innerHTML = `Username does not exist or</br> password is incorrect.`
+      }else{
         console.log(`Signing in... ${username}`);
-        //return the user object containing their folders
-        return i
+        document.querySelector("dialog").remove()
+        //move user to their profile
       }
     })
   }

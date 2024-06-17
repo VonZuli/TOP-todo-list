@@ -10,44 +10,19 @@ import { selectFolder,
          editFolder,
          onUpdate } from './folders';
 import { createElem } from "./factory";
+import { registration } from './registration';
 //#endregion imports
 
 //initialize folders array
 export let folderArray;
 
+
+//user signs in
+//access the folders object within the logged in users accounts array
+//display that users folders
+
 // export function initDOM(){
-  
-  //check if user is logged in and then display the correct data for that user
-  //else show noLoginInit and quote div
-  // let nologinInit = (()=>{
-
-  //   const content = document.querySelector(".content")
-  //   const quoteContainer = document.createElement("div")
-  //   const quoteEl = document.createElement("p")
-  //   const authorEl = document.createElement("p")
-
-  //   quoteContainer.classList.add("quote-container")
-  //   randomQuote();
-  //   quoteEl.classList.add("quote")
-  //   authorEl.classList.add("quote-author")
     
-  //   async function randomQuote() {
-  //     try {
-  //       const response = await fetch('https://api.quotable.io/random')
-  //       const quote = await response.json()
-  //        // Output the quote and author name
-  //       quoteEl.textContent = quote.content;
-  //       console.log(quoteEl.textContent.split(" ").length);
-  //       authorEl.textContent = `- ${quote.author}`
-  //     } catch (error) {
-  //       console.log('Something went wrong!', error);
-  //     }
-  //   }
-  //   content.appendChild(quoteContainer);
-  //   quoteContainer.appendChild(quoteEl);
-  //   quoteContainer.appendChild(authorEl);
-  // })();
-  
   //create folders DOM
   // let folderInit = (() =>{
 
@@ -212,8 +187,8 @@ function initTaskArray(){
   Array.isArray(savedTasks) ? tasksArray = savedTasks : tasksArray = new Array()
 }
 
-export function noLogin(){
-  let nologinInit = (()=>{
+export function initHomepage(){
+  let homeInit = (()=>{
 
     const content = document.querySelector(".content")
     const foldersSection = document.querySelector(".folders-section")
@@ -233,7 +208,8 @@ export function noLogin(){
       hero:{
         heroTitle: "Unlock the Magic of Productivity with ",
         heroSpan: "Arcane Assignments",
-        heroContentText: "The ultimate wizardly task tracker that transforms mundane to-dos into enchanting quests!"
+        heroContentText: "The ultimate wizardly task tracker that transforms mundane to-dos into enchanting quests!",
+        heroBtn: "Join the Arcane Circle – Untether your potential!"
       },
       top:{
         contentTopTitle: "Harness the power of arcane organization",
@@ -258,7 +234,8 @@ export function noLogin(){
           createElem("h1", {class:`${key}-title`}, value[Object.keys(value)[0]],
           createElem("br",), 
           createElem("span", {}, value[Object.keys(value)[1]])), 
-          createElem("h2", {class:`${key}-content`}, value[Object.keys(value)[2]]))
+          createElem("h2", {class:`${key}-content`}, value[Object.keys(value)[2]]),
+          createElem("button",{class:`${key}_btn`},value[Object.keys(value)[3]]))
         ):
       content.appendChild(
       createElem("div", {class: `flex-wrapper content-container content-${key}`}, 
@@ -270,6 +247,8 @@ export function noLogin(){
       )
     })
     
+    document.querySelector('.hero_btn').addEventListener('click', registration)
+
     const footer = createElem("footer",{})
 
     content.appendChild(footer)

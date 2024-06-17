@@ -2,68 +2,63 @@
 import {imagepath} from '..'
 import { loginValidation } from './validation'
 import {registration} from './registration'
-
+import { createElem } from './factory'
 export function login() {
 
-  const userSVG = new Image()
-  userSVG.src = imagepath('./svg/user-login.svg')
-  let viewPasswordSVG = new Image()
+  const body = document.querySelector("body") 
+
   let eyeOpenSVG = imagepath('./svg/eye-open.svg')
   let eyeCloseSVG = imagepath('./svg/eye-closed.svg')
-  
-  viewPasswordSVG.src = eyeOpenSVG
-  const body = document.querySelector("body")
-  const dialog = document.createElement("dialog")
-  const dialogContainer = document.createElement("div")
-  const welcomeMsg = document.createElement("h2")
-  const loginForm = document.createElement("form")
-  const usernameInput = document.createElement("input")
-  const passwordGroup = document.createElement('div')
-  const passwordInput = document.createElement("input")
-  const loginControls = document.createElement('div')
-  const loginBtn = document.createElement('button')
-  const cancelBtn = document.createElement('button')
+
+  let loginObj = {
+    
+  }
+
+  body.appendChild(createElem("dialog", {class:"login_dialog"},
+    createElem("div",{class:"login-container"},
+      createElem("img",{src:imagepath('./svg/user-login.svg')}),
+      createElem("h2", {class:"welcomeMsg"},"Please sign in"),
+      createElem("form", {id:"login", class: "login-form", action:"#"},
+        createElem("input", {autofocus:"", class:"username_txt", type:"text", placeholder:"Username", name:"Username"}),
+        createElem("div",{class: "password-group"}, 
+          createElem("input", {class:"password_txt", type:"password", placeholder:"Password", name:"Password"}),
+          createElem("img",{class:"view-password", src:imagepath('./svg/eye-open.svg')})),
+        createElem("div", {class:"error-container"}, 
+          createElem("p",{class:"error-msg"})), 
+        createElem("div", {class:"login-controls"}, 
+          createElem("button",{class:"sign-in_btn", type:"submit", form:"login"},"Sign In"), 
+          createElem("button",{class:"cancel_btn", type:""},"Cancel"))),
+    )
+  ));
+
+  let usernameInput = document.querySelector(".username_txt")
+  let passwordInput = document.querySelector(".password_txt")
+  let viewPasswordSVG = document.querySelector(".view-password")
+
   const noAccount = document.createElement('p')
   const linkSpan = document.createElement('span')
   const signupLink = document.createElement('a')
-  const errorContainer = document.createElement('div')
-  const errorMsg = document.createElement('p')
 
   signupLink.href = '#'
   signupLink.addEventListener('click', (e)=>{
     e.preventDefault()
-    dialog.remove()
+    document.querySelector("dialog").remove()
     registration()
   })
+
   const linkText = 'here.'
   signupLink.textContent = linkText
   noAccount.textContent = `Don't have an account? Click `
 
-  dialog.classList.add("login_dialog")
-  dialogContainer.classList.add("login-container")
-
-  welcomeMsg.classList.add("welcomeMsg")
-  welcomeMsg.textContent = "Please sign in"
-
-  loginForm.id = 'login'
-  loginForm.classList.add("login_form")
-  loginForm.setAttribute("action", "#")
- 
-  usernameInput.setAttribute("autofocus", "")
-  usernameInput.classList.add('username_txt')
-  usernameInput.setAttribute("type", "text")
-  usernameInput.setAttribute("placeholder", "Username")
-  usernameInput.setAttribute("name", "Username")
-  passwordInput.classList.add('password_txt')
-  passwordInput.setAttribute("type", "password")
-  passwordInput.setAttribute("placeholder", "Password")
-  passwordInput.setAttribute("name", "Password")
-  viewPasswordSVG.classList.add("view-password")
-
+  document.querySelector(".login-container").appendChild(noAccount)
+  noAccount.appendChild(linkSpan)
+  linkSpan.appendChild(signupLink)
+  
   viewPasswordSVG.addEventListener('click', (e)=>{
     switch (true) {
       case e.target.src === eyeOpenSVG:
         viewPasswordSVG.src = eyeCloseSVG
+        document.querySelector("#login > div.password-group > img")
         passwordInput.removeAttribute("type")
         passwordInput.setAttribute("type", "text")
         break;
@@ -76,45 +71,18 @@ export function login() {
         break;
     }
   })
-  passwordGroup.classList.add("password-group")
-  errorContainer.classList.add('error-container')
-  errorMsg.classList.add('error-msg')
 
-  loginControls.classList.add('login-controls')
-  loginBtn.classList.add("sign-in_btn")
-  loginBtn.textContent = "Sign In" 
-  
-  loginBtn.setAttribute('type', 'submit')
-  loginBtn.setAttribute("form", "login")
   function handleLogin(e){
     e.preventDefault()
+
     loginValidation(usernameInput.value, passwordInput.value)
     //log the user in
   }
-  loginBtn.addEventListener('click', handleLogin)
+  document.querySelector(".sign-in_btn").addEventListener('click', handleLogin)
 
-  cancelBtn.classList.add("cancel_btn")
-  cancelBtn.setAttribute('type', 'button')
-  cancelBtn.textContent = "Cancel" 
-  cancelBtn.addEventListener('click', ()=>{
+  document.querySelector(".cancel_btn").addEventListener('click', ()=>{
     document.querySelector("dialog").remove()
   })
 
-  body.appendChild(dialog)
-  dialog.appendChild(dialogContainer)
-  dialogContainer.appendChild(userSVG)
-  dialogContainer.appendChild(welcomeMsg)
-  dialogContainer.appendChild(loginForm)
-  loginForm.appendChild(usernameInput)
-  loginForm.appendChild(passwordGroup)
-  passwordGroup.appendChild(passwordInput)
-  passwordGroup.appendChild(viewPasswordSVG)
-  loginForm.appendChild(errorContainer)
-  errorContainer.appendChild(errorMsg)
-  loginForm.appendChild(loginControls)
-  loginControls.appendChild(loginBtn)
-  loginControls.appendChild(cancelBtn)
-  dialogContainer.appendChild(noAccount)
-  noAccount.appendChild(linkSpan)
-  linkSpan.appendChild(signupLink)
+
 }
