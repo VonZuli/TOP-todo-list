@@ -58,7 +58,6 @@ export function login() {
     switch (true) {
       case e.target.src === eyeOpenSVG:
         viewPasswordSVG.src = eyeCloseSVG
-        document.querySelector("#login > div.password-group > img")
         passwordInput.removeAttribute("type")
         passwordInput.setAttribute("type", "text")
         break;

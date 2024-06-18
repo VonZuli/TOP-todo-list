@@ -890,12 +890,14 @@ li > .taskDetails > *{
 /*#endregion tasks*/
 
 /*#region extras*/
-.reg-content{
+/* .reg-content{
   display: flex;
+  justify-content: space-between;
   flex-direction: column;
   flex-wrap: none;
   align-content: center;
-}
+  min-height: 100vh;
+} */
 
 .registration_section::before{
   content:"";
@@ -934,6 +936,8 @@ li > .taskDetails > *{
   z-index: 1;
   margin: 0px 20px;
   background-color: rgba(54, 54, 54, 0.6);
+  /* position: absolute; */
+  /* bottom: 25%; */
 }
 .reg-form-container > h2{
   padding: 20px;
@@ -976,7 +980,9 @@ form * input.error{
 }
 .field-container > .error-msg {
   min-height: 16px;
+  max-width: fit-content;
   padding: 2px;
+  font-weight: 700;
 }
 .submit_btn{
   display: flex;
@@ -1011,5 +1017,10 @@ form * input.error{
   }
   .registration_section::before{
     background-size: contain;
+  }
+
+  .reg-form-container{
+    /* position: relative; */
+    /* bottom:60% */
   }
 }

@@ -193,15 +193,14 @@ export function initHomepage(){
     const content = document.querySelector(".content")
     const foldersSection = document.querySelector(".folders-section")
     const tasksSection = document.querySelector(".tasks-section")
-    const heroSection = document.createElement("section")
-    const arcaneCircleImg = new Image()
-    
+    const heroSection =  createElem('section',{class:"hero-section"})
+    // const arcaneCircleImg = new Image()
+   
 
     content.innerHTML = ""
     foldersSection.style.display = 'none'
     tasksSection.style.display = 'none'
 
-    heroSection.classList.add("hero-section")
     content.appendChild(heroSection)
 
     let contentObj = {
@@ -209,7 +208,7 @@ export function initHomepage(){
         heroTitle: "Unlock the Magic of Productivity with ",
         heroSpan: "Arcane Assignments",
         heroContentText: "The ultimate wizardly task tracker that transforms mundane to-dos into enchanting quests!",
-        heroBtn: "Join the Arcane Circle – Untether your potential!"
+        heroBtn: "Join the Arcane Circle — Untether your potential!"
       },
       top:{
         contentTopTitle: "Harness the power of arcane organization",
@@ -248,10 +247,6 @@ export function initHomepage(){
     })
     
     document.querySelector('.hero_btn').addEventListener('click', registration)
-
-    const footer = createElem("footer",{})
-
-    content.appendChild(footer)
     
   })();
 }
