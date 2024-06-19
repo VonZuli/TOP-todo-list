@@ -58,7 +58,6 @@ export const loginValidation = (username, password)=>{
   if (username === "" || password === ""){
     return errorMsg.innerHTML = "Username & Password fields cannot be empty.</br>"
   } else {
-    // let matched = accounts.find(account => account.username === username)
     accounts.forEach(i=>{
       const validLogin = username === i.username && password === i.password
       if (!validLogin){
@@ -180,8 +179,8 @@ export function registrationValidation(userInfoObj){
 
         if (isValidUpper === false) {
           errorMsg = "Password must contain at least 1 uppercase letter.</br>"
-            errorObj[formField][isValid] = isValidUpper
-            errorObj[key].errorMsgsArr.push(errorMsg)
+          errorObj[formField][isValid] = isValidUpper
+          errorObj[key].errorMsgsArr.push(errorMsg)
         }
         if (isValidLower === false) {
           errorMsg = "Password must contain at least 1 lowercase letter.</br>"
@@ -209,6 +208,30 @@ export function registrationValidation(userInfoObj){
         }
       })(userInfoObj[key])
     }
+
+    if (key==="email" || key === "username"){
+      const checkUserExists = ((str)=>{
+        const accounts = JSON.parse(localStorage.getItem("users"));
+        if (key === "email") {
+          const emailUnavailable = accounts.find(account => account.email === str)
+          if (emailUnavailable) {
+            errorMsg = `"${str}" is already associated with an account.` 
+            errorObj[formField][isValid] = false
+            errorObj[key].errorMsgsArr.push(errorMsg)
+          }
+        }
+
+        if (key === "username") {
+          const usernameUnavailable = accounts.find(account => account.username === str)
+          if (usernameUnavailable) {
+            errorMsg = `The username "${str}" is taken. Please select another username.` 
+            errorObj[formField][isValid] = false
+            errorObj[key].errorMsgsArr.push(errorMsg)
+          }
+        }
+      })(userInfoObj[key])
+    }
+
   }
   
   Object.entries(errorObj).filter((data)=>{
