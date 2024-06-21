@@ -15,7 +15,7 @@ import { registration } from './registration';
 
 //initialize folders array
 export let folderArray;
-
+export let userArr;
 
 //user signs in
 //access the folders object within the logged in users accounts array
@@ -106,21 +106,21 @@ export let folderArray;
   //   function initFolderArray(folderId, folderTitle, count){
   //     const savedFoldersObj = JSON.parse(localStorage.getItem("folders"));
 
-  //       if (!localStorage.getItem("folders") || savedFoldersObj.length < 1) {
-  //         folderArray = new Array();
-  //         folderArray.push({
-  //           folderId, 
-  //           folderTitle, 
-  //           folderTaskCount:+count
-  //         })
-  //         saveFolders(folderArray)
-  //       }else{
-  //         folderArray = savedFoldersObj
-  //         //call function to render DOM with localstorage data
-  //         render()
-  //       }
+        // if (!localStorage.getItem("folders") || savedFoldersObj.length < 1) {
+        //   folderArray = new Array();
+        //   folderArray.push({
+        //     folderId, 
+        //     folderTitle, 
+        //     folderTaskCount:+count
+        //   })
+        //   saveFolders(folderArray)
+        // }else{
+        //   folderArray = savedFoldersObj
+        //   //call function to render DOM with localstorage data
+        //   render()
+        // }
         
-  //   };
+    // };
   //   initFolderArray(folderId, defaultName, folderCounter.textContent);
     
   //   //adds event listeners to elements on init

@@ -51,8 +51,8 @@ export const loginValidation = (username, password)=>{
   const errorMsg = document.querySelector('.error-msg')
   const accounts = JSON.parse(localStorage.getItem("users"));
 
-  console.log(accounts); 
-  console.log(`Username: ${username}, Password: ${password}`);
+  // console.log(accounts); 
+  // console.log(`Username: ${username}, Password: ${password}`);
   errorMsg.innerHTML = "";
   
   if (username === "" || password === ""){
@@ -211,8 +211,10 @@ export function registrationValidation(userInfoObj){
 
     if (key==="email" || key === "username"){
       const checkUserExists = ((str)=>{
-        const accounts = JSON.parse(localStorage.getItem("users"));
-        if (key === "email") {
+        const accounts = JSON.parse(localStorage.getItem("accounts"));
+        console.log(accounts);
+        console.log(typeof accounts);
+        if (key === "email" && accounts) {
           const emailUnavailable = accounts.find(account => account.email === str)
           if (emailUnavailable) {
             errorMsg = `"${str}" is already associated with an account.` 
@@ -221,8 +223,8 @@ export function registrationValidation(userInfoObj){
           }
         }
 
-        if (key === "username") {
-          const usernameUnavailable = accounts.find(account => account.username === str)
+        if (key === "username" && accounts) {
+          const usernameUnavailable = accounts.find(account => account.username.toLowerCase() === str.toLowerCase())
           if (usernameUnavailable) {
             errorMsg = `The username "${str}" is taken. Please select another username.` 
             errorObj[formField][isValid] = false
@@ -264,10 +266,17 @@ export function registrationValidation(userInfoObj){
   console.log(errorArr);
 
   if (errorArr.length === 0){
-    let savedUsersObj = JSON.parse(localStorage.getItem("users"));
+    const errorMsgDisplay = document.querySelectorAll(".error-msg");
+    const userFolders = {"folders":[]};
+    errorMsgDisplay.forEach(err =>{
+      err.innerHTML = ""
+    })
+    
+    let savedUsersObj = JSON.parse(localStorage.getItem("accounts"));
     let userArr = savedUsersObj ? savedUsersObj : [];
+    Object.assign(userInfoObj, userFolders)
     userArr.push(userInfoObj)
-    localStorage.setItem("users", JSON.stringify(userArr))
+    localStorage.setItem("accounts", JSON.stringify(userArr))
   }
 }
 

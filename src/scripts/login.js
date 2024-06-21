@@ -10,9 +10,7 @@ export function login() {
   let eyeOpenSVG = imagepath('./svg/eye-open.svg')
   let eyeCloseSVG = imagepath('./svg/eye-closed.svg')
 
-  let loginObj = {
-    
-  }
+  let loginObj = {}
 
   body.appendChild(createElem("dialog", {class:"login_dialog"},
     createElem("div",{class:"login-container"},

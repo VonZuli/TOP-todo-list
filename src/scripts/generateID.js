@@ -5,3 +5,10 @@ export const generateId = () => {
 
   return itemId
 }
+
+export const generateAccountId = () =>{
+  const id = new Date().getTime()
+  const accountId = id.toString(16).slice(2);
+
+  return accountId
+}
