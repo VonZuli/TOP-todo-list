@@ -11,6 +11,7 @@ import { selectFolder,
          onUpdate } from './folders';
 import { createElem } from "./factory";
 import { registration } from './registration';
+import { createHeader } from './header';
 //#endregion imports
 
 //initialize folders array
@@ -20,6 +21,233 @@ export let userArr;
 //user signs in
 //access the folders object within the logged in users accounts array
 //display that users folders
+
+export function initFolders(username) {
+  createHeader(username)
+  const folderSVG = imagepath('./svg/folder.svg');
+  const editSVG = imagepath('./svg/edit.svg');
+  const deleteSVG = imagepath('./svg/delete.svg');
+  const folderSection = document.querySelector('.folders-section')
+  const folderId = generateId()
+  folderSection.innerHTML =""
+  folderSection.appendChild(
+    createElem("div",{class:"container"},
+      createElem("div",{id:"folder-subtitle"}, 
+        createElem("img",{src:folderSVG}),
+        createElem("h2", {}, "Folders")
+      ),
+    createElem("div",{id:"folder-content"},
+      createElem("ul",{},
+        createElem("div", {class:"folder-container", "data-folder": folderId},
+          createElem("li",{"data-folder":folderId}, "General"),
+          createElem("div",{class:"animation-container"},
+            createElem("div", {class:"counter-container"},
+              createElem("div",{class:"folder-counter", "data-folder": folderId},"0")
+            ),
+            createElem("div", {class:"edit-container"},
+              createElem("img",{src:editSVG})
+            ),
+            createElem("div", {class:'delete-container hovered'},
+              createElem("img",{src:deleteSVG})
+            )
+          )
+        )
+      )
+    ), 
+    createElem("button",{id:"newFolder", class:"addBtn"}, "Add Folder ➕")
+    )
+  )
+
+  //adds event listeners to elements on init
+  displayDeleteBtn();
+  deleteFolder();
+  selectFolder(); 
+  document.querySelector(".edit-container > img").addEventListener('click', editFolder)
+  document.querySelector(".delete-container > img").addEventListener('click', deleteFolder(folderId))
+
+  // add event listener to form buttons that displays appropriate modal
+  const formBtn = document.querySelectorAll('.addBtn');
+  formBtn.forEach(btn => {
+    btn.addEventListener('click', (e)=>{
+      e.preventDefault()
+      modal(e.target)
+    })
+  });
+  const savedFoldersObj = JSON.parse(localStorage.getItem("folders"));
+  let defaultName = document.querySelector(".folder-container > li").textContent
+  let folderCounter = document.querySelector(".folder-counter")
+  function initFolderArray(folderId, folderTitle, count){
+      if (!localStorage.getItem("folders") || savedFoldersObj.length < 1) {
+        folderArray = new Array();
+        folderArray.push({
+          folderId, 
+          folderTitle, 
+          folderTaskCount:+count
+        })
+        saveFolders(folderArray)
+      }else{
+        folderArray = savedFoldersObj
+        //call function to render DOM with localstorage data
+        render()
+      }
+    };
+  initFolderArray(folderId, defaultName, +folderCounter.textContent);
+  // return {folderInit, taskInit}
+}
+
+// export function initDOM(){
+    
+    
+  //   function initFolderArray(folderId, folderTitle, count){
+  // const savedFoldersObj = JSON.parse(localStorage.getItem("folders"));
+
+        // if (!localStorage.getItem("folders") || savedFoldersObj.length < 1) {
+        //   folderArray = new Array();
+        //   folderArray.push({
+        //     folderId, 
+        //     folderTitle, 
+        //     folderTaskCount:+count
+        //   })
+        //   saveFolders(folderArray)
+        // }else{
+        //   folderArray = savedFoldersObj
+        //   //call function to render DOM with localstorage data
+        //   render()
+        // }
+        
+    // };
+  // initFolderArray(folderId, defaultName, folderCounter.textContent);
+    
+  //   //adds event listeners to elements on init
+  //   displayDeleteBtn();
+  //   deleteFolder();
+  //   selectFolder(); 
+  // })();
+  
+  // //create tasks DOM
+  // let taskInit = (() => {
+  //   //tasks section declarations
+  //   const tasksSection = document.querySelector('.tasks-section')
+  //   const tasksContainer = document.createElement('div')
+  //   const tasksSubtitle = document.createElement('h2')
+  //   const tasksSubtitleContainer = document.createElement('div')
+  //   const tasksContent = document.createElement('div')
+  //   const tasksList = document.createElement('ul')
+  //   const newTaskBtn = document.createElement('button')
+
+  //   //create tasks section
+  //   tasksContainer.classList.add("container")
+  //   tasksSubtitle.textContent = "Tasks"
+  //   tasksSubtitleContainer.id = 'tasks-subtitle'
+  //   tasksContent.id = 'tasks-content'
+
+  //   tasksSection.appendChild(tasksContainer)
+  //   tasksContainer.appendChild(tasksSubtitleContainer)
+  //   tasksSubtitleContainer.appendChild(tasksSubtitle)
+  //   tasksContainer.appendChild(tasksContent)
+  //   tasksContent.appendChild(tasksList)
+    
+
+  //   newTaskBtn.textContent = 'Add Task ➕'
+  //   newTaskBtn.id = 'newTask'
+  //   newTaskBtn.classList.add('addBtn')
+  //   tasksContainer.appendChild(newTaskBtn)
+    
+  // })();
+
+  //add event listener to form buttons that displays appropriate modal
+//   const formBtn = document.querySelectorAll('.addBtn');
+//   formBtn.forEach(btn => {
+//     btn.addEventListener('click', (e)=>{
+//       e.preventDefault()
+//       modal(e.target)
+//     })
+//   });
+//   return {folderInit, taskInit}
+// }
+
+
+
+
+
+//local storage structure
+// folderArray.push([{folderTitle},{"tasksArray": ["task1", "task2", "task3"]}])
+
+//initialze tasks array
+function initTaskArray(){
+  let tasksArray;
+
+  const savedTasks = JSON.parse(localStorage.getItem("tasks"))
+  
+  Array.isArray(savedTasks) ? tasksArray = savedTasks : tasksArray = new Array()
+}
+
+export function initHomepage(){
+  let homeInit = (()=>{
+
+    const content = document.querySelector(".content")
+    const foldersSection = document.querySelector(".folders-section")
+    const tasksSection = document.querySelector(".tasks-section")
+    const heroSection =  createElem('section',{class:"hero-section"})
+    // const arcaneCircleImg = new Image()
+   
+    //this is causing a bug when logging in
+    content.innerHTML = ""
+  if (foldersSection || tasksSection) {
+      foldersSection.style.display = 'none'
+      tasksSection.style.display = 'none'
+  }
+
+    content.appendChild(heroSection)
+
+    let contentObj = {
+      hero:{
+        heroTitle: "Unlock the Magic of Productivity with ",
+        heroSpan: "Arcane Assignments",
+        heroContentText: "The ultimate wizardly task tracker that transforms mundane to-dos into enchanting quests!",
+        heroBtn: "Join the Arcane Circle — Untether your potential!"
+      },
+      top:{
+        contentTopTitle: "Harness the power of arcane organization",
+        contentTopText: "Let your productivity soar as you navigate through your magical list of assignments and tasks. With Arcane Assignments, every task becomes an opportunity to wield your wizardly prowess. Dive into a world where each item on your to-do list transforms into a mystical quest, designed to keep you focused and motivated.",
+        contentTopImg: imagepath("./jpeg/arcane-circle.png")
+      },
+      middle:{
+        contentMidTitle: "Designed for modern-day sorcerers",
+        contentMidText: "Arcane Assignments offers a spellbinding interface, mystical reminders, and an enchanting experience that makes conquering your daily tasks feel like an epic adventure.",
+        contentMidImg: imagepath("./jpeg/wizard-on-horseback.jpg")
+      },
+      bottom:{
+        contentBottomTitle: "Embark on a journey through your tasks",
+        contentBottomText: "With Arcane Assignments, every task is a quest, every goal a spell to cast. Enter a realm where productivity meets magic, and let your wizardly willpower guide you to triumphant task completion.",
+        contentBottomImg: imagepath("./jpeg/misty-mountains.jpeg")
+      }
+    }
+    // arcaneCircleImg.src = contentObj.top.contentTopImg
+    Object.entries(contentObj).forEach(([key, value])=>{
+      key === "hero" ? heroSection.appendChild(
+        createElem("div", {class: `flex-wrapper ${key}-container`}, 
+          createElem("h1", {class:`${key}-title`}, value[Object.keys(value)[0]],
+          createElem("br",), 
+          createElem("span", {}, value[Object.keys(value)[1]])), 
+          createElem("h2", {class:`${key}-content`}, value[Object.keys(value)[2]]),
+          createElem("button",{class:`${key}_btn`},value[Object.keys(value)[3]]))
+        ):
+      content.appendChild(
+      createElem("div", {class: `flex-wrapper content-container content-${key}`}, 
+        createElem("img", {class:`content-image`,src: value[Object.keys(value)[2]]}),
+        createElem("div", {class:`flex-wrapper usp-text-container`},
+        createElem("h3", {class:`title content-${key}`}, value[Object.keys(value)[0]]), 
+        createElem("p", {class: `text content-${key}`}, value[Object.keys(value)[1]]))
+        )
+      )
+    })
+    
+    document.querySelector('.hero_btn').addEventListener('click', registration)
+    
+  })();
+}
+
 
 // export function initDOM(){
     
@@ -102,151 +330,3 @@ export let userArr;
   //   newFolderBtn.id = 'newFolder'
   //   newFolderBtn.classList.add('addBtn')
   //   foldersContainer.appendChild(newFolderBtn)
-    
-  //   function initFolderArray(folderId, folderTitle, count){
-  //     const savedFoldersObj = JSON.parse(localStorage.getItem("folders"));
-
-        // if (!localStorage.getItem("folders") || savedFoldersObj.length < 1) {
-        //   folderArray = new Array();
-        //   folderArray.push({
-        //     folderId, 
-        //     folderTitle, 
-        //     folderTaskCount:+count
-        //   })
-        //   saveFolders(folderArray)
-        // }else{
-        //   folderArray = savedFoldersObj
-        //   //call function to render DOM with localstorage data
-        //   render()
-        // }
-        
-    // };
-  //   initFolderArray(folderId, defaultName, folderCounter.textContent);
-    
-  //   //adds event listeners to elements on init
-  //   displayDeleteBtn();
-  //   deleteFolder();
-  //   selectFolder(); 
-  // })();
-  
-  // //create tasks DOM
-  // let taskInit = (() => {
-  //   //tasks section declarations
-  //   const tasksSection = document.querySelector('.tasks-section')
-  //   const tasksContainer = document.createElement('div')
-  //   const tasksSubtitle = document.createElement('h2')
-  //   const tasksSubtitleContainer = document.createElement('div')
-  //   const tasksContent = document.createElement('div')
-  //   const tasksList = document.createElement('ul')
-  //   const newTaskBtn = document.createElement('button')
-
-  //   //create tasks section
-  //   tasksContainer.classList.add("container")
-  //   tasksSubtitle.textContent = "Tasks"
-  //   tasksSubtitleContainer.id = 'tasks-subtitle'
-  //   tasksContent.id = 'tasks-content'
-
-  //   tasksSection.appendChild(tasksContainer)
-  //   tasksContainer.appendChild(tasksSubtitleContainer)
-  //   tasksSubtitleContainer.appendChild(tasksSubtitle)
-  //   tasksContainer.appendChild(tasksContent)
-  //   tasksContent.appendChild(tasksList)
-    
-
-  //   newTaskBtn.textContent = 'Add Task ➕'
-  //   newTaskBtn.id = 'newTask'
-  //   newTaskBtn.classList.add('addBtn')
-  //   tasksContainer.appendChild(newTaskBtn)
-    
-  // })();
-
-  //add event listener to form buttons that displays appropriate modal
-//   const formBtn = document.querySelectorAll('.addBtn');
-//   formBtn.forEach(btn => {
-//     btn.addEventListener('click', (e)=>{
-//       e.preventDefault()
-//       modal(e.target)
-//     })
-//   });
-//   return {folderInit, taskInit}
-// }
-
-
-
-
-
-//local storage structure
-// folderArray.push([{folderTitle},{"tasksArray": ["task1", "task2", "task3"]}])
-
-//initialze tasks array
-function initTaskArray(){
-  let tasksArray;
-
-  const savedTasks = JSON.parse(localStorage.getItem("tasks"))
-  
-  Array.isArray(savedTasks) ? tasksArray = savedTasks : tasksArray = new Array()
-}
-
-export function initHomepage(){
-  let homeInit = (()=>{
-
-    const content = document.querySelector(".content")
-    const foldersSection = document.querySelector(".folders-section")
-    const tasksSection = document.querySelector(".tasks-section")
-    const heroSection =  createElem('section',{class:"hero-section"})
-    // const arcaneCircleImg = new Image()
-   
-
-    content.innerHTML = ""
-    foldersSection.style.display = 'none'
-    tasksSection.style.display = 'none'
-
-    content.appendChild(heroSection)
-
-    let contentObj = {
-      hero:{
-        heroTitle: "Unlock the Magic of Productivity with ",
-        heroSpan: "Arcane Assignments",
-        heroContentText: "The ultimate wizardly task tracker that transforms mundane to-dos into enchanting quests!",
-        heroBtn: "Join the Arcane Circle — Untether your potential!"
-      },
-      top:{
-        contentTopTitle: "Harness the power of arcane organization",
-        contentTopText: "Let your productivity soar as you navigate through your magical list of assignments and tasks. With Arcane Assignments, every task becomes an opportunity to wield your wizardly prowess. Dive into a world where each item on your to-do list transforms into a mystical quest, designed to keep you focused and motivated.",
-        contentTopImg: imagepath("./jpeg/arcane-circle.png")
-      },
-      middle:{
-        contentMidTitle: "Designed for modern-day sorcerers",
-        contentMidText: "Arcane Assignments offers a spellbinding interface, mystical reminders, and an enchanting experience that makes conquering your daily tasks feel like an epic adventure.",
-        contentMidImg: imagepath("./jpeg/wizard-on-horseback.jpg")
-      },
-      bottom:{
-        contentBottomTitle: "Embark on a journey through your tasks",
-        contentBottomText: "With Arcane Assignments, every task is a quest, every goal a spell to cast. Enter a realm where productivity meets magic, and let your wizardly willpower guide you to triumphant task completion.",
-        contentBottomImg: imagepath("./jpeg/misty-mountains.jpeg")
-      }
-    }
-    // arcaneCircleImg.src = contentObj.top.contentTopImg
-    Object.entries(contentObj).forEach(([key, value])=>{
-      key === "hero" ? heroSection.appendChild(
-        createElem("div", {class: `flex-wrapper ${key}-container`}, 
-          createElem("h1", {class:`${key}-title`}, value[Object.keys(value)[0]],
-          createElem("br",), 
-          createElem("span", {}, value[Object.keys(value)[1]])), 
-          createElem("h2", {class:`${key}-content`}, value[Object.keys(value)[2]]),
-          createElem("button",{class:`${key}_btn`},value[Object.keys(value)[3]]))
-        ):
-      content.appendChild(
-      createElem("div", {class: `flex-wrapper content-container content-${key}`}, 
-        createElem("img", {class:`content-image`,src: value[Object.keys(value)[2]]}),
-        createElem("div", {class:`flex-wrapper usp-text-container`},
-        createElem("h3", {class:`title content-${key}`}, value[Object.keys(value)[0]]), 
-        createElem("p", {class: `text content-${key}`}, value[Object.keys(value)[1]]))
-        )
-      )
-    })
-    
-    document.querySelector('.hero_btn').addEventListener('click', registration)
-    
-  })();
-}

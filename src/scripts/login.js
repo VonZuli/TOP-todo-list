@@ -1,8 +1,9 @@
 //imports
-import {imagepath} from '..'
+import { imagepath } from '..'
 import { loginValidation } from './validation'
-import {registration} from './registration'
+import { registration } from './registration'
 import { createElem } from './factory'
+
 export function login() {
 
   const body = document.querySelector("body") 
@@ -72,8 +73,8 @@ export function login() {
   function handleLogin(e){
     e.preventDefault()
 
-    loginValidation(usernameInput.value, passwordInput.value)
     //log the user in
+    loginValidation(usernameInput.value, passwordInput.value)
   }
   document.querySelector(".sign-in_btn").addEventListener('click', handleLogin)
 

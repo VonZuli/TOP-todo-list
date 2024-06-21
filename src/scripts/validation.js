@@ -2,8 +2,11 @@
 import { isBoolean } from "lodash";
 import { addFolder } from "./folders";
 import { generateId } from "./generateID";
-import { folderArray } from "./init";
+import { folderArray, initFolders, initHomepage, userArr } from "./init";
 import { isValid } from "date-fns";
+import { login } from "./login";
+import { createHeader } from "./header";
+
 // import { bcrypt } from "..";
 //#endregion imports
 
@@ -45,12 +48,10 @@ export const folderValidation = () =>{
   }  
 };
 
-// this section needs to be reworked to validate the login itself not the fields
 export const loginValidation = (username, password)=>{
 
   const errorMsg = document.querySelector('.error-msg')
-  const accounts = JSON.parse(localStorage.getItem("users"));
-
+  const accounts = JSON.parse(localStorage.getItem("accounts"));
   // console.log(accounts); 
   // console.log(`Username: ${username}, Password: ${password}`);
   errorMsg.innerHTML = "";
@@ -66,6 +67,26 @@ export const loginValidation = (username, password)=>{
         console.log(`Signing in... ${username}`);
         document.querySelector("dialog").remove()
         //move user to their profile
+        initFolders(username)
+
+        accounts.forEach(i=>{
+          // console.log(i.username);
+          // console.log(i.isLoggedIn);
+          if (i.username === username){
+    
+            i.isLoggedIn = true
+            console.log(accounts);
+          }
+        })
+    
+        let loginBtn = document.querySelector(".loginBtn"); 
+        loginBtn.innerHTML = "Logout" //add SVG here
+        
+        loginBtn.addEventListener("click", () =>{
+          initHomepage()
+          username = ""
+          createHeader()
+        })
       }
     })
   }
@@ -268,16 +289,19 @@ export function registrationValidation(userInfoObj){
   if (errorArr.length === 0){
     const errorMsgDisplay = document.querySelectorAll(".error-msg");
     const userFolders = {"folders":[]};
+    const isLoggedIn = {"isLoggedIn": false}
     errorMsgDisplay.forEach(err =>{
       err.innerHTML = ""
     })
     
     let savedUsersObj = JSON.parse(localStorage.getItem("accounts"));
     let userArr = savedUsersObj ? savedUsersObj : [];
-    Object.assign(userInfoObj, userFolders)
+    Object.assign(userInfoObj, userFolders, isLoggedIn)
     userArr.push(userInfoObj)
     localStorage.setItem("accounts", JSON.stringify(userArr))
   }
+  initHomepage()
+  login()
 }
 
 

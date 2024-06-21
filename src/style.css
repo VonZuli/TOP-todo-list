@@ -67,6 +67,8 @@ header{
   flex-basis: 100%;
 }
   header > h1{
+    font-size: x-large;
+    color: var(--tertiary-color);
     margin:2px;
     padding: 2px;
   }
@@ -343,6 +345,7 @@ body{
       border: 2px solid var(--secondary-color);
       border-radius: var(--container-radius);
       flex-basis: 50%;
+      margin-left: 20px;
     }
   .tasks-section{
     display: flex;
@@ -579,6 +582,8 @@ button:focus{
       display: flex;
       justify-content: center;
       align-items: center;
+      padding-top: 2px;
+      padding-right: 1px;
       background: -webkit-radial-gradient(25px 25px, circle, rgb(95, 158, 160), rgba(95, 158, 160, 0.308));
       background: radial-gradient(25px 25px, circle, rgb(95, 158, 160), rgba(95, 158, 160, 0.308));
       border-radius: 50%;
@@ -690,7 +695,7 @@ button:focus{
     }
     .tooltip .tooltipText {
       visibility: hidden;
-      width: 120px;
+      width: fit-content;
       background-color:rgba(0, 0, 0, 0.733);
       color: #fff;
       text-align: center;
@@ -722,7 +727,7 @@ button:focus{
       align-items: center;
     }
     .editFolderInput{
-        color: var(--secondary-color);
+        color: var(--tertiary-color);
         width: 70px;
         text-align: start;
         background: transparent;

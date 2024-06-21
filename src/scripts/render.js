@@ -14,7 +14,6 @@ import {
 export function render(){
   
   const folderList = document.querySelector("#folder-content > ul")
-  
   folderList.innerHTML = ""
 
   folderArray.forEach(folder=>{
