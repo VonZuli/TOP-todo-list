@@ -6,6 +6,8 @@ import { folderArray, initFolders, initHomepage, userArr } from "./init";
 import { isValid } from "date-fns";
 import { login } from "./login";
 import { createHeader } from "./header";
+import { registration } from "./registration";
+import { createElem } from "./factory";
 
 // import { bcrypt } from "..";
 //#endregion imports
@@ -59,36 +61,37 @@ export const loginValidation = (username, password)=>{
   if (username === "" || password === ""){
     return errorMsg.innerHTML = "Username & Password fields cannot be empty.</br>"
   } else {
-    accounts.forEach(i=>{
-      const validLogin = username === i.username && password === i.password
-      if (!validLogin){
-        errorMsg.innerHTML = `Username does not exist or</br> password is incorrect.`
-      }else{
-        console.log(`Signing in... ${username}`);
-        document.querySelector("dialog").remove()
-        //move user to their profile
-        initFolders(username)
+      accounts.forEach(i=>{
+        const validLogin = username === i.username && password === i.password
+        if (!validLogin){
+          errorMsg.innerHTML = `Username does not exist or</br> password is incorrect.`
+        }else{
+          let dialog = document.querySelector(".login_dialog")
+          console.log(`Signing in... ${username}`);
+          dialog.remove()
+          //move user to their profile
+          initFolders(username)
 
-        accounts.forEach(i=>{
-          // console.log(i.username);
-          // console.log(i.isLoggedIn);
-          if (i.username === username){
-    
-            i.isLoggedIn = true
-            console.log(accounts);
-          }
-        })
-    
-        let loginBtn = document.querySelector(".loginBtn"); 
-        loginBtn.innerHTML = "Logout" //add SVG here
-        
-        loginBtn.addEventListener("click", () =>{
-          initHomepage()
-          username = ""
-          createHeader()
-        })
-      }
-    })
+          accounts.forEach(i=>{
+            // console.log(i.username);
+            // console.log(i.isLoggedIn);
+            if (i.username === username){
+      
+              i.isLoggedIn = true
+              console.log(accounts);
+            }
+          })
+      
+          let loginBtn = document.querySelector(".loginBtn"); 
+          loginBtn.innerHTML = "Logout" //add SVG here
+          
+          loginBtn.addEventListener("click", () =>{
+            initHomepage()
+            username = ""
+            createHeader()
+          })
+        }
+      })
   }
 }
 

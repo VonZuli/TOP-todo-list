@@ -1,4 +1,5 @@
 //#region imports
+import { createElem } from "./factory";
 import { folderArray } from "./init";
 import { render } from "./render";
 import { saveFolders } from "./saveFolders"
@@ -44,52 +45,34 @@ export function displayDeleteBtn() {
 export const deleteFolder = (folderToDelete, folderTitle)=>{
   return () => {
     handleDelete();
-}
-function handleDelete(){
-  const body = document.querySelector('body')
-  const dialog = document.createElement('dialog')
-  const dialogContent = document.createElement('div')
-  const msgContainer = document.createElement('div')
-  const text = document.createElement('p')
-  const span = document.createElement('span')
-  const controlContainer = document.createElement("div")
-  const confirmBtn = document.createElement('button')
-  const cancelBtn = document.createElement('button')
-  
-  dialog.classList.add('confirmDelete_dialog')
-  dialog.setAttribute('autofocus', '')
-  dialogContent.classList.add('dialog-content')
-  msgContainer.classList.add('dialogMsg-container')
-  text.classList.add('deleteMsg')
-  span.classList.add('deleteMsg_span')
-  controlContainer.classList.add('dialog-controls')
-  confirmBtn.classList.add('confirmDelete_btn')
-  confirmBtn.addEventListener('mouseup', ()=>{
-    document.querySelector('.confirmDelete_dialog').remove()
-    removeFolder(folderToDelete)
-    render()
-  })
-  cancelBtn.classList.add('cancelDelete_btn')
-  cancelBtn.addEventListener('click',()=>{
-    document.querySelector('.confirmDelete_dialog').remove()
-  })
+  }
+  function handleDelete(){
+    const body = document.querySelector('body')
+    const dialogText = `Are you sure you want to delete the folder named ${folderTitle}?`
+    const spanText = "This process is irreversible"
+    body.appendChild(
+      createElem("dialog",{class:'confirmDelete_dialog', autofocus:''},
+        createElem("div",{class:'dialog-content'}, 
+          createElem("div",{class:'dialogMsg-container'},
+            createElem("p", {class:'deleteMsg'}, dialogText),
+            createElem("span",{class:'deleteMsg_span'}, spanText)
+          ),
+          createElem("div",{class:'dialog-controls'},
+            createElem("button",{class:'confirmDelete_btn'},"Confirm"),
+            createElem("button",{class:'cancelDelete_btn'},"Cancel")
+          )
+        )
+      ))
 
-  const dialogText = `Are you sure you want to delete the folder named ${folderTitle}?`
-  const spanText = "This process is irreversible"
-  text.textContent = dialogText
-  span.textContent = spanText.toUpperCase()
-  confirmBtn.textContent = "Confirm"
-  cancelBtn.textContent = "Cancel"
-
-  dialog.appendChild(dialogContent)
-  dialogContent.appendChild(msgContainer)
-  msgContainer.appendChild(text)
-  msgContainer.appendChild(span)
-  dialogContent.appendChild(controlContainer)
-  controlContainer.appendChild(confirmBtn)
-  controlContainer.appendChild(cancelBtn)
-  body.appendChild(dialog)
-}
+    document.querySelector(".confirmDelete_btn").addEventListener('mouseup', ()=>{
+      document.querySelector('.confirmDelete_dialog').remove()
+      removeFolder(folderToDelete)
+      render()
+    })
+    document.querySelector(".cancelDelete_btn").addEventListener('click',()=>{
+      document.querySelector('.confirmDelete_dialog').remove()
+    })
+  }
 }
 function removeFolder(folderToDelete) {
   const index = folderArray.findIndex(folder => 

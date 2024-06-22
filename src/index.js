@@ -17,7 +17,7 @@ export const imagepath = (name) => images(name, true)
 //create DOM structure and initialize app
 header();
 // initDOM();
-initFolders();
-// initHomepage();
+// initFolders();
+initHomepage();
 footer();
 saveFolders();

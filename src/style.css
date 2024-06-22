@@ -693,9 +693,9 @@ button:focus{
       display: inline-block;
       /* border-bottom: 1px dotted black; */
     }
-    .tooltip .tooltipText {
+    .tooltipText {
       visibility: hidden;
-      width: fit-content;
+      width: 120px;
       background-color:rgba(0, 0, 0, 0.733);
       color: #fff;
       text-align: center;

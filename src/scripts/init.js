@@ -9,7 +9,7 @@ import { selectFolder,
          deleteFolder,
          editFolder,
          onUpdate } from './folders';
-import { createElem } from "./factory";
+import { createElem, createListenerElem } from "./factory";
 import { registration } from './registration';
 import { createHeader } from './header';
 //#endregion imports
@@ -22,12 +22,19 @@ export let userArr;
 //access the folders object within the logged in users accounts array
 //display that users folders
 
+//this section may be deprecated in new app flow
+  //solution could be to create folder and tasks sections rather than them existing in HTML file
 export function initFolders(username) {
   createHeader(username)
   const folderSVG = imagepath('./svg/folder.svg');
   const editSVG = imagepath('./svg/edit.svg');
   const deleteSVG = imagepath('./svg/delete.svg');
   const folderSection = document.querySelector('.folders-section')
+  const tasksSection =document.querySelector('.tasks-section')
+
+  folderSection.removeAttribute("style")
+  tasksSection.removeAttribute("style")
+
   const folderId = generateId()
   folderSection.innerHTML =""
   folderSection.appendChild(
@@ -45,10 +52,10 @@ export function initFolders(username) {
               createElem("div",{class:"folder-counter", "data-folder": folderId},"0")
             ),
             createElem("div", {class:"edit-container"},
-              createElem("img",{src:editSVG})
+              createListenerElem("img",{src:editSVG},{click: editFolder})
             ),
             createElem("div", {class:'delete-container hovered'},
-              createElem("img",{src:deleteSVG})
+              createListenerElem("img",{src:deleteSVG},{click:deleteFolder(folderId)})
             )
           )
         )
@@ -62,8 +69,8 @@ export function initFolders(username) {
   displayDeleteBtn();
   deleteFolder();
   selectFolder(); 
-  document.querySelector(".edit-container > img").addEventListener('click', editFolder)
-  document.querySelector(".delete-container > img").addEventListener('click', deleteFolder(folderId))
+  // document.querySelector(".edit-container > img").addEventListener('click', editFolder)
+  // document.querySelector(".delete-container > img").addEventListener('click', deleteFolder(folderId))
 
   // add event listener to form buttons that displays appropriate modal
   const formBtn = document.querySelectorAll('.addBtn');
@@ -192,11 +199,15 @@ export function initHomepage(){
     // const arcaneCircleImg = new Image()
    
     //this is causing a bug when logging in
-    content.innerHTML = ""
-  if (foldersSection || tasksSection) {
-      foldersSection.style.display = 'none'
-      tasksSection.style.display = 'none'
-  }
+    // content.innerHTML = ""
+
+    foldersSection.style.visibility = 'hidden'
+    foldersSection.style.width = "0px"
+    foldersSection.style.height = "0px"
+    tasksSection.style.visibility = 'hidden'
+    tasksSection.style.width = "0px"
+    tasksSection.style.height = "0px"
+
 
     content.appendChild(heroSection)
 
