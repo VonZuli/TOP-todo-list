@@ -172,5 +172,5 @@ export function render(){
   selectFolder(); 
   displayDeleteBtn();
   
-  saveFolders();
+  // saveFolders();
 };

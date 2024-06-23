@@ -29,11 +29,11 @@ export function initFolders(username) {
   const folderSVG = imagepath('./svg/folder.svg');
   const editSVG = imagepath('./svg/edit.svg');
   const deleteSVG = imagepath('./svg/delete.svg');
-  const folderSection = document.querySelector('.folders-section')
-  const tasksSection = document.querySelector('.tasks-section')
+  const folderSection = createElem("section",{class:"folders-section"})
+  const tasksSection = createElem("section",{class:"tasks-section"})
+  // const tasksSection = document.querySelector('.tasks-section')
 
-  // folderSection.removeAttribute("style")
-  // tasksSection.removeAttribute("style")
+  document.querySelector(".content").appendChild(folderSection)
 
   const folderId = generateId()
   folderSection.innerHTML =""
@@ -81,101 +81,26 @@ export function initFolders(username) {
     })
   });
   const savedFoldersObj = JSON.parse(localStorage.getItem("folders"));
-  let defaultName = document.querySelector(".folder-container > li").textContent
-  let folderCounter = document.querySelector(".folder-counter")
-  function initFolderArray(folderId, folderTitle, count){
-      if (!localStorage.getItem("folders") || savedFoldersObj.length < 1) {
-        folderArray = new Array();
-        folderArray.push({
-          folderId, 
-          folderTitle, 
-          folderTaskCount:+count
-        })
-        saveFolders(folderArray)
-      }else{
-        folderArray = savedFoldersObj
-        //call function to render DOM with localstorage data
-        render()
-      }
-    };
-  initFolderArray(folderId, defaultName, +folderCounter.textContent);
+  // let defaultName = document.querySelector(".folder-container > li").textContent
+  // let folderCounter = document.querySelector(".folder-counter")
+  // function initFolderArray(folderId, folderTitle, count){
+  //     if (!localStorage.getItem("folders") || savedFoldersObj.length < 1) {
+  //       folderArray = new Array();
+  //       folderArray.push({
+  //         folderId, 
+  //         folderTitle, 
+  //         folderTaskCount:+count
+  //       })
+  //       saveFolders(folderArray)
+  //     }else{
+  //       folderArray = savedFoldersObj
+  //       //call function to render DOM with localstorage data
+  //       render()
+  //     }
+  //   };
+  // initFolderArray(folderId, defaultName, +folderCounter.textContent);
   // return {folderInit, taskInit}
 }
-
-// export function initDOM(){
-    
-    
-  //   function initFolderArray(folderId, folderTitle, count){
-  // const savedFoldersObj = JSON.parse(localStorage.getItem("folders"));
-
-        // if (!localStorage.getItem("folders") || savedFoldersObj.length < 1) {
-        //   folderArray = new Array();
-        //   folderArray.push({
-        //     folderId, 
-        //     folderTitle, 
-        //     folderTaskCount:+count
-        //   })
-        //   saveFolders(folderArray)
-        // }else{
-        //   folderArray = savedFoldersObj
-        //   //call function to render DOM with localstorage data
-        //   render()
-        // }
-        
-    // };
-  // initFolderArray(folderId, defaultName, folderCounter.textContent);
-    
-  //   //adds event listeners to elements on init
-  //   displayDeleteBtn();
-  //   deleteFolder();
-  //   selectFolder(); 
-  // })();
-  
-  // //create tasks DOM
-  // let taskInit = (() => {
-  //   //tasks section declarations
-  //   const tasksSection = document.querySelector('.tasks-section')
-  //   const tasksContainer = document.createElement('div')
-  //   const tasksSubtitle = document.createElement('h2')
-  //   const tasksSubtitleContainer = document.createElement('div')
-  //   const tasksContent = document.createElement('div')
-  //   const tasksList = document.createElement('ul')
-  //   const newTaskBtn = document.createElement('button')
-
-  //   //create tasks section
-  //   tasksContainer.classList.add("container")
-  //   tasksSubtitle.textContent = "Tasks"
-  //   tasksSubtitleContainer.id = 'tasks-subtitle'
-  //   tasksContent.id = 'tasks-content'
-
-  //   tasksSection.appendChild(tasksContainer)
-  //   tasksContainer.appendChild(tasksSubtitleContainer)
-  //   tasksSubtitleContainer.appendChild(tasksSubtitle)
-  //   tasksContainer.appendChild(tasksContent)
-  //   tasksContent.appendChild(tasksList)
-    
-
-  //   newTaskBtn.textContent = 'Add Task ➕'
-  //   newTaskBtn.id = 'newTask'
-  //   newTaskBtn.classList.add('addBtn')
-  //   tasksContainer.appendChild(newTaskBtn)
-    
-  // })();
-
-  //add event listener to form buttons that displays appropriate modal
-//   const formBtn = document.querySelectorAll('.addBtn');
-//   formBtn.forEach(btn => {
-//     btn.addEventListener('click', (e)=>{
-//       e.preventDefault()
-//       modal(e.target)
-//     })
-//   });
-//   return {folderInit, taskInit}
-// }
-
-
-
-
 
 //local storage structure
 // folderArray.push([{folderTitle},{"tasksArray": ["task1", "task2", "task3"]}])
@@ -196,17 +121,10 @@ export function initHomepage(){
     const foldersSection = document.querySelector(".folders-section")
     const tasksSection = document.querySelector(".tasks-section")
     const heroSection =  createElem('section',{class:"hero-section"})
-    // const arcaneCircleImg = new Image()
    
     //this is causing a bug when logging in
-    // content.innerHTML = ""
+    content.innerHTML = ""
 
-    foldersSection.style.visibility = 'hidden'
-    foldersSection.style.width = "0px"
-    foldersSection.style.height = "0px"
-    tasksSection.style.visibility = 'hidden'
-    tasksSection.style.width = "0px"
-    tasksSection.style.height = "0px"
 
 
     content.appendChild(heroSection)
@@ -216,7 +134,7 @@ export function initHomepage(){
         heroTitle: "Unlock the Magic of Productivity with ",
         heroSpan: "Arcane Assignments",
         heroContentText: "The ultimate wizardly task tracker that transforms mundane to-dos into enchanting quests!",
-        heroBtn: "Join the Arcane Circle — Untether your potential!"
+        heroBtn: `Join the Arcane Circle — Untether your potential!`
       },
       top:{
         contentTopTitle: "Harness the power of arcane organization",
@@ -234,7 +152,7 @@ export function initHomepage(){
         contentBottomImg: imagepath("./jpeg/misty-mountains.jpeg")
       }
     }
-    // arcaneCircleImg.src = contentObj.top.contentTopImg
+
     Object.entries(contentObj).forEach(([key, value])=>{
       key === "hero" ? heroSection.appendChild(
         createElem("div", {class: `flex-wrapper ${key}-container`}, 
@@ -343,3 +261,74 @@ export function initHomepage(){
   //   newFolderBtn.id = 'newFolder'
   //   newFolderBtn.classList.add('addBtn')
   //   foldersContainer.appendChild(newFolderBtn)
+
+  // export function initDOM(){
+    
+    
+  //   function initFolderArray(folderId, folderTitle, count){
+  // const savedFoldersObj = JSON.parse(localStorage.getItem("folders"));
+
+        // if (!localStorage.getItem("folders") || savedFoldersObj.length < 1) {
+        //   folderArray = new Array();
+        //   folderArray.push({
+        //     folderId, 
+        //     folderTitle, 
+        //     folderTaskCount:+count
+        //   })
+        //   saveFolders(folderArray)
+        // }else{
+        //   folderArray = savedFoldersObj
+        //   //call function to render DOM with localstorage data
+        //   render()
+        // }
+        
+    // };
+  // initFolderArray(folderId, defaultName, folderCounter.textContent);
+    
+  //   //adds event listeners to elements on init
+  //   displayDeleteBtn();
+  //   deleteFolder();
+  //   selectFolder(); 
+  // })();
+  
+  // //create tasks DOM
+  // let taskInit = (() => {
+  //   //tasks section declarations
+  //   const tasksSection = document.querySelector('.tasks-section')
+  //   const tasksContainer = document.createElement('div')
+  //   const tasksSubtitle = document.createElement('h2')
+  //   const tasksSubtitleContainer = document.createElement('div')
+  //   const tasksContent = document.createElement('div')
+  //   const tasksList = document.createElement('ul')
+  //   const newTaskBtn = document.createElement('button')
+
+  //   //create tasks section
+  //   tasksContainer.classList.add("container")
+  //   tasksSubtitle.textContent = "Tasks"
+  //   tasksSubtitleContainer.id = 'tasks-subtitle'
+  //   tasksContent.id = 'tasks-content'
+
+  //   tasksSection.appendChild(tasksContainer)
+  //   tasksContainer.appendChild(tasksSubtitleContainer)
+  //   tasksSubtitleContainer.appendChild(tasksSubtitle)
+  //   tasksContainer.appendChild(tasksContent)
+  //   tasksContent.appendChild(tasksList)
+    
+
+  //   newTaskBtn.textContent = 'Add Task ➕'
+  //   newTaskBtn.id = 'newTask'
+  //   newTaskBtn.classList.add('addBtn')
+  //   tasksContainer.appendChild(newTaskBtn)
+    
+  // })();
+
+  //add event listener to form buttons that displays appropriate modal
+//   const formBtn = document.querySelectorAll('.addBtn');
+//   formBtn.forEach(btn => {
+//     btn.addEventListener('click', (e)=>{
+//       e.preventDefault()
+//       modal(e.target)
+//     })
+//   });
+//   return {folderInit, taskInit}
+// }

@@ -81,7 +81,7 @@ function removeFolder(folderToDelete) {
       folderArray.splice(index, 1);
     }
   console.log(folderArray);
-  saveFolders();
+  // saveFolders();
 }
 
 export function editFolder(e) {
@@ -98,7 +98,7 @@ function setEditing(folderToEdit) {
       folder.isEditing = true
     }
   })
-  saveFolders()
+  // saveFolders()
 }
 
 export function onUpdate(e){
@@ -117,7 +117,7 @@ function updateFolder(folderId, newFolderTitle){
       folder.isEditing = false;
     }
   })
-  saveFolders()
+  // saveFolders()
 }
 
 //user clicks child of Folder header

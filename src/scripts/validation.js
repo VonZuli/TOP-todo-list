@@ -61,43 +61,51 @@ export const loginValidation = (username, password)=>{
   if (username === "" || password === ""){
     return errorMsg.innerHTML = "Username & Password fields cannot be empty.</br>"
   } else {
-      accounts.forEach(i=>{
-        const validLogin = username === i.username && password === i.password
-        if (!validLogin){
-          errorMsg.innerHTML = `Username does not exist or</br> password is incorrect.`
-        }else{
-          let dialog = document.querySelector(".login_dialog")
-          console.log(`Signing in... ${username}`);
-          dialog.remove()
-          //move user to their profile
-          initFolders(username)
-
-          accounts.forEach(i=>{
-            // console.log(i.username);
-            // console.log(i.isLoggedIn);
-            if (i.username === username){
-      
-              i.isLoggedIn = true
-              console.log(accounts);
+    accounts.forEach(i=>{
+      const validLogin = username === i.username && password === i.password
+      if (!validLogin){
+        errorMsg.innerHTML = `Username does not exist or</br> password is incorrect.`
+      }else{
+        let dialog = document.querySelector(".login_dialog")
+        console.log(`Signing in... ${username}`);
+        dialog.remove()
+        //move user to their profile
+        initFolders(username)
+        const heroSection = document.querySelector(".hero-section")
+        const contentContainer = document.querySelectorAll('.content-container')
+        heroSection.remove()
+        contentContainer.forEach(i=>{
+          i.remove()
+        })
+        accounts.forEach(account=>{
+          if (account.username === username){
+            account.isLoggedIn = true
+          }
+        })
+    
+        let loginBtn = document.querySelector(".loginBtn"); 
+        loginBtn.innerHTML = "Logout" //add SVG here
+        
+        loginBtn.addEventListener("click", () =>{
+          accounts.forEach(account=>{
+            if (account.isLoggedIn === true){
+              account.isLoggedIn = false
+              document.querySelector(".folders-section").remove()
+              // document.querySelector(".tasks-section").remove()
+              initHomepage()
+              username = ""
+              createHeader()
             }
           })
-      
-          let loginBtn = document.querySelector(".loginBtn"); 
-          loginBtn.innerHTML = "Logout" //add SVG here
-          
-          loginBtn.addEventListener("click", () =>{
-            initHomepage()
-            username = ""
-            createHeader()
-          })
-        }
-      })
+        })
+      }
+    })
   }
 }
 
 export function registrationValidation(userInfoObj){
-  const errorArr = new Array()
-  const errorObj = new Object()
+  let errorArr = new Array()
+  let errorObj = new Object()
   
   for (const key in userInfoObj) {
     const formField = key
@@ -236,8 +244,8 @@ export function registrationValidation(userInfoObj){
     if (key==="email" || key === "username"){
       const checkUserExists = ((str)=>{
         const accounts = JSON.parse(localStorage.getItem("accounts"));
-        console.log(accounts);
-        console.log(typeof accounts);
+        // console.log(accounts);
+        // console.log(typeof accounts);
         if (key === "email" && accounts) {
           const emailUnavailable = accounts.find(account => account.email === str)
           if (emailUnavailable) {
@@ -267,16 +275,23 @@ export function registrationValidation(userInfoObj){
   })
   const displayErrors = (() =>{
     const errorMsgDisplay = document.querySelectorAll(".error-msg");
-    const formField = [...document.querySelectorAll("input")].filter(elem =>
+    const formField = document.querySelectorAll("input");
+
+    formField.forEach(i=>{
+      i.classList.remove("error")
+    });
+
+    [...formField].filter(elem =>
       elem.type === "text" || elem.type==="password" || elem.type==="email");
       
     [...errorMsgDisplay].forEach(el =>{
+      el.innerHTML = ""
+      
       errorArr.forEach(i=>{
+        console.log(i);
         if (i[0]===el.dataset.error) {
-          el.innerHTML = ""
           el.innerHTML += i[1].errorMsgsArr.join("")
         }
-
         [...formField].forEach(input=>{
           if (i[0] === input.dataset.error) {
             input.classList.add("error")
@@ -285,9 +300,7 @@ export function registrationValidation(userInfoObj){
       })
     }); 
   })(errorArr)
-  console.log(`Error message array has ${errorArr.length} errors`);
-
-  console.log(errorArr);
+  console.log(`Error message array has ${errorArr.length} errors`, errorArr);
 
   if (errorArr.length === 0){
     const errorMsgDisplay = document.querySelectorAll(".error-msg");
@@ -302,9 +315,17 @@ export function registrationValidation(userInfoObj){
     Object.assign(userInfoObj, userFolders, isLoggedIn)
     userArr.push(userInfoObj)
     localStorage.setItem("accounts", JSON.stringify(userArr))
+    document.querySelector("body").appendChild(
+      createElem("dialog",{class: "confirm-reg"},
+        createElem("p", {class: "confirm-reg-msg"}, `Account created — Redirecting to login screen...`)
+      ))
+    setTimeout(() => {
+      document.querySelector('.confirm-reg').remove()
+      initHomepage()
+      login()
+    }, 5000);
   }
-  initHomepage()
-  login()
+
 }
 
 
