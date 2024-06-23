@@ -30,10 +30,10 @@ export function initFolders(username) {
   const editSVG = imagepath('./svg/edit.svg');
   const deleteSVG = imagepath('./svg/delete.svg');
   const folderSection = document.querySelector('.folders-section')
-  const tasksSection =document.querySelector('.tasks-section')
+  const tasksSection = document.querySelector('.tasks-section')
 
-  folderSection.removeAttribute("style")
-  tasksSection.removeAttribute("style")
+  // folderSection.removeAttribute("style")
+  // tasksSection.removeAttribute("style")
 
   const folderId = generateId()
   folderSection.innerHTML =""
@@ -239,19 +239,21 @@ export function initHomepage(){
       key === "hero" ? heroSection.appendChild(
         createElem("div", {class: `flex-wrapper ${key}-container`}, 
           createElem("h1", {class:`${key}-title`}, value[Object.keys(value)[0]],
-          createElem("br",), 
-          createElem("span", {}, value[Object.keys(value)[1]])), 
+            createElem("br",), 
+            createElem("span", {}, value[Object.keys(value)[1]])
+          ), 
           createElem("h2", {class:`${key}-content`}, value[Object.keys(value)[2]]),
-          createElem("button",{class:`${key}_btn`},value[Object.keys(value)[3]]))
-        ):
+          createElem("button",{class:`${key}_btn`},value[Object.keys(value)[3]])
+        ))
+        :
       content.appendChild(
       createElem("div", {class: `flex-wrapper content-container content-${key}`}, 
         createElem("img", {class:`content-image`,src: value[Object.keys(value)[2]]}),
         createElem("div", {class:`flex-wrapper usp-text-container`},
-        createElem("h3", {class:`title content-${key}`}, value[Object.keys(value)[0]]), 
-        createElem("p", {class: `text content-${key}`}, value[Object.keys(value)[1]]))
+          createElem("h3", {class:`title content-${key}`}, value[Object.keys(value)[0]]), 
+          createElem("p", {class: `text content-${key}`}, value[Object.keys(value)[1]])
         )
-      )
+      ))
     })
     
     document.querySelector('.hero_btn').addEventListener('click', registration)

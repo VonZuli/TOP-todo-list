@@ -1,5 +1,5 @@
 //factory function to create DOM elements
-export const createElem = (tag, attr, listeners, ...children)=>{
+export const createElem = (tag, attr, ...children)=>{
   const el = document.createElement(tag)
 
   for (const key in attr) {
