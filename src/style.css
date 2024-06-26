@@ -137,6 +137,7 @@ header{
       display: flex;
       flex-direction: column;
       padding: 0 10px 10px 10px;
+      z-index: 1;
     }
       .login_form > input{
         border-radius: var(--btn-radius);
@@ -161,6 +162,7 @@ header{
         margin: 6px 5px 6px 30px;
         max-width: fit-content;
         align-self: center;
+        z-index: 1;
       }
       .username_txt{
         border-radius: var(--btn-radius);
@@ -170,6 +172,7 @@ header{
         /* margin: 6px 5px 6px 30px; */
         max-width: fit-content;
         align-self: center;
+        z-index: 1;
       }
       .view-password{
         width: 25px;
@@ -196,7 +199,6 @@ header{
         color: var(--error-color);
         font-size: smaller;
         line-height: 1.2em;
-        z-index: 1;
       }
 
 footer{
@@ -481,6 +483,7 @@ button:focus{
       flex-basis:50%;
       border-radius: var(--btn-radius);
       min-width: 100px;
+      z-index: 1;
     }
     #formFieldContainer > div:nth-child(4){
       display: flex;
@@ -971,6 +974,7 @@ form * input{
   margin: 6px 5px 0px 5px;
   max-width: fit-content;
   align-self: center;
+  z-index: 1;
 
 }
 form * input.error{

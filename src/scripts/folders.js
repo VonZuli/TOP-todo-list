@@ -1,12 +1,12 @@
 //#region imports
 import { createElem } from "./factory";
-import { folderArray } from "./init";
+// import { folderArray } from "./init";
 import { render } from "./render";
-import { saveFolders } from "./saveFolders"
+import { saveAccounts } from "./saveAccounts"
 //#endregion imports
 
 export function addFolder() {
-  console.log(folderArray);
+
   render();
 }
 
@@ -54,7 +54,7 @@ export const deleteFolder = (folderToDelete, folderTitle)=>{
       createElem("dialog",{class:'confirmDelete_dialog', autofocus:''},
         createElem("div",{class:'dialog-content'}, 
           createElem("div",{class:'dialogMsg-container'},
-            createElem("p", {class:'deleteMsg'}, dialogText),
+            createElem("p",{class:'deleteMsg'}, dialogText),
             createElem("span",{class:'deleteMsg_span'}, spanText)
           ),
           createElem("div",{class:'dialog-controls'},
@@ -81,7 +81,7 @@ function removeFolder(folderToDelete) {
       folderArray.splice(index, 1);
     }
   console.log(folderArray);
-  // saveFolders();
+  // saveAccounts();
 }
 
 export function editFolder(e) {
@@ -98,7 +98,7 @@ function setEditing(folderToEdit) {
       folder.isEditing = true
     }
   })
-  // saveFolders()
+  // saveAccounts()
 }
 
 export function onUpdate(e){
@@ -117,7 +117,7 @@ function updateFolder(folderId, newFolderTitle){
       folder.isEditing = false;
     }
   })
-  // saveFolders()
+  // saveAccounts()
 }
 
 //user clicks child of Folder header

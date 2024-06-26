@@ -8,99 +8,107 @@ import { login } from "./login";
 import { createHeader } from "./header";
 import { registration } from "./registration";
 import { createElem } from "./factory";
+import { saveAccounts } from "./saveAccounts";
 
 // import { bcrypt } from "..";
 //#endregion imports
 
 export const folderValidation = () =>{
+  const accounts = JSON.parse(localStorage.getItem("accounts"));
   const folderNameInput = document.querySelector("#title")
   const errorMsg = document.querySelector("#errorMsgDisplay")
-  const savedFoldersObj = JSON.parse(localStorage.getItem("folders"));
   let userInput = folderNameInput.value;
   let folderTaskCount = document.querySelector('.folder-counter')
   let count = folderTaskCount.textContent
   let folderId = generateId();
+  console.log(accounts);
 
   //change the lower case function to regex later
-  const folderExists = savedFoldersObj.map(folderItem =>{
-    return folderItem.folderTitle.toLowerCase()
+  const folderExists = accounts.map(acc =>{
+    acc.folders.map(folder=>{
+      return folder.folderTitle.toLowerCase()
+    })
   });
  
   if (userInput === "") {
     errorMsg.style.visibility = "visible";
     errorMsg.textContent = "Folder name cannot be empty."
-    return console.log("form error thrown!");
-  } else if(userInput.length < 3) {
+    return
+  }
+  if(userInput.length < 3) {
     errorMsg.style.visibility = "visible";
     errorMsg.textContent = "Folder name must be longer than 2 characters."
-    return console.log("form error thrown!");
-  } else if(folderExists.includes(userInput.toLowerCase())){
+    return
+  }
+  if(folderExists.includes(userInput.toLowerCase())){
     errorMsg.style.visibility = "visible";
     errorMsg.textContent = `Folder with title "${userInput}" already exists.`
-    return console.log("form error thrown!");
-  } else {
-    folderArray.push({
-      folderId,
-      folderTitle:userInput, 
-      folderTaskCount:+count
-    })
-    localStorage.setItem("folders", JSON.stringify(folderArray))
-    document.querySelector('#new-modal').remove();
-    return addFolder(userInput);
-  }  
+    return
+  }
+
+  accounts.forEach(acc=>{
+    if (acc.isLoggedIn === true) {
+      acc.folders.push({
+        folderId, 
+        folderTitle:userInput, 
+        folderTaskCount:+count, 
+        "tasks":[]
+      })
+      //this will set undefined right now
+      // localStorage.setItem("accounts", JSON.stringify(accounts))
+    }
+  })
+  document.querySelector('#new-modal').remove();
+  return addFolder(userInput);
+   
 };
 
 export const loginValidation = (username, password)=>{
 
   const errorMsg = document.querySelector('.error-msg')
-  const accounts = JSON.parse(localStorage.getItem("accounts"));
-  // console.log(accounts); 
-  // console.log(`Username: ${username}, Password: ${password}`);
+  const accounts = JSON.parse(localStorage.getItem("accounts")) || [];
+
   errorMsg.innerHTML = "";
   
   if (username === "" || password === ""){
-    return errorMsg.innerHTML = "Username & Password fields cannot be empty.</br>"
-  } else {
-    accounts.forEach(i=>{
-      const validLogin = username === i.username && password === i.password
-      if (!validLogin){
-        errorMsg.innerHTML = `Username does not exist or</br> password is incorrect.`
-      }else{
-        let dialog = document.querySelector(".login_dialog")
-        console.log(`Signing in... ${username}`);
-        dialog.remove()
-        //move user to their profile
-        initFolders(username)
-        const heroSection = document.querySelector(".hero-section")
-        const contentContainer = document.querySelectorAll('.content-container')
-        heroSection.remove()
-        contentContainer.forEach(i=>{
-          i.remove()
-        })
-        accounts.forEach(account=>{
-          if (account.username === username){
-            account.isLoggedIn = true
-          }
-        })
-    
-        let loginBtn = document.querySelector(".loginBtn"); 
-        loginBtn.innerHTML = "Logout" //add SVG here
-        
-        loginBtn.addEventListener("click", () =>{
-          accounts.forEach(account=>{
-            if (account.isLoggedIn === true){
-              account.isLoggedIn = false
-              document.querySelector(".folders-section").remove()
-              // document.querySelector(".tasks-section").remove()
-              initHomepage()
-              username = ""
-              createHeader()
-            }
-          })
-        })
-      }
-    })
+    errorMsg.innerHTML = "Username & Password fields cannot be empty.</br>"
+    return
   }
+
+  let validLogin = false
+  let userAcc;
+  accounts.forEach(acc=>{
+    if (username === acc.username && password === acc.password){
+      validLogin = true;
+      userAcc = acc;
+    }
+  })
+
+  if (!validLogin){
+   errorMsg.innerHTML = `Username does not exist or</br> password is incorrect.`
+   return
+  }
+ 
+  let dialog = document.querySelector(".login_dialog")
+  console.log(`Signing in... ${username}`);
+  dialog.remove()
+
+  const section = document.querySelector("section")
+  if (section.className === "hero-section") {
+    const heroSection = document.querySelector(".hero-section")
+    const contentContainer = document.querySelectorAll('.content-container')
+    heroSection.remove()
+    contentContainer.forEach(i=>{
+      i.remove()
+    })
+  }else if (section.className === "registration_section"){
+    const regSection = document.querySelector(".registration_section")
+    regSection.remove()
+  }
+
+  //move user to their profile
+  initFolders(username, validLogin)
+  // localStorage.setItem("accounts", JSON.stringify(accounts))
 }
 
 export function registrationValidation(userInfoObj){
@@ -318,12 +326,13 @@ export function registrationValidation(userInfoObj){
     document.querySelector("body").appendChild(
       createElem("dialog",{class: "confirm-reg"},
         createElem("p", {class: "confirm-reg-msg"}, `Account created — Redirecting to login screen...`)
+        //add animation here
       ))
     setTimeout(() => {
       document.querySelector('.confirm-reg').remove()
       initHomepage()
       login()
-    }, 5000);
+    }, 3000);
   }
 
 }

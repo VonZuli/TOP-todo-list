@@ -15,7 +15,7 @@ module.exports = {
    tasks: './src/scripts/tasks.js',
    validation: './src/scripts/validation.js',
    render: './src/scripts/render.js',
-   saveFolders:'./src/scripts/saveFolders.js',
+   saveFolders:'./src/scripts/saveAccounts.js',
    generateID: './src/scripts/generateID.js'
   },
   devtool: 'inline-source-map',

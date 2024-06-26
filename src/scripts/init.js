@@ -2,7 +2,7 @@
 import { createModal as modal } from './modal'
 import { imagepath } from "../index";
 import { render } from "./render";
-import { saveFolders } from './saveFolders';
+import { saveFolders, saveAccounts } from './saveAccounts';
 import { generateId } from './generateID';
 import { selectFolder, 
          displayDeleteBtn, 
@@ -15,8 +15,8 @@ import { createHeader } from './header';
 //#endregion imports
 
 //initialize folders array
-export let folderArray;
-export let userArr;
+// export let accounts;
+// export let userArr;
 
 //user signs in
 //access the folders object within the logged in users accounts array
@@ -24,19 +24,21 @@ export let userArr;
 
 //this section may be deprecated in new app flow
   //solution could be to create folder and tasks sections rather than them existing in HTML file
-export function initFolders(username) {
+export function initFolders(username, validLogin) {
   createHeader(username)
   const folderSVG = imagepath('./svg/folder.svg');
   const editSVG = imagepath('./svg/edit.svg');
   const deleteSVG = imagepath('./svg/delete.svg');
   const folderSection = createElem("section",{class:"folders-section"})
-  const tasksSection = createElem("section",{class:"tasks-section"})
-  // const tasksSection = document.querySelector('.tasks-section')
+  // const tasksSection = createElem("section",{class:"tasks-section"})
 
   document.querySelector(".content").appendChild(folderSection)
-
+  // document.querySelector(".content").appendChild(tasksSection)
+  
   const folderId = generateId()
+
   folderSection.innerHTML =""
+
   folderSection.appendChild(
     createElem("div",{class:"container"},
       createElem("div",{id:"folder-subtitle"}, 
@@ -80,7 +82,62 @@ export function initFolders(username) {
       modal(e.target)
     })
   });
-  const savedFoldersObj = JSON.parse(localStorage.getItem("folders"));
+  
+  //get the accounts from localstorage
+  const accounts = JSON.parse(localStorage.getItem("accounts"));
+  console.log(accounts);
+  //for each account in accounts
+  let defaultName = document.querySelector(".folder-container > li").textContent
+  let folderCounter = document.querySelector(".folder-counter")
+
+  //function to push folder object to array
+  function initFolderArray(accounts, username, folderId, folderTitle, count){
+    let userAccount = accounts.find(user => user.username === username);
+
+    console.log(userAccount);
+    if (userAccount) {
+      userAccount.isLoggedIn = validLogin
+      if (!Array.isArray(userAccount.folders)) {
+        userAccount.folders = [];
+      }
+      userAccount.folders.push({
+        folderId, 
+        folderTitle, 
+        folderTaskCount: +count, 
+        "tasks":{}
+      })
+      saveAccounts(accounts)
+      console.log(accounts);
+    } else {
+      console.log("user not found");
+      // acc.folders = accounts
+      // render(username)
+    }
+  }
+  initFolderArray(accounts, username, folderId, defaultName, +folderCounter.textContent)
+
+  //set logout event to login button
+  let loginBtn = document.querySelector(".loginBtn"); 
+  loginBtn.innerHTML = "Logout" //add SVG here
+  
+  //right now this would logout any user that is flagged as logged in would need to be adjusted for real world application
+  //a timeout would need to be added to logout user
+  // user is not logged out on page refresh so you need to create a check for logged in users on refresh and load the correct DOM elements
+  loginBtn.addEventListener("click", () =>{
+    accounts.forEach(account=>{
+      console.log(account);
+      if (account.isLoggedIn === true){
+        account.isLoggedIn = false
+        saveAccounts(accounts)
+        document.querySelector(".folders-section").remove()
+        // document.querySelector(".tasks-section").remove()
+        initHomepage()
+        username = ""
+        createHeader()
+      }
+    })
+  })
+}
   // let defaultName = document.querySelector(".folder-container > li").textContent
   // let folderCounter = document.querySelector(".folder-counter")
   // function initFolderArray(folderId, folderTitle, count){
@@ -100,7 +157,6 @@ export function initFolders(username) {
   //   };
   // initFolderArray(folderId, defaultName, +folderCounter.textContent);
   // return {folderInit, taskInit}
-}
 
 //local storage structure
 // folderArray.push([{folderTitle},{"tasksArray": ["task1", "task2", "task3"]}])
@@ -116,16 +172,14 @@ function initTaskArray(){
 
 export function initHomepage(){
   let homeInit = (()=>{
-
+  
     const content = document.querySelector(".content")
     const foldersSection = document.querySelector(".folders-section")
     const tasksSection = document.querySelector(".tasks-section")
     const heroSection =  createElem('section',{class:"hero-section"})
-   
+    // const accounts = JSON.parse(localStorage.getItem("accounts"))
     //this is causing a bug when logging in
     content.innerHTML = ""
-
-
 
     content.appendChild(heroSection)
 

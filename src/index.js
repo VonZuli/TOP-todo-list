@@ -5,7 +5,7 @@ import './style.css'
 import {createHeader as header} from './scripts/header'
 import {createFooter as footer} from './scripts/footer';
 import {initHomepage, initDOM, noLogin, initFolders } from './scripts/init';
-import { saveFolders } from './scripts/saveFolders';
+import { saveFolders } from './scripts/saveAccounts';
 
 // import images
 const images = require.context('../src/assets/images', true)

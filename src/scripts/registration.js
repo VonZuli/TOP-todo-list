@@ -5,9 +5,9 @@ import { createHeader  as header } from "./header"
 import { initHomepage } from "./init"
 import { registrationValidation } from "./validation";
 import { createElem } from "./factory";
-import { createAccount } from "./accountStorage";
 
-export let accountsArr;
+
+
 //builds registration page
 export function registration(){
 

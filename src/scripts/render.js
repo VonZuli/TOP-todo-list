@@ -1,7 +1,7 @@
 //#region imports
 import { imagepath } from "../index";
 import { folderArray } from "./init";
-import { saveFolders } from "./saveFolders";
+import { saveAccounts } from "./saveAccounts";
 import { 
   selectFolder, 
   displayDeleteBtn,
@@ -12,12 +12,20 @@ import {
 import { createElem, createListenerElem } from "./factory";
 //#endregion imports  
 
-export function render(){
+export function render(username){
   
+  const accounts = JSON.parse(localStorage.getItem("accounts"));
   const folderList = document.querySelector("#folder-content > ul")
+  accounts.forEach(acc=>{
+
+    if (acc.isLoggedIn === true) {
+      console.log(username);
+    }
+
+
   folderList.innerHTML = ""
 
-  folderArray.forEach(folder=>{
+  acc.folders.forEach(folder=>{
 
     let folderTitle = folder.folderTitle
     // const deleteSVG = new Image();
@@ -87,6 +95,16 @@ export function render(){
           )
         )
       ))
+
+    })
+
+  //adds event listener to folder-container new class elements
+  selectFolder(); 
+  displayDeleteBtn();
+  })
+  saveAccounts()
+};
+
     // const folderContainer = document.createElement('div')
     // const animationContainer = document.createElement('div')
     // const counterContainer = document.createElement('div')
@@ -166,11 +184,3 @@ export function render(){
     // editContainer.appendChild(editSVG)
     // deleteContainer.appendChild(tooltipDel)
     // deleteContainer.appendChild(deleteSVG)
-  })
-
-  //adds event listener to folder-container new class elements
-  selectFolder(); 
-  displayDeleteBtn();
-  
-  // saveFolders();
-};
