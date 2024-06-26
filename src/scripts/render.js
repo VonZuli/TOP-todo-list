@@ -16,93 +16,86 @@ export function render(username){
   
   const accounts = JSON.parse(localStorage.getItem("accounts"));
   const folderList = document.querySelector("#folder-content > ul")
+
   accounts.forEach(acc=>{
-
     if (acc.isLoggedIn === true) {
+      folderList.innerHTML = ""
       console.log(username);
+      acc.folders.forEach(folder=>{
+
+        let folderTitle = folder.folderTitle
+
+        const deleteSVG = imagepath('./svg/delete.svg');
+        const editSVG = imagepath('./svg/edit.svg')
+        const folderId = folder.folderId
+
+        folderList.appendChild(
+          createElem("div",{class:'folder-container','data-folder': folderId},
+            folder.isEditing !== true ?
+            createElem("li",{'data-folder': folderId}, folderTitle)
+            :
+            (function() {
+              const editingContainer = 
+                createElem("div", { class: "editing-container" },
+                  createElem("input", { 
+                    type: "text", 
+                    id:`edit-folderTitle-${folderId}`, 
+                    autofocus: "", 
+                    class: "editFolderInput", 
+                    "value": folderTitle 
+                  })
+              );
+
+              const saveEditButton = 
+                createElem("button", { 
+                  class: "saveEditBtn", 
+                  "data-folder": folderId, 
+                  id: folderId 
+                }, "Save?");
+
+              saveEditButton.addEventListener('click', onUpdate)
+
+              editingContainer.appendChild(saveEditButton);
+              return editingContainer;
+            })(),
+
+            createElem("div",{class:'animation-container'},
+              createElem("div",{class:'counter-container'},
+                createElem("div",{
+                  class: 'folder-counter', 
+                  'data-folder': folderId
+                }, "0")
+              ), 
+              createElem("div",{class:'edit-container tooltip'},
+                createElem("span",{class:'tooltipText'},"Edit folder name"),
+                createListenerElem("img",{
+                  src:editSVG, 
+                  class:'editBtn', 
+                  'data-folder': folderId, 
+                  tabindex:"0"
+                },
+                {click:editFolder})
+              ), 
+              createElem("div",{class:'delete-container hovered tooltip'},
+                createElem("span",{class:"tooltipText"}, "Delete folder"),
+                createListenerElem("img",{
+                  src:deleteSVG, 
+                  class:'deleteBtn',
+                  'data-folder': folderId, 
+                  tabindex:"1"
+                },
+                {click:deleteFolder(folderId, folderTitle)})
+              )
+            )
+        ))
+      })
+    //adds event listener to folder-container new class elements
+    selectFolder(); 
+    displayDeleteBtn();
     }
-
-
-  folderList.innerHTML = ""
-
-  acc.folders.forEach(folder=>{
-
-    let folderTitle = folder.folderTitle
-    // const deleteSVG = new Image();
-    // const editSVG = new Image()
-    const deleteSVG = imagepath('./svg/delete.svg');
-    const editSVG = imagepath('./svg/edit.svg')
-    const folderId = folder.folderId
-
-    // deleteSVG.src = imagepath('./svg/delete.svg');
-    // editSVG.src = imagepath('./svg/edit.svg')
-    folderList.appendChild(
-      createElem("div",{class:'folder-container','data-folder': folderId},
-      folder.isEditing !== true ?
-        createElem("li",{'data-folder': folderId}, folderTitle)
-        :
-        (function() {
-          const editingContainer = 
-            createElem("div", { class: "editing-container" },
-              createElem("input", { 
-                type: "text", 
-                id:`edit-folderTitle-${folderId}`, 
-                autofocus: "", 
-                class: "editFolderInput", 
-                "value": folderTitle 
-              })
-          );
-
-          const saveEditButton = 
-            createElem("button", { 
-              class: "saveEditBtn", 
-              "data-folder": folderId, 
-              id: folderId 
-            }, "Save?");
-
-          saveEditButton.addEventListener('click', onUpdate)
-
-          editingContainer.appendChild(saveEditButton);
-          return editingContainer;
-        })(),
-
-        createElem("div",{class:'animation-container'},
-          createElem("div",{class:'counter-container'},
-            createElem("div",{
-              class: 'folder-counter', 
-              'data-folder': folderId
-            }, "0")
-          ), 
-          createElem("div",{class:'edit-container tooltip'},
-            createElem("span",{class:'tooltipText'},"Edit folder name"),
-            createListenerElem("img",{
-              src:editSVG, 
-              class:'editBtn', 
-              'data-folder': folderId, 
-              tabindex:"0"
-            },
-            {click:editFolder})
-          ), 
-          createElem("div",{class:'delete-container hovered tooltip'},
-            createElem("span",{class:"tooltipText"}, "Delete folder"),
-            createListenerElem("img",{
-              src:deleteSVG, 
-              class:'deleteBtn',
-              'data-folder': folderId, 
-              tabindex:"1"
-            },
-            {click:deleteFolder(folderId, folderTitle)})
-          )
-        )
-      ))
-
-    })
-
-  //adds event listener to folder-container new class elements
-  selectFolder(); 
-  displayDeleteBtn();
   })
-  saveAccounts()
+  saveAccounts(accounts)
+  
 };
 
     // const folderContainer = document.createElement('div')

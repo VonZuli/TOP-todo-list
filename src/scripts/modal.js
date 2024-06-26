@@ -104,9 +104,11 @@ export function createModal(e) {
       }
       createForm();
       document.querySelector('input').setAttribute('autofocus', '')
-      
+      document.querySelector('form').addEventListener("submit", (e) =>{
+        e.preventDefault
+      })
       addBtn.addEventListener('click', (e)=>{
-          e.preventDefault()
+        e.preventDefault()
           if (e.target.dataset.addType === 'folder') {
             folderValidation();
           }
@@ -148,12 +150,13 @@ let createFormObject = {
 
       let idAttr = Object.keys(this)[1]
       let id = this.id[val3]
-      
+  
       let nameAttr = 'name';
       let name = this.id[val3];
 
+      let formAttr = 'form'
       if (type === this.type[1]) {
-        return `<button ${typeAttr}=${type} ${idAttr}=${this.id[val2]}>Add ➕</button>
+        return `<button ${typeAttr}=${type} ${idAttr}=${this.id[val2]} ${formAttr}=${createFormObject.label.labelAttr.form[0]}>Add ➕</button>
               </div>`
       }else if(type === this.type[4]){
         return `<div>

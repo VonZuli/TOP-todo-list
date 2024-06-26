@@ -16,7 +16,7 @@ import { createHeader } from './header';
 
 //initialize folders array
 // export let accounts;
-// export let userArr;
+export let userArr;
 
 //user signs in
 //access the folders object within the logged in users accounts array
@@ -85,7 +85,6 @@ export function initFolders(username, validLogin) {
   
   //get the accounts from localstorage
   const accounts = JSON.parse(localStorage.getItem("accounts"));
-  console.log(accounts);
   //for each account in accounts
   let defaultName = document.querySelector(".folder-container > li").textContent
   let folderCounter = document.querySelector(".folder-counter")
@@ -93,13 +92,11 @@ export function initFolders(username, validLogin) {
   //function to push folder object to array
   function initFolderArray(accounts, username, folderId, folderTitle, count){
     let userAccount = accounts.find(user => user.username === username);
+    userAccount.isLoggedIn = validLogin
 
     console.log(userAccount);
-    if (userAccount) {
-      userAccount.isLoggedIn = validLogin
-      if (!Array.isArray(userAccount.folders)) {
-        userAccount.folders = [];
-      }
+    if (!userAccount || userAccount.folders < 1) {
+      userAccount.folders = [];
       userAccount.folders.push({
         folderId, 
         folderTitle, 
@@ -107,11 +104,9 @@ export function initFolders(username, validLogin) {
         "tasks":{}
       })
       saveAccounts(accounts)
-      console.log(accounts);
     } else {
-      console.log("user not found");
-      // acc.folders = accounts
-      // render(username)
+      saveAccounts(accounts)
+      render(username)
     }
   }
   initFolderArray(accounts, username, folderId, defaultName, +folderCounter.textContent)
@@ -138,25 +133,7 @@ export function initFolders(username, validLogin) {
     })
   })
 }
-  // let defaultName = document.querySelector(".folder-container > li").textContent
-  // let folderCounter = document.querySelector(".folder-counter")
-  // function initFolderArray(folderId, folderTitle, count){
-  //     if (!localStorage.getItem("folders") || savedFoldersObj.length < 1) {
-  //       folderArray = new Array();
-  //       folderArray.push({
-  //         folderId, 
-  //         folderTitle, 
-  //         folderTaskCount:+count
-  //       })
-  //       saveFolders(folderArray)
-  //     }else{
-  //       folderArray = savedFoldersObj
-  //       //call function to render DOM with localstorage data
-  //       render()
-  //     }
-  //   };
-  // initFolderArray(folderId, defaultName, +folderCounter.textContent);
-  // return {folderInit, taskInit}
+ 
 
 //local storage structure
 // folderArray.push([{folderTitle},{"tasksArray": ["task1", "task2", "task3"]}])
@@ -178,7 +155,7 @@ export function initHomepage(){
     const tasksSection = document.querySelector(".tasks-section")
     const heroSection =  createElem('section',{class:"hero-section"})
     // const accounts = JSON.parse(localStorage.getItem("accounts"))
-    //this is causing a bug when logging in
+   
     content.innerHTML = ""
 
     content.appendChild(heroSection)
@@ -317,7 +294,25 @@ export function initHomepage(){
   //   foldersContainer.appendChild(newFolderBtn)
 
   // export function initDOM(){
-    
+     // let defaultName = document.querySelector(".folder-container > li").textContent
+  // let folderCounter = document.querySelector(".folder-counter")
+  // function initFolderArray(folderId, folderTitle, count){
+  //     if (!localStorage.getItem("folders") || savedFoldersObj.length < 1) {
+  //       folderArray = new Array();
+  //       folderArray.push({
+  //         folderId, 
+  //         folderTitle, 
+  //         folderTaskCount:+count
+  //       })
+  //       saveFolders(folderArray)
+  //     }else{
+  //       folderArray = savedFoldersObj
+  //       //call function to render DOM with localstorage data
+  //       render()
+  //     }
+  //   };
+  // initFolderArray(folderId, defaultName, +folderCounter.textContent);
+  // return {folderInit, taskInit}
     
   //   function initFolderArray(folderId, folderTitle, count){
   // const savedFoldersObj = JSON.parse(localStorage.getItem("folders"));

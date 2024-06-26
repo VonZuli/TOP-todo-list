@@ -2,7 +2,7 @@
 import { isBoolean } from "lodash";
 import { addFolder } from "./folders";
 import { generateId } from "./generateID";
-import { folderArray, initFolders, initHomepage, userArr } from "./init";
+import { initFolders, initHomepage, userArr } from "./init";
 import { isValid } from "date-fns";
 import { login } from "./login";
 import { createHeader } from "./header";
@@ -14,6 +14,7 @@ import { saveAccounts } from "./saveAccounts";
 //#endregion imports
 
 export const folderValidation = () =>{
+  
   const accounts = JSON.parse(localStorage.getItem("accounts"));
   const folderNameInput = document.querySelector("#title")
   const errorMsg = document.querySelector("#errorMsgDisplay")
@@ -25,7 +26,9 @@ export const folderValidation = () =>{
 
   //change the lower case function to regex later
   const folderExists = accounts.map(acc =>{
+    console.log(acc);
     acc.folders.map(folder=>{
+      console.log(folder);
       return folder.folderTitle.toLowerCase()
     })
   });
@@ -54,8 +57,8 @@ export const folderValidation = () =>{
         folderTaskCount:+count, 
         "tasks":[]
       })
-      //this will set undefined right now
-      // localStorage.setItem("accounts", JSON.stringify(accounts))
+
+      localStorage.setItem("accounts", JSON.stringify(accounts))
     }
   })
   document.querySelector('#new-modal').remove();
