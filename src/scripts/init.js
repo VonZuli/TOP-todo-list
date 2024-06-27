@@ -27,13 +27,14 @@ export let userArr;
 export function initFolders(username, validLogin) {
   createHeader(username)
   const folderSVG = imagepath('./svg/folder.svg');
+  const addFolderSVG = imagepath('./svg/add-folder.svg')
   const editSVG = imagepath('./svg/edit.svg');
   const deleteSVG = imagepath('./svg/delete.svg');
   const folderSection = createElem("section",{class:"folders-section"})
-  // const tasksSection = createElem("section",{class:"tasks-section"})
+  const tasksSection = createElem("section",{class:"tasks-section"})
 
   document.querySelector(".content").appendChild(folderSection)
-  // document.querySelector(".content").appendChild(tasksSection)
+  document.querySelector(".content").appendChild(tasksSection)
   
   const folderId = generateId()
 
@@ -63,7 +64,9 @@ export function initFolders(username, validLogin) {
         )
       )
     ), 
-    createElem("button",{id:"newFolder", class:"addBtn"}, "Add Folder ➕")
+    createElem("button",{id:"newFolder", class:"addBtn"}, "Create Folder", 
+      createListenerElem("img", {src:addFolderSVG},{})
+    )
     )
   )
 

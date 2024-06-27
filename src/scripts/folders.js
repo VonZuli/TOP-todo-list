@@ -1,8 +1,10 @@
 //#region imports
-import { createElem } from "./factory";
+import { imagepath } from "..";
+import { createElem, createListenerElem } from "./factory";
 // import { folderArray } from "./init";
 import { render } from "./render";
 import { saveAccounts } from "./saveAccounts"
+import { addTask } from "./tasks";
 //#endregion imports
 
 export function addFolder() {
@@ -20,7 +22,8 @@ export function selectFolder(){
         // document.querySelector(".editBtn").style.display = "none"
         // if (folderDiv.classList.contains("active")) 
         // document.querySelector(".editBtn").style.display = "flex"
-
+        let folderTitle = document.querySelector("li[data-folder]")
+        displayFolderContents(folderTitle);
     })
   )
 }
@@ -122,10 +125,47 @@ function updateFolder(folderId, newFolderTitle){
 
 //user clicks child of Folder header
 function displayFolderContents(e) {
+  const addTaskSVG = imagepath("./svg/add-task.svg")
   const tasksSection = document.querySelector(".tasks-section")
+  const mainContent = document.querySelector(".content")
+  mainContent.style.flexDirection = "row"
+  mainContent.style.justifyContent = "flex-start"
   tasksSection.style.visibility = "visible"
-  let taskHeader = e.target.firstChild.textContent;
+  console.log(e);
+  let taskHeader = e.textContent;
   //modify tasks subtitle h2 to display "folder name + tasks"
-  const tasksSubtitle = document.querySelector("#tasks-subtitle > h2")
-  tasksSubtitle.textContent = `${taskHeader} Tasks`
+  tasksSection.appendChild(
+    createListenerElem("div", {class: "container"},{},
+      createListenerElem("div", {id: "tasks-subtitle"},{},
+        createListenerElem("h2", {},{}, `${taskHeader} Tasks`)
+      )
+    ),
+    createListenerElem("div", {id:'tasks-content'}, {},
+      createListenerElem("ul", {},{})
+    ),
+    createListenerElem("button", {id: "newTask", class: "addBtn"},{click:addTask}, "Create Task", 
+      createListenerElem("img", {src:addTaskSVG})
+    )
+  )
 }
+
+
+// let taskInit = (() => {
+  //   //tasks section declarations
+
+
+
+
+  //   const newTaskBtn = document.createElement('button')
+
+  //   //create tasks section
+
+
+    
+
+  //   newTaskBtn.textContent = 'Add Task ➕'
+  //   newTaskBtn.id = 'newTask'
+  //   newTaskBtn.classList.add('addBtn')
+  //   tasksContainer.appendChild(newTaskBtn)
+    
+  // })();

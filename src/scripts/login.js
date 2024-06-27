@@ -10,13 +10,14 @@ export function login() {
   const linkText = 'here.'
   let eyeOpenSVG = imagepath('./svg/eye-open.svg')
   let eyeCloseSVG = imagepath('./svg/eye-closed.svg')
+  const loginSVG = imagepath('./svg/user-login.svg')
 
   let loginObj = {}
 
   body.appendChild(
     createElem("dialog", {class:"login_dialog"},
       createElem("div",{class:"login-container"},
-        createElem("img",{src:imagepath('./svg/user-login.svg')}),
+        createElem("img",{src:loginSVG}),
         createElem("h2", {class:"welcomeMsg"},"Please sign in"),
         createElem("form", {id:"login", class: "login-form", action:"#"},
           createElem("input", {autofocus:"", class:"username_txt", type:"text", placeholder:"Username", name:"Username"}),

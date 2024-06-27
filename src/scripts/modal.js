@@ -1,122 +1,91 @@
 import { addTask } from "./tasks"
 import { folderValidation } from "./validation";
-
+import { createElem, createListenerElem } from "./factory";
+import { imagepath } from "..";
 export function createModal(e) {
   
   function renderModal() {
-    // create the modal element and append to DOM
-    const newModal = document.createElement('div');
-    newModal.id = 'new-modal';
-    newModal.classList.add('modal');
-    document.body.appendChild(newModal);
+    const closeSVG = imagepath("./svg/close.svg")
+    const addFolderSVG = imagepath("./svg/add-folder.svg")
+    let variable = "folder/task"
 
-    // create the content
-    const modalContent = document.createElement('div');
-    modalContent.classList.add('modal-content');
-    
-    // add a close "button"
-    const modalClose = document.createElement('span');
-    modalClose.classList.add('modal-close');
-    modalClose.textContent = '❌';
-
-    // display the modal
-    newModal.style.display = 'block';
-    
-    // add close event to close "button"
-    modalClose.addEventListener('click', ()=>{
+    // add close event to closeSVG
+    let modalClose = () => {
       document.querySelector('#new-modal').remove();
-    });
-    newModal.appendChild(modalContent);
+    };
+
+    document.body.appendChild(
+      createListenerElem("dialog", {id: "new-modal", class: "modal"},{}, 
+        createListenerElem("div", {class:"modal-content"},{},
+          createListenerElem("div", {class:"modal-header"},{},
+            createListenerElem("h1",{},{}, `Create new ${variable}`),
+            createListenerElem("img",{src:closeSVG, class: "modal-close"},{click: modalClose})
+          ),
+          createListenerElem("form",{id:"modalNewFolderForm"},{},
+            createListenerElem("div",{id:"formFieldContainer"},{},
+              createListenerElem("div",{},{},
+                createListenerElem("label",{for:"title"},{}, "Folder Name:"), 
+                createListenerElem("input",{id:"title", type:"text",name:"title",},{})
+              ), 
+              createListenerElem("div", {id:"errorMsgDisplay"},{})
+            ),
+            createListenerElem("button", {id:"addBtn", form:`modalNewFolderForm`, "data-add-type":"folder"},{}, "Add", 
+              createListenerElem("img", {src:addFolderSVG})
+            )
+          )  
+        )
+      )
+    );
+
+
+
+
+  // pass in the form type and use it to determine form creation
+  // dynamically create forms
+    function createForm(){
+
+      
+      // creates task form
+      function createTaskForm(newForm){
+        modalFormTitle.textContent = "Create new task";
+        newForm.setAttribute('id', createFormObject.label.labelAttr.form[1]);
+
+        // create form from object
+        formFieldContainer.innerHTML = 
+        `${createFormObject.label.generateLabel(0,0)}
+          ${createFormObject.input.generateInput(0,1,0)} 
+
+          ${createFormObject.label.generateLabel(1,1)}
+          ${createFormObject.input.generateInput(0,1,1)}
+
+          ${createFormObject.label.generateLabel(2,2)}
+          ${createFormObject.input.generateInput(2,1,2)}
+
+          ${createFormObject.label.generateLabel(3,3)}
+          ${createFormObject.input.generateInput(4,1,3)}
+        `;
+      };
+
+      //set input focus
+      document.querySelector("input").focus()
+    }
+    createForm();
+    document.querySelector('input').setAttribute('autofocus', '')
+    document.querySelector('form').addEventListener("submit", (e) =>{
+      e.preventDefault
+    })
+    addBtn.addEventListener('click', (e)=>{
+      e.preventDefault()
+        if (e.target.dataset.addType === 'folder') {
+          folderValidation();
+        }
+        if (e.target.dataset.addType === 'task') {
+          addTask()
+          document.querySelector('#new-modal').remove();
+        }
+    })
+
     
-    // dynamically create forms
-      function createForm(){
-        const folderBtn = document.getElementById('newFolder');
-        const taskBtn = document.getElementById('newTask');
-        const modalFormTitle = document.createElement('h1');
-        const createNewForm = document.createElement('form');
-        const formFieldContainer = document.createElement('div');
-        const errorMsgDisplay = document.createElement("div")
-        formFieldContainer.id = "formFieldContainer"
-        errorMsgDisplay.id = "errorMsgDisplay"
-   
-        // logic to call function depending on button pressed
-        if(folderBtn === e){
-          createFolderForm(createNewForm);
-        }
-        if (taskBtn === e) {
-          createTaskForm(createNewForm);
-        }
-        
-        // append form to modal
-        modalContent.appendChild(modalFormTitle);
-        modalContent.appendChild(modalClose);
-        modalContent.appendChild(createNewForm);
-        createNewForm.appendChild(formFieldContainer)
-        formFieldContainer.appendChild(errorMsgDisplay)
-
-        // append addBtn to modal
-        let addBtn = createFormObject.input.generateInput(1,6);
-        formFieldContainer.insertAdjacentHTML("afterend", addBtn);
-        
-        // if rendering form add data-type attr to addBtn
-        if (createNewForm.id === createFormObject.label.labelAttr.form[0]) {
-          document.querySelector('#addBtn').setAttribute('data-add-type', 'folder')
-        }
-        if (createNewForm.id === createFormObject.label.labelAttr.form[1]) {
-          document.querySelector('#addBtn').setAttribute('data-add-type', 'task')
-        }
-
-        // creates folder form       
-        function createFolderForm(newForm){
-          modalFormTitle.textContent = "Create new folder";
-          newForm.setAttribute('id', createFormObject.label.labelAttr.form[0]);
-
-          formFieldContainer.innerHTML = 
-            `${createFormObject.label.generateLabel(0,6)}
-             ${createFormObject.input.generateInput(0,0,0)}
-            `;
-
-        };
-        
-        // creates task form
-        function createTaskForm(newForm){
-          modalFormTitle.textContent = "Create new task";
-          newForm.setAttribute('id', createFormObject.label.labelAttr.form[1]);
-
-          // create form from object
-          formFieldContainer.innerHTML = 
-          `${createFormObject.label.generateLabel(0,0)}
-           ${createFormObject.input.generateInput(0,1,0)} 
-
-           ${createFormObject.label.generateLabel(1,1)}
-           ${createFormObject.input.generateInput(0,1,1)}
-
-           ${createFormObject.label.generateLabel(2,2)}
-           ${createFormObject.input.generateInput(2,1,2)}
-
-           ${createFormObject.label.generateLabel(3,3)}
-           ${createFormObject.input.generateInput(4,1,3)}
-          `;
-        };
-
-        //set input focus
-        document.querySelector("input").focus()
-      }
-      createForm();
-      document.querySelector('input').setAttribute('autofocus', '')
-      document.querySelector('form').addEventListener("submit", (e) =>{
-        e.preventDefault
-      })
-      addBtn.addEventListener('click', (e)=>{
-        e.preventDefault()
-          if (e.target.dataset.addType === 'folder') {
-            folderValidation();
-          }
-          if (e.target.dataset.addType === 'task') {
-            addTask()
-            document.querySelector('#new-modal').remove();
-          }
-      })
   }
   renderModal();
 };
@@ -181,3 +150,75 @@ let createFormObject = {
     },
   }
 };
+
+
+
+
+    // // create the modal element and append to DOM
+    // const newModal = document.createElement('div');
+    // newModal.id = 'new-modal';
+    // newModal.classList.add('modal');
+        // modalContent.appendChild(modalFormTitle);
+        // modalContent.appendChild(modalClose);
+        // modalContent.appendChild(createNewForm);
+        // createNewForm.appendChild(formFieldContainer)
+        // formFieldContainer.appendChild(errorMsgDisplay)
+            // // create the content
+    // const modalContent = document.createElement('div');
+    // modalContent.classList.add('modal-content');
+    
+    // // add a close "button"
+    // const modalClose = document.createElement('span');
+    // modalClose.classList.add('modal-close');
+    // modalClose.textContent = '❌';
+
+    // // display the modal
+    // newModal.style.display = 'block';
+        // newModal.appendChild(modalContent);
+        // const folderBtn = document.getElementById('newFolder');
+        // const taskBtn = document.getElementById('newTask');
+        // const modalFormTitle = document.createElement('h1');
+        // const createNewForm = document.createElement('form');
+        // const formFieldContainer = document.createElement('div');
+        // const errorMsgDisplay = document.createElement("div")
+        // formFieldContainer.id = "formFieldContainer"
+        // errorMsgDisplay.id = "errorMsgDisplay"
+   
+        // // logic to call function depending on button pressed
+        // if(folderBtn === e){
+        //   createFolderForm(createNewForm);
+        // }
+        // if (taskBtn === e) {
+        //   createTaskForm(createNewForm);
+        // }
+        
+        // append form to modal
+        // modalContent.appendChild(modalFormTitle);
+        // modalContent.appendChild(modalClose);
+        // modalContent.appendChild(createNewForm);
+        // createNewForm.appendChild(formFieldContainer)
+        // formFieldContainer.appendChild(errorMsgDisplay)
+
+        // append addBtn to modal
+        // let addBtn = createFormObject.input.generateInput(1,6);
+        // formFieldContainer.insertAdjacentHTML("afterend", addBtn);
+        
+        // if rendering form add data-type attr to addBtn
+        // if (createNewForm.id === createFormObject.label.labelAttr.form[0]) {
+        //   document.querySelector('#addBtn').setAttribute('data-add-type', 'folder')
+        // }
+        // if (createNewForm.id === createFormObject.label.labelAttr.form[1]) {
+        //   document.querySelector('#addBtn').setAttribute('data-add-type', 'task')
+        // }
+
+        // creates folder form       
+        // function createFolderForm(newForm){
+        //   // modalFormTitle.textContent = "Create new folder";
+        //   // newForm.setAttribute('id', createFormObject.label.labelAttr.form[0]);
+
+        //   formFieldContainer.innerHTML = 
+        //     `${createFormObject.label.generateLabel(0,6)}
+        //      ${createFormObject.input.generateInput(0,0,0)}
+        //     `;
+
+        // };
