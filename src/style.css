@@ -514,21 +514,41 @@ button:focus{
       z-index: 1;
     }
     #formFieldContainer > div:nth-child(4){
-      display: flex;
-      flex-direction: row;
+      /* display: flex; */
+      /* flex-direction: row; */
+    
     }
     #formFieldContainer > div:nth-child(4) > label{
       align-self: start;
 
     }
     #formFieldContainer > div:nth-child(4) > div:nth-child(2){
-      flex-basis: 100%;
+      /* flex-basis: 100%; */
+      
     }
     #formFieldContainer > div:nth-child(4) > div{
+
+      /* border: green 2px solid; */
+    }
+    .radio-wrapper{
       display: flex;
       flex-direction: column;
       max-width: fit-content;
+      color: var(--text-color);
+     
     }
+    .radio-wrapper > div{
+      display: flex;
+      align-items: center;
+    }
+    .radio-wrapper > div > input{
+      margin: 0
+    }
+    .radio-wrapper > div > label{
+      flex-basis: 100%;
+      padding-left: 0.3em;
+    }
+
     #formFieldContainer > div > input[type='text']{
       padding: 3px;
     }
@@ -634,13 +654,13 @@ button:focus{
       flex: 0;
       transition: flex 1s; 
     }
-    .addBtn{
+    .createBtn{
       display: flex;
       flex-direction: row;
       justify-content: center;
       align-items: center;
     }
-    .addBtn > img{
+    .createBtn > img{
       width: 25px;
       margin-left: 5px;
     }

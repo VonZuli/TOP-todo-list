@@ -1,4 +1,3 @@
-import { forEach } from "lodash";
 import { imagepath } from "../index";
 import { generateId } from "./generateID";
 
@@ -7,7 +6,7 @@ export function addTask() {
   const trashSVG = new Image()
   const editSVG = new Image()
   const calendarSVG = new Image()
-  trashSVG.src = imagepath('./svg/trash.svg')
+  trashSVG.src = imagepath('./svg/delete.svg')
   editSVG.src = imagepath('./svg/edit.svg')
   calendarSVG.src = imagepath('./svg/calendar-exclaim.svg')
 

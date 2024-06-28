@@ -1,6 +1,7 @@
 //#region imports
 import { imagepath } from "..";
 import { createElem, createListenerElem } from "./factory";
+import { createModal as modal }  from "./modal";
 // import { folderArray } from "./init";
 import { render } from "./render";
 import { saveAccounts } from "./saveAccounts"
@@ -8,7 +9,7 @@ import { addTask } from "./tasks";
 //#endregion imports
 
 export function addFolder() {
-
+  
   render();
 }
 
@@ -138,34 +139,13 @@ function displayFolderContents(e) {
     createListenerElem("div", {class: "container"},{},
       createListenerElem("div", {id: "tasks-subtitle"},{},
         createListenerElem("h2", {},{}, `${taskHeader} Tasks`)
+      ),
+      createListenerElem("div", {id:'tasks-content'}, {},
+        createListenerElem("ul", {},{})
+      ),
+      createListenerElem("button", {id: "newTask", class: "createBtn"},{click:modal}, "Create Task", 
+        createListenerElem("img", {src:addTaskSVG})
       )
-    ),
-    createListenerElem("div", {id:'tasks-content'}, {},
-      createListenerElem("ul", {},{})
-    ),
-    createListenerElem("button", {id: "newTask", class: "addBtn"},{click:addTask}, "Create Task", 
-      createListenerElem("img", {src:addTaskSVG})
     )
   )
 }
-
-
-// let taskInit = (() => {
-  //   //tasks section declarations
-
-
-
-
-  //   const newTaskBtn = document.createElement('button')
-
-  //   //create tasks section
-
-
-    
-
-  //   newTaskBtn.textContent = 'Add Task ➕'
-  //   newTaskBtn.id = 'newTask'
-  //   newTaskBtn.classList.add('addBtn')
-  //   tasksContainer.appendChild(newTaskBtn)
-    
-  // })();

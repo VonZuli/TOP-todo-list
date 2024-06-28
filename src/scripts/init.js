@@ -64,7 +64,7 @@ export function initFolders(username, validLogin) {
         )
       )
     ), 
-    createElem("button",{id:"newFolder", class:"addBtn"}, "Create Folder", 
+    createListenerElem("button",{id:"newFolder", class:"createBtn"},{click:modal}, "Create Folder", 
       createListenerElem("img", {src:addFolderSVG},{})
     )
     )
@@ -78,13 +78,13 @@ export function initFolders(username, validLogin) {
   // document.querySelector(".delete-container > img").addEventListener('click', deleteFolder(folderId))
 
   // add event listener to form buttons that displays appropriate modal
-  const formBtn = document.querySelectorAll('.addBtn');
-  formBtn.forEach(btn => {
-    btn.addEventListener('click', (e)=>{
-      e.preventDefault()
-      modal(e.target)
-    })
-  });
+  // const formBtn = document.querySelectorAll('.createBtn');
+  // formBtn.forEach(btn => {
+  //   btn.addEventListener('click', (e)=>{
+  //     e.preventDefault()
+  //     modal(e.target)
+  //   })
+  // });
   
   //get the accounts from localstorage
   const accounts = JSON.parse(localStorage.getItem("accounts"));
@@ -197,7 +197,7 @@ export function initHomepage(){
           createElem("h2", {class:`${key}-content`}, value[Object.keys(value)[2]]),
           createElem("button",{class:`${key}_btn`},value[Object.keys(value)[3]])
         ))
-        :
+      :
       content.appendChild(
       createElem("div", {class: `flex-wrapper content-container content-${key}`}, 
         createElem("img", {class:`content-image`,src: value[Object.keys(value)[2]]}),
