@@ -85,7 +85,7 @@ export function createModal(e) {
         createListenerElem("form",{id:"modalNewTaskForm"},{},
           formFieldContainer,
           createListenerElem("div", {id:"errorMsgDisplay"},{}),
-          createListenerElem("button", {id:"addBtn", form:"modalNewTaskForm", "data-add-type":"task"},{}, "Add", 
+          createListenerElem("button", {id:"addBtn", form:"modalNewTaskForm", "data-add-type":"task"},{click: addTask}, "Add", 
             createListenerElem("img", {src:addTaskSVG})
           )
         )  
