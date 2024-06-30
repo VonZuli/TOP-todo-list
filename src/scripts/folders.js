@@ -1,6 +1,6 @@
 //#region imports
 import { imagepath } from "..";
-import { createElem, createListenerElem } from "./factory";
+import { createElem } from "./factory";
 import { createModal as modal }  from "./modal";
 // import { folderArray } from "./init";
 import { render } from "./render";
@@ -18,13 +18,10 @@ export function selectFolder(){
   selectedFolder.forEach((folderDiv)=>
     folderDiv.addEventListener('click', (e)=>{
       e.preventDefault()
-        document.querySelector(".active")?.classList.remove("active")
-        folderDiv.classList.add("active")
-        // document.querySelector(".editBtn").style.display = "none"
-        // if (folderDiv.classList.contains("active")) 
-        // document.querySelector(".editBtn").style.display = "flex"
-        let folderTitle = document.querySelector("li[data-folder]")
-        displayFolderContents(folderTitle);
+      document.querySelector(".active")?.classList.remove("active")
+      folderDiv.classList.add("active")
+      let folderTitle = document.querySelector("li[data-folder]")
+      displayFolderContents(folderTitle);
     })
   )
 }
@@ -55,73 +52,94 @@ export const deleteFolder = (folderToDelete, folderTitle)=>{
     const dialogText = `Are you sure you want to delete the folder named ${folderTitle}?`
     const spanText = "This process is irreversible"
     body.appendChild(
-      createElem("dialog",{class:'confirmDelete_dialog', autofocus:''},
-        createElem("div",{class:'dialog-content'}, 
-          createElem("div",{class:'dialogMsg-container'},
-            createElem("p",{class:'deleteMsg'}, dialogText),
-            createElem("span",{class:'deleteMsg_span'}, spanText)
+      createElem("dialog",{class:'confirmDelete_dialog', autofocus:''}, {},
+        createElem("div",{class:'dialog-content'}, {},
+          createElem("div",{class:'dialogMsg-container'},{},
+            createElem("p",{class:'deleteMsg'},{}, dialogText),
+            createElem("span",{class:'deleteMsg_span'},{},spanText)
           ),
-          createElem("div",{class:'dialog-controls'},
-            createElem("button",{class:'confirmDelete_btn'},"Confirm"),
-            createElem("button",{class:'cancelDelete_btn'},"Cancel")
+          createElem("div",{class:'dialog-controls'},{},
+            createElem("button",{class:'confirmDelete_btn'},{mouseup: confirmDelete},"Confirm"),
+            createElem("button",{class:'cancelDelete_btn'},{click:cancelDelete},"Cancel")
           )
         )
       ))
 
-    document.querySelector(".confirmDelete_btn").addEventListener('mouseup', ()=>{
+   function confirmDelete(){
       document.querySelector('.confirmDelete_dialog').remove()
       removeFolder(folderToDelete)
+      document.querySelector(".task-container").remove()
       render()
-    })
-    document.querySelector(".cancelDelete_btn").addEventListener('click',()=>{
+    }
+    function cancelDelete(){
       document.querySelector('.confirmDelete_dialog').remove()
-    })
+    }
   }
 }
+
 function removeFolder(folderToDelete) {
-  const index = folderArray.findIndex(folder => 
-    folder.folderId === folderToDelete);
-    if (index > -1) {
-      folderArray.splice(index, 1);
+
+  const accounts = JSON.parse(localStorage.getItem("accounts"));
+
+  accounts.forEach(acc=>{
+    if (acc.isLoggedIn === true){
+      const index = acc.folders.findIndex(folder => folder.folderId === folderToDelete)
+      if (index > -1) {
+        acc.folders.splice(index, 1);
+      }
+      saveAccounts(accounts);
     }
-  console.log(folderArray);
-  // saveAccounts();
+  })
 }
 
 export function editFolder(e) {
   const editBtn = e.target;
   const folderToEdit = editBtn.dataset.folder;
-  console.log(folderToEdit);
   setEditing(folderToEdit);
   render();
 }
 function setEditing(folderToEdit) {
-  folderArray.forEach(folder=>{
-    console.log(folder);
-    if (folder.folderId === folderToEdit) {
-      folder.isEditing = true
+  const accounts = JSON.parse(localStorage.getItem("accounts"));
+  accounts.forEach(acc=>{
+    if (acc.isLoggedIn === true){
+      acc.folders.forEach(folder=>{
+        if(folder.folderId === folderToEdit){
+          folder.isEditing = true
+        }
+      })
+
+      saveAccounts(accounts)
     }
   })
-  // saveAccounts()
 }
 
 export function onUpdate(e){
 const saveBtn = e.target;
 const folderId = saveBtn.dataset.folder
 const textbox = document.querySelector(`#edit-folderTitle-${folderId}`)
+const tasksSection = document.querySelector(".tasks-section")
 const newFolderTitle = textbox.value
-
+if (tasksSection.style.visibility === "visible"){
+  document.querySelector("#tasks-subtitle > h2").textContent = `${newFolderTitle} Tasks`
+}
 updateFolder(folderId, newFolderTitle)
 render();
 }
+
 function updateFolder(folderId, newFolderTitle){
-  folderArray.forEach(folder=>{
-    if (folder.folderId === folderId) {
-      folder.folderTitle = newFolderTitle
-      folder.isEditing = false;
+  const accounts = JSON.parse(localStorage.getItem("accounts"));
+  accounts.forEach(acc=>{
+    if (acc.isLoggedIn === true) {
+      console.log(acc);
+      acc.folders.forEach(folder=>{
+        if(folder.folderId === folderId){
+          folder.folderTitle = newFolderTitle
+          folder.isEditing = false
+        }
+      })
+      saveAccounts(accounts)
     }
   })
-  // saveAccounts()
 }
 
 //user clicks child of Folder header
@@ -132,19 +150,19 @@ function displayFolderContents(e) {
   mainContent.style.flexDirection = "row"
   mainContent.style.justifyContent = "flex-start"
   tasksSection.style.visibility = "visible"
-  console.log(e);
-  let taskHeader = e.textContent;
+  let taskHeader = document.querySelector(".active > li").textContent
+  tasksSection.innerHTML = ""
   //modify tasks subtitle h2 to display "folder name + tasks"
   tasksSection.appendChild(
-    createListenerElem("div", {class: "container"},{},
-      createListenerElem("div", {id: "tasks-subtitle"},{},
-        createListenerElem("h2", {},{}, `${taskHeader} Tasks`)
+    createElem("div", {class: "task-container"},{},
+      createElem("div", {id: "tasks-subtitle"},{},
+        createElem("h2", {},{}, `${taskHeader} Tasks`)
       ),
-      createListenerElem("div", {id:'tasks-content'}, {},
-        createListenerElem("ul", {},{})
+      createElem("div", {id:'tasks-content'}, {},
+        createElem("ul", {},{})
       ),
-      createListenerElem("button", {id: "newTask", class: "createBtn"},{click:modal}, "Create Task", 
-        createListenerElem("img", {src:addTaskSVG})
+      createElem("button", {id: "newTask", class: "createBtn"},{click:modal}, "Create Task", 
+        createElem("img", {src:addTaskSVG})
       )
     )
   )

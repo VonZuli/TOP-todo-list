@@ -327,8 +327,8 @@ export function registrationValidation(userInfoObj){
     userArr.push(userInfoObj)
     localStorage.setItem("accounts", JSON.stringify(userArr))
     document.querySelector("body").appendChild(
-      createElem("dialog",{class: "confirm-reg"},
-        createElem("p", {class: "confirm-reg-msg"}, `Account created — Redirecting to login screen...`)
+      createElem("dialog",{class: "confirm-reg"},{},
+        createElem("p", {class: "confirm-reg-msg"},{}, `Account created — Redirecting to login screen...`)
         //add animation here
       ))
     setTimeout(() => {

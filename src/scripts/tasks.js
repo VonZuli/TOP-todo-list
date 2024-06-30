@@ -16,13 +16,9 @@ export function addTask(e) {
   let taskDesc = document.querySelector("#desc")
   let taskDueDate = document.querySelector("#dueDate")
   let taskPriority = document.querySelectorAll("input[type='radio']")
-  let lowPriority = document.querySelector("#priority-low")
-  let medPriority = document.querySelector("#priority-med")
-  let highPriority = document.querySelector("#priority-high")
+
   let taskPrioritySelection = ""
   
-
- 
   let taskId = generateId()
 
   taskPriority.forEach((priority)=>{
@@ -70,6 +66,8 @@ export function addTask(e) {
 }
 
 
+
+
   // // handleCheckbox(taskId)
   
   // // when we add a new task call this function
@@ -99,3 +97,8 @@ export function addTask(e) {
   //     }  
   //   })
   // )}
+
+
+  // let lowPriority = document.querySelector("#priority-low")
+  // let medPriority = document.querySelector("#priority-med")
+  // let highPriority = document.querySelector("#priority-high")

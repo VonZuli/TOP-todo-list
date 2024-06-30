@@ -1,6 +1,6 @@
 import { addTask } from "./tasks"
 import { folderValidation } from "./validation";
-import { createElem, createListenerElem } from "./factory";
+import { createElem } from "./factory";
 import { imagepath } from "..";
 export function createModal(e) {
   e.preventDefault();
@@ -24,14 +24,14 @@ export function createModal(e) {
       document.querySelector('#new-modal').remove();
     };
 
-    const formFieldContainer = createListenerElem("div",{id:"formFieldContainer"},{})
+    const formFieldContainer = createElem("div",{id:"formFieldContainer"},{})
 
     document.body.appendChild(
-      createListenerElem("dialog", {id: "new-modal", class: "modal"},{}, 
-        createListenerElem("div", {class:"modal-content"},{},
-          createListenerElem("div", {class:"modal-header"},{},
-            createListenerElem("h1",{},{}, `Create new ${formType}`),
-            createListenerElem("img",{src:closeSVG, class: "modal-close"},{click: modalClose})
+      createElem("dialog", {id: "new-modal", class: "modal"},{}, 
+        createElem("div", {class:"modal-content"},{},
+          createElem("div", {class:"modal-header"},{},
+            createElem("h1",{},{}, `Create new ${formType}`),
+            createElem("img",{src:closeSVG, class: "modal-close"},{click: modalClose})
           )
         )
       )
@@ -39,54 +39,54 @@ export function createModal(e) {
     
     if (e.target.id === "newFolder") {
       document.querySelector(".modal-content").appendChild(
-        createListenerElem("form",{id:"modalNewFolderForm"},{},
-          createListenerElem("div",{id:"formFieldContainer"},{},
-            createListenerElem("div",{},{},
-              createListenerElem("label",{for:"title"},{}, "Folder Name:"), 
-              createListenerElem("input",{id:"title", type:"text", name:"title"},{})
+        createElem("form",{id:"modalNewFolderForm"},{},
+          createElem("div",{id:"formFieldContainer"},{},
+            createElem("div",{},{},
+              createElem("label",{for:"title"},{}, "Folder Name:"), 
+              createElem("input",{id:"title", type:"text", name:"title"},{})
             ), 
-            createListenerElem("div", {id:"errorMsgDisplay"},{})
+            createElem("div", {id:"errorMsgDisplay"},{})
           ),
-          createListenerElem("button", {id:"addBtn", form:`modalNewFolderForm`, "data-add-type":"folder"},{}, "Add", 
-            createListenerElem("img", {src:addFolderSVG})
+          createElem("button", {id:"addBtn", form:`modalNewFolderForm`, "data-add-type":"folder"},{click:folderValidation}, "Add", 
+            createElem("img", {src:addFolderSVG})
           )
         )  
       )
     }
 
     if (e.target.id === "newTask"){
-      const radioWrapper = createListenerElem("div",{class:"radio-wrapper"},{})
+      const radioWrapper = createElem("div",{class:"radio-wrapper"},{})
       fields.forEach(field=>{
         if (field.type === "radio") { 
-          const radioDiv = createListenerElem("div",{},{},
-            createListenerElem("label",{}, {}, field.label),
+          const radioDiv = createElem("div",{},{},
+            createElem("label",{}, {}, field.label),
             radioWrapper
           );
           field.options.forEach(option=>{
             const radioId = `${field.id}-${option.toLowerCase()}`
             radioWrapper.appendChild(
-              createListenerElem("div",{},{},
-                createListenerElem("input",{id: radioId, type:"radio", name:field.name, value: option},{}),
-                createListenerElem("label", {for: radioId}, {},option)
+              createElem("div",{},{},
+                createElem("input",{id: radioId, type:"radio", name:field.name, value: option},{}),
+                createElem("label", {for: radioId}, {},option)
               )
             )
           })
           formFieldContainer.appendChild(radioDiv)
         } else {
-          const fieldDiv = createListenerElem("div",{},{},
-          createListenerElem("label", { for: field.id }, {}, field.label),
-          createListenerElem("input", { id: field.id, type: field.type, name: field.name }, {})
+          const fieldDiv = createElem("div",{},{},
+          createElem("label", { for: field.id }, {}, field.label),
+          createElem("input", { id: field.id, type: field.type, name: field.name }, {})
           )
           formFieldContainer.appendChild(fieldDiv);
         }
       });
 
       document.querySelector(".modal-content").appendChild(
-        createListenerElem("form",{id:"modalNewTaskForm"},{},
+        createElem("form",{id:"modalNewTaskForm"},{},
           formFieldContainer,
-          createListenerElem("div", {id:"errorMsgDisplay"},{}),
-          createListenerElem("button", {id:"addBtn", form:"modalNewTaskForm", "data-add-type":"task"},{click: addTask}, "Add", 
-            createListenerElem("img", {src:addTaskSVG})
+          createElem("div", {id:"errorMsgDisplay"},{}),
+          createElem("button", {id:"addBtn", form:"modalNewTaskForm", "data-add-type":"task"},{click: addTask}, "Add", 
+            createElem("img", {src:addTaskSVG})
           )
         )  
       );

@@ -19,11 +19,11 @@ export function registration(){
   content.innerHTML = ""
   const registrationMsg = "Welcome! Please input your information below and press submit."
   content.appendChild(
-    createElem("section",{class:"registration_section"},
-      createElem("div", {class:"reg-form-container"},
-        createElem("img",{src:imagepath('./svg/user-plus.svg')}),
-        createElem("h2",{class:"registration-msg"}, registrationMsg),
-        createElem("form",{class:"registration_form"})
+    createElem("section",{class:"registration_section"},{},
+      createElem("div", {class:"reg-form-container"},{},
+        createElem("img",{src:imagepath('./svg/user-plus.svg')},{}),
+        createElem("h2",{class:"registration-msg"},{}, registrationMsg),
+        createElem("form",{class:"registration_form"},{})
       )
     )
   )
@@ -90,32 +90,32 @@ export function registration(){
     Object.entries(regFormObj).forEach(([key,value])=>{
   
       regForm.appendChild(
-        createElem("div",{class:"field-container"},
+        createElem("div",{class:"field-container"},{},
           key === "passwordInput" || key === "confirmPWInput" ? 
           createElem("div", {
               class:"password-group", 
               'data-field':key.split('Input')[0]
-            },
-            createElem("input", value),
+            },{},
+            createElem("input", value,{}),
               createElem("img",{
                   class:"view-password",
                   src:imagepath('./svg/eye-open.svg'),
                   "data-field":key.split('Input')[0]
-                }
+                },{}
               )
           )
           :
-          createElem("input", value),
+          createElem("input", value,{}),
           createElem("p",{
             class:`error-msg ${regFormObj[key].class.split('_')[0]}`,
-            'data-error': `${regFormObj[key].class.split('_')[0]}`},""
+            'data-error': `${regFormObj[key].class.split('_')[0]}`},{},""
           ),
         )
       )
     })
     regForm.appendChild(
-      createElem("button",{class:"submit_btn", type:"submit"},"Submit", 
-        createElem("img",{src: submitSVG})
+      createElem("button",{class:"submit_btn", type:"submit"},{},"Submit", 
+        createElem("img",{src: submitSVG},{})
       ))
 
     const submitBtn = document.querySelector('.submit_btn')

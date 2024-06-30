@@ -360,7 +360,7 @@ body{
     margin-right: 20px;
     margin-top: 10px;
   }
-    .tasks-section > .container{
+    .tasks-section > .task-container{
       border: 2px solid var(--secondary-color);
       border-radius: var(--container-radius);
       padding: 10px;

@@ -2,14 +2,14 @@
 import { createModal as modal } from './modal'
 import { imagepath } from "../index";
 import { render } from "./render";
-import { saveFolders, saveAccounts } from './saveAccounts';
+import { saveAccounts } from './saveAccounts';
 import { generateId } from './generateID';
 import { selectFolder, 
          displayDeleteBtn, 
          deleteFolder,
          editFolder,
          onUpdate } from './folders';
-import { createElem, createListenerElem } from "./factory";
+import { createElem } from "./factory";
 import { registration } from './registration';
 import { createHeader } from './header';
 //#endregion imports
@@ -30,8 +30,8 @@ export function initFolders(username, validLogin) {
   const addFolderSVG = imagepath('./svg/add-folder.svg')
   const editSVG = imagepath('./svg/edit.svg');
   const deleteSVG = imagepath('./svg/delete.svg');
-  const folderSection = createElem("section",{class:"folders-section"})
-  const tasksSection = createElem("section",{class:"tasks-section"})
+  const folderSection = createElem("section",{class:"folders-section"},{})
+  const tasksSection = createElem("section",{class:"tasks-section"},{})
 
   document.querySelector(".content").appendChild(folderSection)
   document.querySelector(".content").appendChild(tasksSection)
@@ -41,38 +41,38 @@ export function initFolders(username, validLogin) {
   folderSection.innerHTML =""
 
   folderSection.appendChild(
-    createElem("div",{class:"container"},
-      createElem("div",{id:"folder-subtitle"}, 
-        createElem("img",{src:folderSVG}),
-        createElem("h2", {}, "Folders")
+    createElem("div",{class:"container"},{},
+      createElem("div",{id:"folder-subtitle"},{}, 
+        createElem("img",{src:folderSVG},{},),
+        createElem("h2", {},{}, "Folders")
       ),
-    createElem("div",{id:"folder-content"},
-      createElem("ul",{},
-        createElem("div", {class:"folder-container", "data-folder": folderId},
-          createElem("li",{"data-folder":folderId}, "General"),
-          createElem("div",{class:"animation-container"},
-            createElem("div", {class:"counter-container"},
-              createElem("div",{class:"folder-counter", "data-folder": folderId},"0")
+    createElem("div",{id:"folder-content"},{},
+      createElem("ul",{},{},
+        createElem("div", {class:"folder-container", "data-folder": folderId},{},
+          createElem("li",{"data-folder":folderId},{}, "General"),
+          createElem("div",{class:"animation-container"},{},
+            createElem("div", {class:"counter-container"},{},
+              createElem("div",{class:"folder-counter", "data-folder": folderId},{},"0")
             ),
-            createElem("div", {class:"edit-container"},
-              createListenerElem("img",{src:editSVG},{click: editFolder})
+            createElem("div", {class:"edit-container"},{},
+              createElem("img",{src:editSVG},{click: editFolder})
             ),
-            createElem("div", {class:'delete-container hovered'},
-              createListenerElem("img",{src:deleteSVG},{click:deleteFolder(folderId)})
+            createElem("div", {class:'delete-container hovered'},{},
+              createElem("img",{src:deleteSVG},{click:deleteFolder(folderId)})
             )
           )
         )
       )
     ), 
-    createListenerElem("button",{id:"newFolder", class:"createBtn"},{click:modal}, "Create Folder", 
-      createListenerElem("img", {src:addFolderSVG},{})
+    createElem("button",{id:"newFolder", class:"createBtn"},{click:modal}, "Create Folder", 
+      createElem("img", {src:addFolderSVG},{})
     )
     )
   )
 
   //adds event listeners to elements on init
   displayDeleteBtn();
-  deleteFolder();
+  // deleteFolder();
   selectFolder(); 
   // document.querySelector(".edit-container > img").addEventListener('click', editFolder)
   // document.querySelector(".delete-container > img").addEventListener('click', deleteFolder(folderId))
@@ -128,7 +128,7 @@ export function initFolders(username, validLogin) {
         account.isLoggedIn = false
         saveAccounts(accounts)
         document.querySelector(".folders-section").remove()
-        // document.querySelector(".tasks-section").remove()
+        document.querySelector(".tasks-section").remove()
         initHomepage()
         username = ""
         createHeader()
@@ -154,9 +154,10 @@ export function initHomepage(){
   let homeInit = (()=>{
   
     const content = document.querySelector(".content")
+    content.removeAttribute("style")
     const foldersSection = document.querySelector(".folders-section")
     const tasksSection = document.querySelector(".tasks-section")
-    const heroSection =  createElem('section',{class:"hero-section"})
+    const heroSection =  createElem('section',{class:"hero-section"},{})
     // const accounts = JSON.parse(localStorage.getItem("accounts"))
    
     content.innerHTML = ""
@@ -189,21 +190,21 @@ export function initHomepage(){
 
     Object.entries(contentObj).forEach(([key, value])=>{
       key === "hero" ? heroSection.appendChild(
-        createElem("div", {class: `flex-wrapper ${key}-container`}, 
-          createElem("h1", {class:`${key}-title`}, value[Object.keys(value)[0]],
+        createElem("div", {class: `flex-wrapper ${key}-container`},{}, 
+          createElem("h1", {class:`${key}-title`},{}, value[Object.keys(value)[0]],
             createElem("br",), 
-            createElem("span", {}, value[Object.keys(value)[1]])
+            createElem("span", {},{}, value[Object.keys(value)[1]])
           ), 
-          createElem("h2", {class:`${key}-content`}, value[Object.keys(value)[2]]),
-          createElem("button",{class:`${key}_btn`},value[Object.keys(value)[3]])
+          createElem("h2", {class:`${key}-content`},{}, value[Object.keys(value)[2]]),
+          createElem("button",{class:`${key}_btn`},{},value[Object.keys(value)[3]])
         ))
       :
       content.appendChild(
-      createElem("div", {class: `flex-wrapper content-container content-${key}`}, 
-        createElem("img", {class:`content-image`,src: value[Object.keys(value)[2]]}),
-        createElem("div", {class:`flex-wrapper usp-text-container`},
-          createElem("h3", {class:`title content-${key}`}, value[Object.keys(value)[0]]), 
-          createElem("p", {class: `text content-${key}`}, value[Object.keys(value)[1]])
+      createElem("div", {class: `flex-wrapper content-container content-${key}`},{}, 
+        createElem("img", {class:`content-image`,src: value[Object.keys(value)[2]]},{},),
+        createElem("div", {class:`flex-wrapper usp-text-container`},{},
+          createElem("h3", {class:`title content-${key}`},{}, value[Object.keys(value)[0]]), 
+          createElem("p", {class: `text content-${key}`},{},value[Object.keys(value)[1]])
         )
       ))
     })

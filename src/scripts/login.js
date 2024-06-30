@@ -15,38 +15,38 @@ export function login() {
   let loginObj = {}
 
   body.appendChild(
-    createElem("dialog", {class:"login_dialog"},
-      createElem("div",{class:"login-container"},
-        createElem("img",{src:loginSVG}),
-        createElem("h2", {class:"welcomeMsg"},"Please sign in"),
-        createElem("form", {id:"login", class: "login-form", action:"#"},
-          createElem("input", {autofocus:"", class:"username_txt", type:"text", placeholder:"Username", name:"Username"}),
-          createElem("div",{class: "password-group"}, 
-            createElem("input", {class:"password_txt", type:"password", placeholder:"Password", name:"Password"}),
-            createElem("img",{class:"view-password", src:imagepath('./svg/eye-open.svg')})
+    createElem("dialog", {class:"login_dialog"},{},
+      createElem("div",{class:"login-container"},{},
+        createElem("img",{src:loginSVG},{},),
+        createElem("h2", {class:"welcomeMsg"},{},"Please sign in"),
+        createElem("form", {id:"login", class: "login-form", action:"#"},{},
+          createElem("input", {autofocus:"", class:"username_txt", type:"text", placeholder:"Username", name:"Username"},{}),
+          createElem("div",{class: "password-group"},{}, 
+            createElem("input", {class:"password_txt", type:"password", placeholder:"Password", name:"Password"},{}),
+            createElem("img",{class:"view-password", src:imagepath('./svg/eye-open.svg')},{})
           ),
-          createElem("div", {class:"error-container"}, 
-            createElem("p",{class:"error-msg"})
+          createElem("div", {class:"error-container"},{}, 
+            createElem("p",{class:"error-msg"},{})
           ), 
-          createElem("div", {class:"login-controls"}, 
-            createElem("button",{class:"sign-in_btn", type:"submit", form:"login"},"Sign In"), 
-            createElem("button",{class:"cancel_btn", type:""},"Cancel")
+          createElem("div", {class:"login-controls"},{}, 
+            createElem("button",{class:"sign-in_btn", type:"submit", form:"login"},{click:handleLogin},"Sign In"), 
+            createElem("button",{class:"cancel_btn", type:""},{click:cancelLogin},"Cancel")
           )
         ),
-        createElem("p",{},`Don't have an account? Click `,
-          createElem("span",{},
-            createElem("a",{href: "#"},linkText)
+        createElem("p",{},{},`Don't have an account? Click `,
+          createElem("span",{},{},
+            createElem("a",{href: "#"},{click:moveToReg},linkText)
           )
         )
       )
     )
   );
 
-  document.querySelector(".login-container > p > span > a").addEventListener('click', (e)=>{
+ function moveToReg(e){
     e.preventDefault()
     document.querySelector("dialog").remove()
     registration()
-  })
+  }
 
   let usernameInput = document.querySelector(".username_txt")
   let passwordInput = document.querySelector(".password_txt")
@@ -71,13 +71,11 @@ export function login() {
 
   function handleLogin(e){
     e.preventDefault()
-
-    //log the user in
+    //validate the user login
     loginValidation(usernameInput.value, passwordInput.value)
   }
-  document.querySelector(".sign-in_btn").addEventListener('click', handleLogin)
 
-  document.querySelector(".cancel_btn").addEventListener('click', ()=>{
+  function cancelLogin(){
     document.querySelector("dialog").remove()
-  })
+  }
 }

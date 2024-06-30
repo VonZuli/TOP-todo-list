@@ -9,7 +9,7 @@ import {
   editFolder,
   onUpdate
 } from './folders.js'
-import { createElem, createListenerElem } from "./factory";
+import { createElem } from "./factory";
 //#endregion imports  
 
 export function render(username){
@@ -20,7 +20,6 @@ export function render(username){
   accounts.forEach(acc=>{
     if (acc.isLoggedIn === true) {
       folderList.innerHTML = ""
-      console.log(username);
       acc.folders.forEach(folder=>{
 
         let folderTitle = folder.folderTitle
@@ -30,20 +29,22 @@ export function render(username){
         const folderId = folder.folderId
 
         folderList.appendChild(
-          createElem("div",{class:'folder-container','data-folder': folderId},
+          createElem("div",{class:'folder-container','data-folder': folderId},{},
             folder.isEditing !== true ?
-            createElem("li",{'data-folder': folderId}, folderTitle)
+            createElem("li",{'data-folder': folderId},{}, folderTitle)
             :
             (function() {
               const editingContainer = 
-                createElem("div", { class: "editing-container" },
+                createElem("div", { class: "editing-container" },{},
                   createElem("input", { 
                     type: "text", 
                     id:`edit-folderTitle-${folderId}`, 
                     autofocus: "", 
                     class: "editFolderInput", 
                     "value": folderTitle 
-                  })
+                  },{click:(e)=>{
+                    e.stopPropagation()
+                  }})
               );
 
               const saveEditButton = 
@@ -51,40 +52,46 @@ export function render(username){
                   class: "saveEditBtn", 
                   "data-folder": folderId, 
                   id: folderId 
-                }, "Save?");
-
-              saveEditButton.addEventListener('click', onUpdate)
+                },{click:(e)=>{
+                  e.stopPropagation()
+                  onUpdate(e)
+                }}, "Save?");
 
               editingContainer.appendChild(saveEditButton);
               return editingContainer;
             })(),
 
-            createElem("div",{class:'animation-container'},
-              createElem("div",{class:'counter-container'},
+            createElem("div",{class:'animation-container'},{},
+              createElem("div",{class:'counter-container'},{},
                 createElem("div",{
                   class: 'folder-counter', 
                   'data-folder': folderId
-                }, "0")
+                },{}, "0")
               ), 
-              createElem("div",{class:'edit-container tooltip'},
-                createElem("span",{class:'tooltipText'},"Edit folder name"),
-                createListenerElem("img",{
+              createElem("div",{class:'edit-container tooltip'},{},
+                createElem("span",{class:'tooltipText'},{},"Edit folder name"),
+                createElem("img",{
                   src:editSVG, 
                   class:'editBtn', 
                   'data-folder': folderId, 
                   tabindex:"0"
                 },
-                {click:editFolder})
+                {click:(e)=>{
+                  e.stopPropagation()
+                  editFolder(e)
+                }})
               ), 
-              createElem("div",{class:'delete-container hovered tooltip'},
-                createElem("span",{class:"tooltipText"}, "Delete folder"),
-                createListenerElem("img",{
+              createElem("div",{class:'delete-container hovered tooltip'},{},
+                createElem("span",{class:"tooltipText"},{}, "Delete folder"),
+                createElem("img",{
                   src:deleteSVG, 
                   class:'deleteBtn',
                   'data-folder': folderId, 
                   tabindex:"1"
                 },
-                {click:deleteFolder(folderId, folderTitle)})
+                {click:
+                  deleteFolder(folderId, folderTitle)
+                })
               )
             )
         ))
