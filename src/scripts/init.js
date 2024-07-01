@@ -52,7 +52,7 @@ export function initFolders(username, validLogin) {
           createElem("li",{"data-folder":folderId},{}, "General"),
           createElem("div",{class:"animation-container"},{},
             createElem("div", {class:"counter-container"},{},
-              createElem("div",{class:"folder-counter", "data-folder": folderId},{},"0")
+              createElem("div",{class:"folder-counter", "data-folder": folderId},{},0)
             ),
             createElem("div", {class:"edit-container"},{},
               createElem("img",{src:editSVG},{click: editFolder})
@@ -72,20 +72,9 @@ export function initFolders(username, validLogin) {
 
   //adds event listeners to elements on init
   displayDeleteBtn();
-  // deleteFolder();
   selectFolder(); 
-  // document.querySelector(".edit-container > img").addEventListener('click', editFolder)
-  // document.querySelector(".delete-container > img").addEventListener('click', deleteFolder(folderId))
+  // deleteFolder();
 
-  // add event listener to form buttons that displays appropriate modal
-  // const formBtn = document.querySelectorAll('.createBtn');
-  // formBtn.forEach(btn => {
-  //   btn.addEventListener('click', (e)=>{
-  //     e.preventDefault()
-  //     modal(e.target)
-  //   })
-  // });
-  
   //get the accounts from localstorage
   const accounts = JSON.parse(localStorage.getItem("accounts"));
   //for each account in accounts
@@ -104,7 +93,7 @@ export function initFolders(username, validLogin) {
         folderId, 
         folderTitle, 
         folderTaskCount: +count, 
-        "tasks":{}
+        "tasks":[]
       })
       saveAccounts(accounts)
     } else {
@@ -137,17 +126,23 @@ export function initFolders(username, validLogin) {
   })
 }
  
-
-//local storage structure
-// folderArray.push([{folderTitle},{"tasksArray": ["task1", "task2", "task3"]}])
-
 //initialze tasks array
-function initTaskArray(){
-  let tasksArray;
-
-  const savedTasks = JSON.parse(localStorage.getItem("tasks"))
-  
-  Array.isArray(savedTasks) ? tasksArray = savedTasks : tasksArray = new Array()
+export function initTaskArray(taskObj){
+  // let tasksArray;
+  const accounts = JSON.parse(localStorage.getItem("accounts"));
+  accounts.forEach(acc=>{
+    acc.folders.forEach(folder=>{
+      console.log(folder);
+      console.log(typeof folder.tasks, folder.tasks);
+      if (!folder.tasks || folder.tasks < 1){
+        if(folder.folderId === taskObj.id){
+          folder.tasks.push(taskObj)
+        }
+      }
+      saveAccounts(accounts)
+    })
+  })
+  // Array.isArray(savedTasks) ? tasksArray = savedTasks : tasksArray = new Array()
 }
 
 export function initHomepage(){
@@ -384,4 +379,14 @@ export function initHomepage(){
 //     })
 //   });
 //   return {folderInit, taskInit}
-// }
+// }  // document.querySelector(".edit-container > img").addEventListener('click', editFolder)
+  // document.querySelector(".delete-container > img").addEventListener('click', deleteFolder(folderId))
+
+  // add event listener to form buttons that displays appropriate modal
+  // const formBtn = document.querySelectorAll('.createBtn');
+  // formBtn.forEach(btn => {
+  //   btn.addEventListener('click', (e)=>{
+  //     e.preventDefault()
+  //     modal(e.target)
+  //   })
+  // });

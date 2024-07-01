@@ -150,15 +150,15 @@ function displayFolderContents(e) {
   mainContent.style.flexDirection = "row"
   mainContent.style.justifyContent = "flex-start"
   tasksSection.style.visibility = "visible"
-  let taskHeader = document.querySelector(".active > li").textContent
+  let taskHeader = document.querySelector(".active > li")
   tasksSection.innerHTML = ""
   //modify tasks subtitle h2 to display "folder name + tasks"
   tasksSection.appendChild(
     createElem("div", {class: "task-container"},{},
       createElem("div", {id: "tasks-subtitle"},{},
-        createElem("h2", {},{}, `${taskHeader} Tasks`)
+        createElem("h2", {},{}, `${taskHeader.textContent} Tasks`)
       ),
-      createElem("div", {id:'tasks-content'}, {},
+      createElem("div", {id:'tasks-content', "data-folder":`${taskHeader.dataset.folder}`}, {},
         createElem("ul", {},{})
       ),
       createElem("button", {id: "newTask", class: "createBtn"},{click:modal}, "Create Task", 

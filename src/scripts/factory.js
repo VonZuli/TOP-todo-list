@@ -11,7 +11,7 @@ export const createElem = (tag, attr, listeners, ...children)=>{
   }
   
   children.forEach(child=>{
-    typeof child === "string" ? 
+    typeof child === "string" || typeof child === "number"? 
     el.appendChild(document.createTextNode(child)) :
     el.appendChild(child)
   })

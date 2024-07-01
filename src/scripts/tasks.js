@@ -1,24 +1,25 @@
 import { imagepath } from "../index";
+import { createElem } from "./factory";
 import { generateId } from "./generateID";
+import { initTaskArray } from "./init";
 
 export function addTask(e) {
   e.preventDefault();
-  const trashSVG = new Image()
-  const editSVG = new Image()
-  const calendarSVG = new Image()
-  trashSVG.src = imagepath('./svg/delete.svg')
-  editSVG.src = imagepath('./svg/edit.svg')
-  calendarSVG.src = imagepath('./svg/calendar-exclaim.svg')
+  const deleteSVG = imagepath('./svg/delete.svg')
+  const editSVG = imagepath('./svg/edit.svg')
+  const calendarSVG = imagepath('./svg/calendar-exclaim.svg')
 
+  let folderCounter = document.querySelectorAll(".folder-counter")
+  let folderId = document.querySelectorAll("li[data-folder]")
+  let tasksContent = document.querySelector("#tasks-content[data-folder]")
   let tasksList = document.querySelector("#tasks-content > ul")
-  
   let taskTitle = document.querySelector("#title");
   let taskDesc = document.querySelector("#desc")
   let taskDueDate = document.querySelector("#dueDate")
   let taskPriority = document.querySelectorAll("input[type='radio']")
 
   let taskPrioritySelection = ""
-  
+  let taskObj = {};
   let taskId = generateId()
 
   taskPriority.forEach((priority)=>{
@@ -28,41 +29,58 @@ export function addTask(e) {
     }
   })
   
-  let listItem = `
-  <div class="item-container ${taskPrioritySelection}">
-    <div class="taskControls">
-      <div class="taskControls-top">
-        <input for=${taskId} type=checkbox class="completedChk">
-      </div>
-      <div class="taskControls-bottom">
-        <img class="editTaskBtn" src="${editSVG.src}">
-        <img class="deleteTaskBtn" src="${trashSVG.src}">
-      </div>
-    </div> 
-    <li data-id=${taskId}>
-      <div class="taskDetails">
-        <div class="header-wrapper">
-          <label id=${taskId} class="taskTitle">${taskTitle.value}</label>
-          <div class="taskDesc">${taskDesc.value}</div>
-        </div>
-        <div class="calendar-container">
-          <img class="calendarSVG" src="${calendarSVG.src}">
-          <div class="taskDueDate">${taskDueDate.value}</div>
-        </div>
-        <div class="priority-wrapper">
-          <div class="priority-indicator ${taskPrioritySelection}"></div>
-          <div class="taskPriority ${taskPrioritySelection}">${taskPrioritySelection.split("-")[1]}</div>
-        </div>
-        <div class="notes-wrapper">
-          <div class="taskNotes">Task Notes</div>
-          <textarea class="textarea"></textarea>
-        </div>
-      </div>
-    </li>
-  </div>`
-  
-  //appends task to DOM
-  tasksList.insertAdjacentHTML('beforeend', listItem)  
+  tasksList.appendChild(createElem("div", {class:`item-container ${taskPrioritySelection}`},{},
+    createElem("div", {class:"taskControls"},{},
+      createElem("div",{class:"taskControls-top"},{},
+        createElem("input", {class:"completedChk", for:`${taskId}`, type: "checkbox"})
+      ),
+      createElem("div",{class:"taskControls-bottom"},{},
+        createElem("img",{class:"editTaskBtn", src:`${editSVG}`},{}),
+        createElem("img",{class:"deleteTaskBtn", src:`${deleteSVG}`},{})
+      )
+    ),
+    createElem("li",{"data-id":`${taskId}`},{},
+      createElem("div",{class:"taskDetails"},{},
+        createElem("div",{class:"header-wrapper"},{},
+          createElem("label",{id:`${taskId}`, class:"taskTitle"},{},`${taskTitle.value}`),
+          createElem("div",{class:"taskDesc"},{},`${taskDesc.value}`)
+        ),
+        createElem("div",{class:"calendar-wrapper"},{},
+          createElem("img",{class: "calendarSVG", src:`${calendarSVG}`},{}),
+          createElem("div",{class:"taskDueDate"},{},`${taskDueDate.value}`)
+        ),
+        createElem("div",{class:"priority-wrapper"},{},
+          createElem("div",{class:`priority-indicator ${taskPrioritySelection}`},{}),
+          createElem("div",{class:`taskPriority ${taskPrioritySelection}`},{},taskPrioritySelection.split("-")[1])
+        ),
+        createElem("div",{class:"notes-wrapper"},{},
+          createElem("div",{class:"taskNotes"},{},"Task Notes"),
+          createElem("textarea",{class:"textarea"},{})
+        )
+      )
+    )
+  ))
+  taskObj = {
+    id:tasksContent.dataset.folder,
+    title:taskTitle.value,
+    description:taskDesc.value,
+    dueDate:taskDueDate.value,
+    taskPriority:taskPrioritySelection.split("-")[1],
+    taskNotes:{},
+    completed: false
+  }
+  initTaskArray(taskObj);
+ 
+  console.log(tasksContent.dataset.folder);
+  // console.log(folderCounter);
+  // console.log(typeof folderCounter);
+  // folderCounter.forEach(i=>{
+  //   i.dataset ===
+  // })
+  //change this to set folder count to task array length
+  // let folderCount = parseInt(folderCounter.textContent);
+  // folderCount++
+  // folderCounter.textContent = folderCount.toString();
 }
 
 

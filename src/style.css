@@ -398,9 +398,7 @@ button:focus{
   border: 1px solid var(--secondary-color);
   box-shadow: 0 0 10px var(--secondary-color);
 }
-/* #newTask{
-  padding: 5px;
-} */
+
 /*#endregion html*/
 
 /*#region modal*/
@@ -420,9 +418,9 @@ button:focus{
     display: flex;
     flex-direction: column;
     border-radius: var(--pop-up-border-radius);
-    margin: 15% auto;
+    margin: 10% auto;
     border: 5px solid var(--secondary-color);
-    width: 600px; 
+    width: fit-content; 
     height: fit-content;
     background-color: var(--primary-color);
     justify-content: space-between;
@@ -438,7 +436,10 @@ button:focus{
     align-self: center;
     flex-basis: 100%;
     padding: 50px 10px 10px 10px;
-    color: var(--text-color);
+    color: var(--tertiary-color);
+    margin-left: 0.5em;
+    text-decoration:underline dotted 2px;
+    text-underline-offset: 0.5em;
   }
   .modal-close {
     width: 40px;
@@ -495,7 +496,7 @@ button:focus{
       display: flex;
       flex-direction: row;
       padding: 5px;
-      margin-left: 10px;
+      /* margin-left: 10px; */
     }
     #formFieldContainer > div > label{
       display: flex;
@@ -503,6 +504,7 @@ button:focus{
       align-items: center;
       padding-right: 5px;
       color: var(--text-color);
+      justify-content: flex-end;
     }
     #formFieldContainer > div > input{
       display: flex;
@@ -510,51 +512,32 @@ button:focus{
       flex-basis:50%;
       margin: 5px;
       border-radius: var(--btn-radius);
-      min-width: 100px;
+      min-width: 160px;
       z-index: 1;
-    }
-    #formFieldContainer > div:nth-child(4){
-      /* display: flex; */
-      /* flex-direction: row; */
-    
+      padding: 3px;
     }
     #formFieldContainer > div:nth-child(4) > label{
       align-self: start;
-
-    }
-    #formFieldContainer > div:nth-child(4) > div:nth-child(2){
-      /* flex-basis: 100%; */
-      
-    }
-    #formFieldContainer > div:nth-child(4) > div{
-
-      /* border: green 2px solid; */
     }
     .radio-wrapper{
       display: flex;
       flex-direction: column;
       max-width: fit-content;
       color: var(--text-color);
-     
+      margin: 0px 5px 5px 5px;
     }
     .radio-wrapper > div{
       display: flex;
       align-items: center;
     }
     .radio-wrapper > div > input{
-      margin: 0
+      margin: 0;
+      accent-color: var(--tertiary-color)
     }
     .radio-wrapper > div > label{
       flex-basis: 100%;
       padding-left: 0.3em;
       font-size: 0.75em
-    }
-
-    #formFieldContainer > div > input[type='text']{
-      padding: 3px;
-    }
-    #formFieldContainer > div > input[type='date']{
-      padding: 3px;
     }
     #errorMsgDisplay{
       visibility: hidden;
@@ -562,6 +545,7 @@ button:focus{
       font-weight: 500;
       font-size: 0.9rem;
     }
+    
 /*#endregion modal*/
 
 /*#region folders*/ 
@@ -844,6 +828,7 @@ button:focus{
   padding: 0 0 10px 10px;
   margin-bottom: 15px;
   border-bottom: 2px dotted var(--tertiary-color);
+  flex-grow: 1;
 }
 
 .taskDetails.completed{
@@ -863,14 +848,7 @@ button:focus{
   border-left: 4px solid rgba(95, 158, 160, 0.4);
 }
 
-/* .item-container > *{
-  padding: 5px;
-  margin: 2px;
-} */
-/* .item-container > * > *{
-  padding: 5px;
-  margin: 2px;
-} */
+
 
 
 li > .taskDetails{
@@ -878,9 +856,6 @@ li > .taskDetails{
   flex-direction: column;
   /* flex-basis: 100%; */
 }
-/* li > .taskDetails > *{
-  margin:5px;
-} */
 
 .item-container > .taskControls{
   display: flex;
@@ -917,7 +892,7 @@ li > .taskDetails{
     stroke: rgb(129, 24, 24);
   } */
 
-.calendar-container{
+.calendar-wrapper{
   display: flex;
   flex-direction: row;
   /* width: fit-content; */
@@ -1004,6 +979,7 @@ li > .taskDetails{
   display: block;
   resize: both;
   padding: 5px;
+  width: 100%;
 }
 /* .taskNotes{
   flex-basis: 100%;
