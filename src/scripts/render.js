@@ -1,6 +1,6 @@
 //#region imports
 import { imagepath } from "../index";
-import { folderArray } from "./init";
+import { initTasks } from "./init";
 import { saveAccounts } from "./saveAccounts";
 import { 
   selectFolder, 
@@ -10,9 +10,10 @@ import {
   onUpdate
 } from './folders.js'
 import { createElem } from "./factory";
+import { generateId } from "./generateID";
 //#endregion imports  
 
-export function render(username){
+export function renderFolders(){
   
   const accounts = JSON.parse(localStorage.getItem("accounts"));
   const folderList = document.querySelector("#folder-content > ul")
@@ -102,9 +103,79 @@ export function render(username){
     }
   })
   saveAccounts(accounts)
-  
 };
 
+export function renderTasks(){
+  const accounts = JSON.parse(localStorage.getItem("accounts"));
+  const tasksList = document.querySelector("#tasks-content > ul");
+  tasksList.innerHTML = ""
+  accounts.forEach(acc=>{
+    if(acc.isLoggedIn === true){
+      acc.folders.forEach(folder=>{
+        const deleteSVG = imagepath('./svg/delete.svg')
+        const editSVG = imagepath('./svg/edit.svg')
+        const calendarSVG = imagepath('./svg/calendar-exclaim.svg')
+        folder.tasks.forEach(task=>{
+          console.log(task);
+          tasksList.appendChild(createElem("div", {class:`item-container ${task.taskPriority}`},{},
+          createElem("div", {class:"taskControls"},{},
+            createElem("div",{class:"taskControls-top"},{},
+              createElem("input", {class:"completedChk", for:`${task.taskId}`, type: "checkbox"})
+            ),
+            createElem("div",{class:"taskControls-bottom"},{},
+              createElem("img",{class:"editTaskBtn", src:`${editSVG}`},{}),
+              createElem("img",{class:"deleteTaskBtn", src:`${deleteSVG}`},{})
+            )
+          ),
+          createElem("li",{"data-id":`${task.taskId}`},{},
+            createElem("div",{class:"taskDetails"},{},
+              createElem("div",{class:"header-wrapper"},{},
+                createElem("label",{id:`${task.taskId}`, class:"taskTitle"},{},`${task.taskTitle}`),
+                createElem("div",{class:"taskDesc"},{},`${task.taskDesc}`)
+              ),
+              createElem("div",{class:"calendar-wrapper"},{},
+                createElem("img",{class: "calendarSVG", src:`${calendarSVG}`},{}),
+                createElem("div",{class:"taskDueDate"},{},`${task.taskDueDate}`)
+              ),
+              createElem("div",{class:"priority-wrapper"},{},
+                createElem("div",{class:`priority-indicator ${task.taskPriority}`},{}),
+                createElem("div",{class:`taskPriority ${task.taskPriority}`},{},task.taskPriority)
+              ),
+              createElem("div",{class:"notes-wrapper"},{},
+                createElem("div",{class:"taskNotes"},{},"Task Notes"),
+                createElem("textarea",{class:"textarea"},{})
+              )
+            )
+          )
+        ))
+        })
+      })
+
+    
+      // let folderCounter = document.querySelectorAll(".folder-counter")
+      // let folderId = document.querySelectorAll("li[data-folder]")
+      // let tasksContent = document.querySelector("#tasks-content[data-folder]")
+      
+      // let taskTitle = document.querySelector("#title");
+      // let taskDesc = document.querySelector("#desc")
+      // let taskDueDate = document.querySelector("#dueDate")
+      // let taskPriority = document.querySelectorAll("input[type='radio']")
+    
+      // let taskPrioritySelection = ""
+      // let taskId = generateId()
+    
+      // taskPriority.forEach((priority)=>{
+      //   if (priority.checked === true) {
+      //     taskPrioritySelection = priority.id;
+      //     return taskPrioritySelection
+      //   }
+      // })
+      
+
+    }
+  })
+  saveAccounts(accounts)
+}
     // const folderContainer = document.createElement('div')
     // const animationContainer = document.createElement('div')
     // const counterContainer = document.createElement('div')

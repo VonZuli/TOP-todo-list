@@ -1,7 +1,7 @@
 //#region imports
 import { createModal as modal } from './modal'
 import { imagepath } from "../index";
-import { render } from "./render";
+import { renderFolders, renderTasks } from "./render";
 import { saveAccounts } from './saveAccounts';
 import { generateId } from './generateID';
 import { selectFolder, 
@@ -86,7 +86,6 @@ export function initFolders(username, validLogin) {
     let userAccount = accounts.find(user => user.username === username);
     userAccount.isLoggedIn = validLogin
 
-    console.log(userAccount);
     if (!userAccount || userAccount.folders < 1) {
       userAccount.folders = [];
       userAccount.folders.push({
@@ -98,7 +97,7 @@ export function initFolders(username, validLogin) {
       saveAccounts(accounts)
     } else {
       saveAccounts(accounts)
-      render(username)
+      renderFolders(username)
     }
   }
   initFolderArray(accounts, username, folderId, defaultName, +folderCounter.textContent)
@@ -126,23 +125,49 @@ export function initFolders(username, validLogin) {
   })
 }
  
-//initialze tasks array
-export function initTaskArray(taskObj){
-  // let tasksArray;
-  const accounts = JSON.parse(localStorage.getItem("accounts"));
-  accounts.forEach(acc=>{
-    acc.folders.forEach(folder=>{
-      console.log(folder);
-      console.log(typeof folder.tasks, folder.tasks);
-      if (!folder.tasks || folder.tasks < 1){
-        if(folder.folderId === taskObj.id){
-          folder.tasks.push(taskObj)
-        }
-      }
-      saveAccounts(accounts)
-    })
-  })
-  // Array.isArray(savedTasks) ? tasksArray = savedTasks : tasksArray = new Array()
+//initialze tasks section
+export function initTasks(){
+  const addTaskSVG = imagepath("./svg/add-task.svg")
+  const tasksSection = document.querySelector(".tasks-section")
+  const mainContent = document.querySelector(".content")
+  mainContent.style.flexDirection = "row"
+  mainContent.style.justifyContent = "flex-start"
+  tasksSection.style.visibility = "visible"
+  
+  let taskHeader = document.querySelector(".active > li")
+  tasksSection.innerHTML = ""
+  //modify tasks subtitle h2 to display "folder name + tasks"
+
+  tasksSection.appendChild(
+    createElem("div", {class: "task-container"},{},
+      createElem("div", {id: "tasks-subtitle"},{},
+        createElem("h2", {},{}, `${taskHeader.textContent} Tasks`)
+      ),
+      createElem("div", {id:'tasks-content', "data-folder":`${taskHeader.dataset.folder}`}, {},
+        createElem("ul", {},{})
+      ),
+      createElem("button", {id: "newTask", class: "createBtn"},{click:modal}, "Create Task", 
+        createElem("img", {src:addTaskSVG})
+      )
+    )
+  )
+
+  // function initTaskArray(){
+  //   const accounts = JSON.parse(localStorage.getItem("accounts"));
+  //   accounts.forEach(acc=>{
+  //     acc.folders.forEach(folder=>{
+  //       if (!folder.tasks || folder.tasks < 1) {
+  //         acc.folders.tasks = []
+  //         acc.folders.tasks.push(taskObj)
+  //         console.log(`Folder: ${folder}, ${folder.folderId}`);
+  //       } else{
+  //         saveAccounts(accounts)
+  //         renderTasks(folder.tasks)
+  //       }
+  //     })
+  //   })
+  // }
+  // initTaskArray(taskObj)
 }
 
 export function initHomepage(){

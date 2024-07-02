@@ -7,7 +7,6 @@ module.exports = {
 	entry: {
    index: './src/index.js',
    header: './src/scripts/header.js',
-   todo: './src/scripts/todo.js',
    init: './src/scripts/init.js',
    footer: './src/scripts/footer.js',
    modal: './src/scripts/modal.js',

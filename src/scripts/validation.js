@@ -1,5 +1,5 @@
 //#region imports
-import { isBoolean } from "lodash";
+import { identity, isBoolean } from "lodash";
 import { addFolder } from "./folders";
 import { generateId } from "./generateID";
 import { initFolders, initHomepage, userArr } from "./init";
@@ -9,6 +9,7 @@ import { createHeader } from "./header";
 import { registration } from "./registration";
 import { createElem } from "./factory";
 import { saveAccounts } from "./saveAccounts";
+import { addTask } from "./tasks";
 
 // import { bcrypt } from "..";
 //#endregion imports
@@ -18,17 +19,16 @@ export const folderValidation = () =>{
   const accounts = JSON.parse(localStorage.getItem("accounts"));
   const folderNameInput = document.querySelector("#title")
   const errorMsg = document.querySelector("#errorMsgDisplay")
+  
   let userInput = folderNameInput.value;
   let folderTaskCount = document.querySelector('.folder-counter')
   let count = folderTaskCount.textContent
   let folderId = generateId();
-  console.log(accounts);
+
 
   //change the lower case function to regex later
   const folderExists = accounts.map(acc =>{
-    console.log(acc);
     acc.folders.map(folder=>{
-      console.log(folder);
       return folder.folderTitle.toLowerCase()
     })
   });
@@ -57,14 +57,81 @@ export const folderValidation = () =>{
         folderTaskCount:+count, 
         "tasks":[]
       })
-
-      localStorage.setItem("accounts", JSON.stringify(accounts))
+      saveAccounts(accounts)
     }
   })
   document.querySelector('#new-modal').remove();
   return addFolder(userInput);
-   
 };
+
+export const taskValidation = ()=>{
+
+  const accounts = JSON.parse(localStorage.getItem("accounts"));
+
+  let taskInputs = document.querySelectorAll("input")
+  let radioInputs = document.querySelectorAll("input[type=radio]")
+  const errorMsg = document.querySelector("#errorMsgDisplay")
+  let folderTitleEl = document.querySelector("li[data-folder]")
+
+  const textInputEmpty = Array.from(taskInputs).some(input => input.type !=="radio" && input.value === "");
+
+  if (textInputEmpty) {
+    errorMsg.style.visibility = "visible";
+    errorMsg.textContent += "Input fields cannot be empty.</br>"
+    return
+  }
+
+  const isRadioChecked = Array.from(radioInputs).some(radio=> radio.checked);
+  if (!isRadioChecked) {
+    errorMsg.style.visibility = "visible";
+    errorMsg.textContent = "Please select a priority level for your task.</br>"
+    return
+  }
+
+  let taskObj = {}
+  let taskId = generateId()
+  let taskTitle;
+  let taskDesc;
+  let taskPriority;
+  let taskDueDate;
+
+  taskInputs.forEach(input=>{
+    if (input.type === "text"){
+      input.id === "title" ? 
+      taskTitle = input.value : taskDesc = input.value
+      console.log(taskTitle, taskDesc);
+      Object.assign(taskObj, {taskTitle}, {taskDesc})
+    }
+
+    if(input.type === "radio"){
+      if(input.checked === true){
+        taskPriority = input.value
+        console.log(taskPriority);
+        Object.assign(taskObj, {taskPriority})
+      }
+    }
+
+    if (input.type === "date") {
+      taskDueDate = input.value;
+      Object.assign(taskObj, {taskDueDate})
+      console.log(taskDueDate);
+    }
+  })
+
+  Object.assign(taskObj, {taskId})
+
+  accounts.forEach(acc=>{
+    if(acc.isLoggedIn===true){
+      acc.folders.forEach(folder=>{
+        if(folder.folderId === folderTitleEl.dataset.folder)
+          folder.tasks.push(taskObj)
+        saveAccounts(accounts)
+      })
+    }
+  })
+
+  return addTask(taskObj)
+}
 
 export const loginValidation = (username, password)=>{
 

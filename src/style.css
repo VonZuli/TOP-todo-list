@@ -502,7 +502,7 @@ button:focus{
       display: flex;
       flex-basis:50%;
       align-items: center;
-      padding-right: 5px;
+
       color: var(--text-color);
       justify-content: flex-end;
     }
@@ -516,8 +516,9 @@ button:focus{
       z-index: 1;
       padding: 3px;
     }
-    #formFieldContainer > div:nth-child(4) > label{
+    #formFieldContainer > div:nth-child(3) > label{
       align-self: start;
+      padding-right: 7px;
     }
     .radio-wrapper{
       display: flex;
@@ -541,6 +542,8 @@ button:focus{
     }
     #errorMsgDisplay{
       visibility: hidden;
+      justify-content: center;
+      align-self: center;
       color: rgb(255, 68, 68);
       font-weight: 500;
       font-size: 0.9rem;
@@ -606,7 +609,7 @@ button:focus{
       /* border: 2px solid  */
       border-radius: var(--btn-radius);
       background-color: rgba(95, 158, 160, 0.308);
-      box-shadow: 0 0 0 2px var(--text-color);;
+      box-shadow: 0 0 0 2px var(--tertiary-color);;
     }
     .counter-container{
       display: flex;

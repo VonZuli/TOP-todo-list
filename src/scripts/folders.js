@@ -1,18 +1,20 @@
 //#region imports
 import { imagepath } from "..";
 import { createElem } from "./factory";
+import { initTasks } from "./init";
 import { createModal as modal }  from "./modal";
 // import { folderArray } from "./init";
-import { render } from "./render";
+import { renderFolders, renderTasks } from "./render";
 import { saveAccounts } from "./saveAccounts"
 import { addTask } from "./tasks";
 //#endregion imports
 
 export function addFolder() {
   
-  render();
+  renderFolders();
 }
 
+//user selects folder
 export function selectFolder(){
   const selectedFolder = document.querySelectorAll(".folder-container")
   selectedFolder.forEach((folderDiv)=>
@@ -20,8 +22,18 @@ export function selectFolder(){
       e.preventDefault()
       document.querySelector(".active")?.classList.remove("active")
       folderDiv.classList.add("active")
-      let folderTitle = document.querySelector("li[data-folder]")
-      displayFolderContents(folderTitle);
+      const accounts = JSON.parse(localStorage.getItem("accounts"))
+      
+      accounts.forEach(acc=>{
+        if (acc.isLoggedIn === true) {
+          acc.folders.forEach(folder=>{
+            let taskObj = folder.tasks;
+            return taskObj;
+          })
+        }
+      })
+      initTasks();
+      renderTasks();
     })
   )
 }
@@ -69,7 +81,7 @@ export const deleteFolder = (folderToDelete, folderTitle)=>{
       document.querySelector('.confirmDelete_dialog').remove()
       removeFolder(folderToDelete)
       document.querySelector(".task-container").remove()
-      render()
+      renderFolders()
     }
     function cancelDelete(){
       document.querySelector('.confirmDelete_dialog').remove()
@@ -96,7 +108,7 @@ export function editFolder(e) {
   const editBtn = e.target;
   const folderToEdit = editBtn.dataset.folder;
   setEditing(folderToEdit);
-  render();
+  renderFolders();
 }
 function setEditing(folderToEdit) {
   const accounts = JSON.parse(localStorage.getItem("accounts"));
@@ -114,16 +126,16 @@ function setEditing(folderToEdit) {
 }
 
 export function onUpdate(e){
-const saveBtn = e.target;
-const folderId = saveBtn.dataset.folder
-const textbox = document.querySelector(`#edit-folderTitle-${folderId}`)
-const tasksSection = document.querySelector(".tasks-section")
-const newFolderTitle = textbox.value
-if (tasksSection.style.visibility === "visible"){
-  document.querySelector("#tasks-subtitle > h2").textContent = `${newFolderTitle} Tasks`
-}
-updateFolder(folderId, newFolderTitle)
-render();
+  const saveBtn = e.target;
+  const folderId = saveBtn.dataset.folder
+  const textbox = document.querySelector(`#edit-folderTitle-${folderId}`)
+  const tasksSection = document.querySelector(".tasks-section")
+  const newFolderTitle = textbox.value
+  if (tasksSection.style.visibility === "visible"){
+    document.querySelector("#tasks-subtitle > h2").textContent = `${newFolderTitle} Tasks`
+  }
+  updateFolder(folderId, newFolderTitle)
+  renderFolders();
 }
 
 function updateFolder(folderId, newFolderTitle){
@@ -140,30 +152,4 @@ function updateFolder(folderId, newFolderTitle){
       saveAccounts(accounts)
     }
   })
-}
-
-//user clicks child of Folder header
-function displayFolderContents(e) {
-  const addTaskSVG = imagepath("./svg/add-task.svg")
-  const tasksSection = document.querySelector(".tasks-section")
-  const mainContent = document.querySelector(".content")
-  mainContent.style.flexDirection = "row"
-  mainContent.style.justifyContent = "flex-start"
-  tasksSection.style.visibility = "visible"
-  let taskHeader = document.querySelector(".active > li")
-  tasksSection.innerHTML = ""
-  //modify tasks subtitle h2 to display "folder name + tasks"
-  tasksSection.appendChild(
-    createElem("div", {class: "task-container"},{},
-      createElem("div", {id: "tasks-subtitle"},{},
-        createElem("h2", {},{}, `${taskHeader.textContent} Tasks`)
-      ),
-      createElem("div", {id:'tasks-content', "data-folder":`${taskHeader.dataset.folder}`}, {},
-        createElem("ul", {},{})
-      ),
-      createElem("button", {id: "newTask", class: "createBtn"},{click:modal}, "Create Task", 
-        createElem("img", {src:addTaskSVG})
-      )
-    )
-  )
 }

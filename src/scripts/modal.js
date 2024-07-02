@@ -1,5 +1,5 @@
 import { addTask } from "./tasks"
-import { folderValidation } from "./validation";
+import { folderValidation, taskValidation } from "./validation";
 import { createElem } from "./factory";
 import { imagepath } from "..";
 export function createModal(e) {
@@ -12,11 +12,10 @@ export function createModal(e) {
 
     const fields = [
       { label: "Title:", id: "title", type: "text", name: "title" },
-      { label: "Description:", id: "desc", type: "text", name: "desc" },
+      { label: "Description:", id: "desc", type: "text", name: "desc" },      { label: "Priority:", id: "priority", type: "radio", name: "priority", 
+      options:["Low", "Medium", "High"] },
       { label: "Due Date:", id: "dueDate", type: "date", name: "dueDate" },
-      { label: "Priority:", id: "priority", type: "radio", name: "priority", 
-        options:["Low", "Medium", "High"] },
-      { label: "Notes:", id: "notes", type: "text", name: "notes" },
+
     ]
 
     // add close event to closeSVG
@@ -85,7 +84,10 @@ export function createModal(e) {
         createElem("form",{id:"modalNewTaskForm"},{},
           formFieldContainer,
           createElem("div", {id:"errorMsgDisplay"},{}),
-          createElem("button", {id:"addBtn", form:"modalNewTaskForm", "data-add-type":"task"},{click: addTask}, "Add", 
+          createElem("button", {id:"addBtn", form:"modalNewTaskForm", "data-add-type":"task"},{click:(e)=>{
+            e.preventDefault()
+            taskValidation()
+          }}, "Add", 
             createElem("img", {src:addTaskSVG})
           )
         )  
