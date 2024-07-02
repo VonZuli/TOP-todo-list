@@ -502,7 +502,6 @@ button:focus{
       display: flex;
       flex-basis:50%;
       align-items: center;
-
       color: var(--text-color);
       justify-content: flex-end;
     }
@@ -838,13 +837,13 @@ button:focus{
   opacity: 30%;
   text-decoration: line-through;
 }
-.item-container.priority-low{
+.item-container.priority-Low{
   border-left: 4px solid rgb(0, 255, 0);
 }
-.item-container.priority-medium{
+.item-container.priority-Medium{
   border-left: 4px solid yellow;
 }
-.item-container.priority-high{
+.item-container.priority-High{
   border-left: 4px solid red;
 }
 #tasks-content > ul > div.completed{
@@ -939,13 +938,13 @@ li > .taskDetails{
     width: 10px;
     border-radius: 50%;
   }
-  .priority-indicator.priority-low{
+  .priority-indicator.priority-Low{
     background-color: rgb(0, 255, 0)
   }
-  .priority-indicator.priority-medium{
+  .priority-indicator.priority-Medium{
     background-color: yellow;
   }
-  .priority-indicator.priority-high{
+  .priority-indicator.priority-High{
     background-color: red;
   }
   .taskPriority{
@@ -953,13 +952,13 @@ li > .taskDetails{
     font-size: smaller;
     margin: 5px;
   }
-  .taskPriority.priority-low{
+  .taskPriority.priority-Low{
     color: rgb(0, 255, 0);
   }
-  .taskPriority.priority-medium{
+  .taskPriority.priority-Medium{
     color: yellow;
   }
-  .taskPriority.priority-high{
+  .taskPriority.priority-High{
     color:red;
   }
 

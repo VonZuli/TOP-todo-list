@@ -117,7 +117,7 @@ export function renderTasks(){
         const calendarSVG = imagepath('./svg/calendar-exclaim.svg')
         folder.tasks.forEach(task=>{
           console.log(task);
-          tasksList.appendChild(createElem("div", {class:`item-container ${task.taskPriority}`},{},
+          tasksList.appendChild(createElem("div", {class:`item-container priority-${task.taskPriority}`},{},
           createElem("div", {class:"taskControls"},{},
             createElem("div",{class:"taskControls-top"},{},
               createElem("input", {class:"completedChk", for:`${task.taskId}`, type: "checkbox"})
@@ -138,8 +138,8 @@ export function renderTasks(){
                 createElem("div",{class:"taskDueDate"},{},`${task.taskDueDate}`)
               ),
               createElem("div",{class:"priority-wrapper"},{},
-                createElem("div",{class:`priority-indicator ${task.taskPriority}`},{}),
-                createElem("div",{class:`taskPriority ${task.taskPriority}`},{},task.taskPriority)
+                createElem("div",{class:`priority-indicator priority-${task.taskPriority}`},{}),
+                createElem("div",{class:`taskPriority priority-${task.taskPriority}`},{},task.taskPriority)
               ),
               createElem("div",{class:"notes-wrapper"},{},
                 createElem("div",{class:"taskNotes"},{},"Task Notes"),
