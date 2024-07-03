@@ -3,9 +3,43 @@ import { createElem } from "./factory";
 import { generateId } from "./generateID";
 import { initTaskArray, initTasks } from "./init";
 import { renderTasks } from "./render";
+import { saveAccounts } from "./saveAccounts";
 
-export function addTask() {
-  renderTasks();
+export function addTask(taskObj) {
+
+  const accounts = JSON.parse(localStorage.getItem("accounts"));
+  const activeFolder = document.querySelector(".folder-container.active")
+
+  if (!activeFolder) {
+    console.error("No active folder found");
+    return;
+  }
+  const activeFolderId = activeFolder.getAttribute("data-folder");
+
+  let userFound = false;
+  let folderFound = false;
+
+  accounts.forEach(acc=>{
+    if(acc.isLoggedIn === true){
+      userFound = true;
+      acc.folders.forEach(folder=>{
+        
+        if(folder.folderId === activeFolderId){
+          folderFound = true
+          console.log(`Adding task to folder: ${folder.folderTitle}`);
+          folder.tasks.push(taskObj);
+          renderTasks(folder.tasks);
+        }
+
+        if (!Array.isArray(folder.tasks)) {
+          folder.tasks = [];
+        }
+
+        saveAccounts(accounts)
+        
+      })
+    }
+  })
 }
 
  

@@ -78,20 +78,21 @@ export function initFolders(username, validLogin) {
   //get the accounts from localstorage
   const accounts = JSON.parse(localStorage.getItem("accounts"));
   //for each account in accounts
-  let defaultName = document.querySelector(".folder-container > li").textContent
+  let defaultTitle = document.querySelector(".folder-container > li").textContent
   let folderCounter = document.querySelector(".folder-counter")
 
   //function to push folder object to array
   function initFolderArray(accounts, username, folderId, folderTitle, count){
     let userAccount = accounts.find(user => user.username === username);
+    // count = userAccount.folders.forEach(folder=>folder.tasks.length);
+    
     userAccount.isLoggedIn = validLogin
-
     if (!userAccount || userAccount.folders < 1) {
       userAccount.folders = [];
       userAccount.folders.push({
         folderId, 
         folderTitle, 
-        folderTaskCount: +count, 
+        folderTaskCount: count, 
         "tasks":[]
       })
       saveAccounts(accounts)
@@ -100,7 +101,7 @@ export function initFolders(username, validLogin) {
       renderFolders(username)
     }
   }
-  initFolderArray(accounts, username, folderId, defaultName, +folderCounter.textContent)
+  initFolderArray(accounts, username, folderId, defaultTitle, +folderCounter.textContent)
 
   //set logout event to login button
   let loginBtn = document.querySelector(".loginBtn"); 
@@ -274,7 +275,7 @@ export function initHomepage(){
   //   foldersContent.id = 'folder-content'
     
   //   defaultListItem.textContent = "General"
-  //   let defaultName = defaultListItem.textContent
+  //   let defaultTitle = defaultListItem.textContent
     
   //   defaultFolder.classList.add('folder-container')
   //   defaultFolder.setAttribute('data-folder', folderId)
@@ -318,7 +319,7 @@ export function initHomepage(){
   //   foldersContainer.appendChild(newFolderBtn)
 
   // export function initDOM(){
-     // let defaultName = document.querySelector(".folder-container > li").textContent
+     // let defaultTitle = document.querySelector(".folder-container > li").textContent
   // let folderCounter = document.querySelector(".folder-counter")
   // function initFolderArray(folderId, folderTitle, count){
   //     if (!localStorage.getItem("folders") || savedFoldersObj.length < 1) {
@@ -335,7 +336,7 @@ export function initHomepage(){
   //       render()
   //     }
   //   };
-  // initFolderArray(folderId, defaultName, +folderCounter.textContent);
+  // initFolderArray(folderId, defaultTitle, +folderCounter.textContent);
   // return {folderInit, taskInit}
     
   //   function initFolderArray(folderId, folderTitle, count){
@@ -356,7 +357,7 @@ export function initHomepage(){
         // }
         
     // };
-  // initFolderArray(folderId, defaultName, folderCounter.textContent);
+  // initFolderArray(folderId, defaultTitle, folderCounter.textContent);
     
   //   //adds event listeners to elements on init
   //   displayDeleteBtn();

@@ -46,7 +46,10 @@ export function createModal(e) {
             ), 
             createElem("div", {id:"errorMsgDisplay"},{})
           ),
-          createElem("button", {id:"addBtn", form:`modalNewFolderForm`, "data-add-type":"folder"},{click:folderValidation}, "Add", 
+          createElem("button", {id:"addBtn", form:`modalNewFolderForm`, "data-add-type":"folder"},{click:(e)=>{
+            e.preventDefault()
+            folderValidation()
+          }}, "Add", 
             createElem("img", {src:addFolderSVG})
           )
         )  

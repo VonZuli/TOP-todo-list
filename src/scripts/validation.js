@@ -43,6 +43,8 @@ export const folderValidation = () =>{
     errorMsg.textContent = "Folder name must be longer than 2 characters."
     return
   }
+  
+  //this is broken
   if(folderExists.includes(userInput.toLowerCase())){
     errorMsg.style.visibility = "visible";
     errorMsg.textContent = `Folder with title "${userInput}" already exists.`
@@ -66,25 +68,23 @@ export const folderValidation = () =>{
 
 export const taskValidation = ()=>{
 
-  const accounts = JSON.parse(localStorage.getItem("accounts"));
-
   let taskInputs = document.querySelectorAll("input")
   let radioInputs = document.querySelectorAll("input[type=radio]")
   const errorMsg = document.querySelector("#errorMsgDisplay")
-  let folderTitleEl = document.querySelector("li[data-folder]")
+
 
   const textInputEmpty = Array.from(taskInputs).some(input => input.type !=="radio" && input.value === "");
 
   if (textInputEmpty) {
     errorMsg.style.visibility = "visible";
-    errorMsg.textContent += "Input fields cannot be empty.</br>"
+    errorMsg.textContent += "Input fields cannot be empty."
     return
   }
 
   const isRadioChecked = Array.from(radioInputs).some(radio=> radio.checked);
   if (!isRadioChecked) {
     errorMsg.style.visibility = "visible";
-    errorMsg.textContent = "Please select a priority level for your task.</br>"
+    errorMsg.textContent = "Please select a priority level for your task."
     return
   }
 
@@ -99,14 +99,12 @@ export const taskValidation = ()=>{
     if (input.type === "text"){
       input.id === "title" ? 
       taskTitle = input.value : taskDesc = input.value
-      console.log(taskTitle, taskDesc);
       Object.assign(taskObj, {taskTitle}, {taskDesc})
     }
 
     if(input.type === "radio"){
       if(input.checked === true){
         taskPriority = input.value
-        console.log(taskPriority);
         Object.assign(taskObj, {taskPriority})
       }
     }
@@ -114,21 +112,10 @@ export const taskValidation = ()=>{
     if (input.type === "date") {
       taskDueDate = input.value;
       Object.assign(taskObj, {taskDueDate})
-      console.log(taskDueDate);
     }
   })
 
   Object.assign(taskObj, {taskId})
-
-  accounts.forEach(acc=>{
-    if(acc.isLoggedIn===true){
-      acc.folders.forEach(folder=>{
-        if(folder.folderId === folderTitleEl.dataset.folder)
-          folder.tasks.push(taskObj)
-        saveAccounts(accounts)
-      })
-    }
-  })
 
   return addTask(taskObj)
 }

@@ -67,7 +67,7 @@ export function renderFolders(){
                 createElem("div",{
                   class: 'folder-counter', 
                   'data-folder': folderId
-                },{}, "0")
+                },{}, 0)
               ), 
               createElem("div",{class:'edit-container tooltip'},{},
                 createElem("span",{class:'tooltipText'},{},"Edit folder name"),
@@ -105,18 +105,21 @@ export function renderFolders(){
   saveAccounts(accounts)
 };
 
-export function renderTasks(){
+export function renderTasks(folderTasks){
   const accounts = JSON.parse(localStorage.getItem("accounts"));
   const tasksList = document.querySelector("#tasks-content > ul");
-  tasksList.innerHTML = ""
+
   accounts.forEach(acc=>{
     if(acc.isLoggedIn === true){
       acc.folders.forEach(folder=>{
-        const deleteSVG = imagepath('./svg/delete.svg')
-        const editSVG = imagepath('./svg/edit.svg')
-        const calendarSVG = imagepath('./svg/calendar-exclaim.svg')
-        folder.tasks.forEach(task=>{
-          console.log(task);
+
+        tasksList.innerHTML = ""
+
+        folderTasks.forEach(task=>{
+          const deleteSVG = imagepath('./svg/delete.svg')
+          const editSVG = imagepath('./svg/edit.svg')
+          const calendarSVG = imagepath('./svg/calendar-exclaim.svg')
+
           tasksList.appendChild(createElem("div", {class:`item-container priority-${task.taskPriority}`},{},
           createElem("div", {class:"taskControls"},{},
             createElem("div",{class:"taskControls-top"},{},
@@ -150,8 +153,11 @@ export function renderTasks(){
         ))
         })
       })
+    }
+  })
+  saveAccounts(accounts)
+}
 
-    
       // let folderCounter = document.querySelectorAll(".folder-counter")
       // let folderId = document.querySelectorAll("li[data-folder]")
       // let tasksContent = document.querySelector("#tasks-content[data-folder]")
@@ -170,12 +176,6 @@ export function renderTasks(){
       //     return taskPrioritySelection
       //   }
       // })
-      
-
-    }
-  })
-  saveAccounts(accounts)
-}
     // const folderContainer = document.createElement('div')
     // const animationContainer = document.createElement('div')
     // const counterContainer = document.createElement('div')

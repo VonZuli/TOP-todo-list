@@ -22,18 +22,21 @@ export function selectFolder(){
       e.preventDefault()
       document.querySelector(".active")?.classList.remove("active")
       folderDiv.classList.add("active")
+
       const accounts = JSON.parse(localStorage.getItem("accounts"))
-      
       accounts.forEach(acc=>{
         if (acc.isLoggedIn === true) {
           acc.folders.forEach(folder=>{
-            let taskObj = folder.tasks;
-            return taskObj;
+            console.log(e.target.dataset.folder);
+            if (folder.folderId === e.target.dataset.folder) {
+              initTasks();
+              console.log(folder.tasks);
+              renderTasks(folder.tasks);
+            }
           })
         }
       })
-      initTasks();
-      renderTasks();
+      
     })
   )
 }
