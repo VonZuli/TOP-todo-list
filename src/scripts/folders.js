@@ -1,12 +1,9 @@
 //#region imports
-import { imagepath } from "..";
 import { createElem } from "./factory";
 import { initTasks } from "./init";
-import { createModal as modal }  from "./modal";
-// import { folderArray } from "./init";
 import { renderFolders, renderTasks } from "./render";
 import { saveAccounts } from "./saveAccounts"
-import { addTask } from "./tasks";
+
 //#endregion imports
 
 export function addFolder() {

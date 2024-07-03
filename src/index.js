@@ -4,7 +4,7 @@ import _ from 'lodash';
 import './style.css'
 import {createHeader as header} from './scripts/header'
 import {createFooter as footer} from './scripts/footer';
-import {initHomepage, initDOM, noLogin, initFolders } from './scripts/init';
+import {initHomepage } from './scripts/init';
 import { saveFolders } from './scripts/saveAccounts';
 
 // import images
@@ -16,8 +16,5 @@ export const imagepath = (name) => images(name, true)
 
 //create DOM structure and initialize app
 header();
-// initDOM();
-// initFolders();
 initHomepage();
 footer();
-// saveFolders();

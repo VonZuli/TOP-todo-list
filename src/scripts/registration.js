@@ -1,8 +1,5 @@
 //imports
 import { imagepath } from "..";
-import { createFooter as footer } from "./footer"
-import { createHeader  as header } from "./header"
-import { initHomepage } from "./init"
 import { registrationValidation } from "./validation";
 import { createElem } from "./factory";
 

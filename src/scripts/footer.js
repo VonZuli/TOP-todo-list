@@ -1,5 +1,6 @@
 //imports
 import { imagepath } from "..";
+
 export function createFooter() {
   const footer = document.querySelector('footer')
   let tagline = document.createElement('h4')

@@ -1,12 +1,8 @@
 //#region imports
-import { identity, isBoolean } from "lodash";
 import { addFolder } from "./folders";
 import { generateId } from "./generateID";
-import { initFolders, initHomepage, userArr } from "./init";
-import { isValid } from "date-fns";
+import { initFolders, initHomepage } from "./init";
 import { login } from "./login";
-import { createHeader } from "./header";
-import { registration } from "./registration";
 import { createElem } from "./factory";
 import { saveAccounts } from "./saveAccounts";
 import { addTask } from "./tasks";

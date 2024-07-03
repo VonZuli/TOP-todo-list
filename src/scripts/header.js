@@ -1,6 +1,6 @@
 //imports
 import { imagepath } from ".."
-import { initHomepage } from "./init"
+
 import { login } from "./login"
 
 export function createHeader(username) {

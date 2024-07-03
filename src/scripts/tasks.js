@@ -1,7 +1,3 @@
-import { imagepath } from "../index";
-import { createElem } from "./factory";
-import { generateId } from "./generateID";
-import { initTaskArray, initTasks } from "./init";
 import { renderTasks } from "./render";
 import { saveAccounts } from "./saveAccounts";
 
