@@ -90,6 +90,7 @@ export const taskValidation = ()=>{
   let taskDesc;
   let taskPriority;
   let taskDueDate;
+  let completed = false;
 
   taskInputs.forEach(input=>{
     if (input.type === "text"){
@@ -111,7 +112,7 @@ export const taskValidation = ()=>{
     }
   })
 
-  Object.assign(taskObj, {taskId})
+  Object.assign(taskObj, {taskId, completed})
 
   return addTask(taskObj)
 }

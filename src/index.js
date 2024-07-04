@@ -2,9 +2,9 @@
 // const bcrypt = require('bcrypt');
 import _ from 'lodash';
 import './style.css'
-import {createHeader as header} from './scripts/header'
-import {createFooter as footer} from './scripts/footer';
-import {initHomepage } from './scripts/init';
+import { createHeader as header } from './scripts/header'
+import { createFooter as footer } from './scripts/footer';
+import { initHomepage } from './scripts/init';
 import { saveFolders } from './scripts/saveAccounts';
 
 // import images

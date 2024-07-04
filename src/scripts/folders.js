@@ -24,10 +24,8 @@ export function selectFolder(){
       accounts.forEach(acc=>{
         if (acc.isLoggedIn === true) {
           acc.folders.forEach(folder=>{
-            console.log(e.target.dataset.folder);
             if (folder.folderId === e.target.dataset.folder) {
               initTasks();
-              console.log(folder.tasks);
               renderTasks(folder.tasks);
             }
           })

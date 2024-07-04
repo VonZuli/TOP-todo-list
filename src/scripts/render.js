@@ -1,6 +1,7 @@
 //#region imports
 import { imagepath } from "../index";
 import { saveAccounts } from "./saveAccounts";
+import { createElem } from "./factory";
 import { 
   selectFolder, 
   displayDeleteBtn,
@@ -8,7 +9,7 @@ import {
   editFolder,
   onUpdate
 } from './folders.js'
-import { createElem } from "./factory";
+import { handleCheckbox } from "./tasks";
 //#endregion imports  
 
 export function renderFolders(){
@@ -117,11 +118,34 @@ export function renderTasks(folderTasks){
           const deleteSVG = imagepath('./svg/delete.svg')
           const editSVG = imagepath('./svg/edit.svg')
           const calendarSVG = imagepath('./svg/calendar-exclaim.svg')
-
-          tasksList.appendChild(createElem("div", {class:`item-container priority-${task.taskPriority}`},{},
+          let checked;
+          tasksList.appendChild(
+            createElem("div", {class:`item-container priority-${task.taskPriority}`},{},
           createElem("div", {class:"taskControls"},{},
             createElem("div",{class:"taskControls-top"},{},
-              createElem("input", {class:"completedChk", for:`${task.taskId}`, type: "checkbox"})
+            task.completed !== true ? 
+              createElem("input", {class:"completedChk", for:`${task.taskId}`, type: "checkbox"},{change:(e)=>{
+                e.stopPropagation();
+                checked = false;
+                handleCheckbox(e, checked)
+              }})
+            
+            :
+            (function(){
+              const completedTask = 
+                createElem("input", {
+                  class: "completedChk", 
+                  for: `${task.taskId}`, 
+                  type: "checkbox",
+                  checked: true
+                },{change:(e)=>{
+                  e.stopPropagation();
+                  checked = true;
+                  handleCheckbox(e, checked)
+                }})
+                return completedTask
+            })(),
+
             ),
             createElem("div",{class:"taskControls-bottom"},{},
               createElem("img",{class:"editTaskBtn", src:`${editSVG}`},{}),

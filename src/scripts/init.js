@@ -151,23 +151,6 @@ export function initTasks(){
       )
     )
   )
-
-  // function initTaskArray(){
-  //   const accounts = JSON.parse(localStorage.getItem("accounts"));
-  //   accounts.forEach(acc=>{
-  //     acc.folders.forEach(folder=>{
-  //       if (!folder.tasks || folder.tasks < 1) {
-  //         acc.folders.tasks = []
-  //         acc.folders.tasks.push(taskObj)
-  //         console.log(`Folder: ${folder}, ${folder.folderId}`);
-  //       } else{
-  //         saveAccounts(accounts)
-  //         renderTasks(folder.tasks)
-  //       }
-  //     })
-  //   })
-  // }
-  // initTaskArray(taskObj)
 }
 
 export function initHomepage(){

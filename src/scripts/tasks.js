@@ -56,14 +56,23 @@ export function addTask(taskObj) {
   // // handleCheckbox(taskId)
   
   // // when we add a new task call this function
-  // function handleCheckbox(taskId, checked) {
-  //   taskArray.forEach((task)=>{
-  //     if (task.id === taskId){
-  //       task.complete = checked;
-
-  //     }
-  //   })
-    
+  export function handleCheckbox(e, checked) {
+    const accounts = JSON.parse(localStorage.getItem("accounts"));
+    accounts.forEach(acc=>{
+      if (acc.isLoggedIn === true){
+        acc.folders.forEach(folder=>{
+          folder.tasks.forEach(task=>{
+            if (task.taskId === e.target.attributes[1].value){
+              task.completed === false ? 
+                task.completed = true : task.completed = false;
+                saveAccounts(accounts)
+              //run function to strike todo item here
+            }
+          })
+        })
+      }
+    })
+  }
 
 
   //   // this function gives the new checkbox an event listener
