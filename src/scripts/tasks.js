@@ -1,4 +1,4 @@
-import { renderTasks } from "./render";
+import { renderFolders, renderTasks } from "./render";
 import { saveAccounts } from "./saveAccounts";
 
 export function addTask(taskObj) {
@@ -26,12 +26,13 @@ export function addTask(taskObj) {
           folder.tasks.push(taskObj);
           renderTasks(folder.tasks);
         }
-
+        
         if (!Array.isArray(folder.tasks)) {
           folder.tasks = [];
         }
-
+        
         saveAccounts(accounts)
+        renderFolders();
         
       })
     }

@@ -89,6 +89,18 @@ header{
     height: 40px;
     padding: 10px;
   }
+  .logoutBtn{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin: 2px 20px;
+    font-weight: 700;
+    font-size: 1.2em;
+    width: 120px;
+    height: 40px;
+    padding: 10px;
+  }
   .loginSVG{
     max-width: 25px;
     margin: 2px 2px 2px 5px;
@@ -838,6 +850,10 @@ button:focus{
 .taskDetails.completed{
   opacity: 30%;
   text-decoration: line-through;
+}
+.taskDetails.completed:hover{
+  opacity: 100%;
+  text-decoration: none;
 }
 .item-container.priority-Low{
   border-left: 4px solid rgb(0, 255, 0);

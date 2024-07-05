@@ -23,10 +23,11 @@ export function renderFolders(){
       acc.folders.forEach(folder=>{
 
         let folderTitle = folder.folderTitle
+        let folderId = folder.folderId
+        let taskCount = folder.tasks.length
 
         const deleteSVG = imagepath('./svg/delete.svg');
         const editSVG = imagepath('./svg/edit.svg')
-        const folderId = folder.folderId
 
         folderList.appendChild(
           createElem("div",{class:'folder-container','data-folder': folderId},{},
@@ -66,7 +67,7 @@ export function renderFolders(){
                 createElem("div",{
                   class: 'folder-counter', 
                   'data-folder': folderId
-                },{}, 0)
+                },{}, taskCount)
               ), 
               createElem("div",{class:'edit-container tooltip'},{},
                 createElem("span",{class:'tooltipText'},{},"Edit folder name"),

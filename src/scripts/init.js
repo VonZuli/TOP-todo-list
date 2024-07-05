@@ -83,7 +83,7 @@ export function initFolders(username, validLogin) {
   let folderCounter = document.querySelector(".folder-counter")
 
   //function to push folder object to array
-  function initFolderArray(accounts, username, folderId, folderTitle, count){
+  function initFolderArray(accounts, username, folderId, folderTitle){
     let userAccount = accounts.find(user => user.username === username);
 
     userAccount.isLoggedIn = validLogin
@@ -92,7 +92,6 @@ export function initFolders(username, validLogin) {
       userAccount.folders.push({
         folderId, 
         folderTitle, 
-        folderTaskCount: count, 
         "tasks":[]
       })
       saveAccounts(accounts)
@@ -101,7 +100,7 @@ export function initFolders(username, validLogin) {
       renderFolders(username)
     }
   }
-  initFolderArray(accounts, username, folderId, defaultTitle, +folderCounter.textContent)
+  initFolderArray(accounts, username, folderId, defaultTitle)
 
   //set logout event to login button
   let loginBtn = document.querySelector(".loginBtn"); 
