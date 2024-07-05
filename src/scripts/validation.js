@@ -62,8 +62,8 @@ export const folderValidation = () =>{
   return addFolder(userInput);
 };
 
-export const taskValidation = ()=>{
-
+export const taskValidation = (e)=>{
+  e.preventDefault()
   let taskInputs = document.querySelectorAll("input")
   let radioInputs = document.querySelectorAll("input[type=radio]")
   const errorMsg = document.querySelector("#errorMsgDisplay")
@@ -306,8 +306,6 @@ export function registrationValidation(userInfoObj){
     if (key==="email" || key === "username"){
       const checkUserExists = ((str)=>{
         const accounts = JSON.parse(localStorage.getItem("accounts"));
-        // console.log(accounts);
-        // console.log(typeof accounts);
         if (key === "email" && accounts) {
           const emailUnavailable = accounts.find(account => account.email === str)
           if (emailUnavailable) {
@@ -350,7 +348,6 @@ export function registrationValidation(userInfoObj){
       el.innerHTML = ""
       
       errorArr.forEach(i=>{
-        console.log(i);
         if (i[0]===el.dataset.error) {
           el.innerHTML += i[1].errorMsgsArr.join("")
         }

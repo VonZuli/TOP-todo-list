@@ -11,6 +11,7 @@ import { selectFolder,
 import { createElem } from "./factory";
 import { registration } from './registration';
 import { createHeader } from './header';
+import { login } from './login';
 //#endregion imports
 
 //initialize folders array
@@ -76,6 +77,7 @@ export function initFolders(username, validLogin) {
 
   //get the accounts from localstorage
   const accounts = JSON.parse(localStorage.getItem("accounts"));
+  const header = document.querySelector("header")
   //for each account in accounts
   let defaultTitle = document.querySelector(".folder-container > li").textContent
   let folderCounter = document.querySelector(".folder-counter")
@@ -83,8 +85,7 @@ export function initFolders(username, validLogin) {
   //function to push folder object to array
   function initFolderArray(accounts, username, folderId, folderTitle, count){
     let userAccount = accounts.find(user => user.username === username);
-    // count = userAccount.folders.forEach(folder=>folder.tasks.length);
-    
+
     userAccount.isLoggedIn = validLogin
     if (!userAccount || userAccount.folders < 1) {
       userAccount.folders = [];
@@ -105,23 +106,24 @@ export function initFolders(username, validLogin) {
   //set logout event to login button
   let loginBtn = document.querySelector(".loginBtn"); 
   loginBtn.innerHTML = "Logout" //add SVG here
-  
+  loginBtn.removeEventListener("click", login)
   //right now this would logout any user that is flagged as logged in would need to be adjusted for real world application
   //a timeout would need to be added to logout user
   // user is not logged out on page refresh so you need to create a check for logged in users on refresh and load the correct DOM elements
   loginBtn.addEventListener("click", () =>{
-    accounts.forEach(account=>{
-      console.log(account);
-      if (account.isLoggedIn === true){
-        account.isLoggedIn = false
+    accounts.forEach(acc=>{
+      if (acc.isLoggedIn === true){
+        acc.isLoggedIn = false
         saveAccounts(accounts)
-        document.querySelector(".folders-section").remove()
-        document.querySelector(".tasks-section").remove()
-        initHomepage()
-        username = ""
-        createHeader()
+        console.log("Account logged out:", acc.username);
+        console.log("Accounts saved to localStorage:", JSON.stringify(accounts));
       }
     })
+    document.querySelector(".folders-section").remove()
+    document.querySelector(".tasks-section").remove()
+    initHomepage()
+    username = ""
+    createHeader()
   })
 }
  

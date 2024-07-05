@@ -140,7 +140,6 @@ function updateFolder(folderId, newFolderTitle){
   const accounts = JSON.parse(localStorage.getItem("accounts"));
   accounts.forEach(acc=>{
     if (acc.isLoggedIn === true) {
-      console.log(acc);
       acc.folders.forEach(folder=>{
         if(folder.folderId === folderId){
           folder.folderTitle = newFolderTitle

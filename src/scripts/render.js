@@ -118,61 +118,52 @@ export function renderTasks(folderTasks){
           const deleteSVG = imagepath('./svg/delete.svg')
           const editSVG = imagepath('./svg/edit.svg')
           const calendarSVG = imagepath('./svg/calendar-exclaim.svg')
-          let checked;
-          tasksList.appendChild(
-            createElem("div", {class:`item-container priority-${task.taskPriority}`},{},
-          createElem("div", {class:"taskControls"},{},
-            createElem("div",{class:"taskControls-top"},{},
-            task.completed !== true ? 
-              createElem("input", {class:"completedChk", for:`${task.taskId}`, type: "checkbox"},{change:(e)=>{
-                e.stopPropagation();
-                checked = false;
-                handleCheckbox(e, checked)
-              }})
-            
-            :
-            (function(){
-              const completedTask = 
-                createElem("input", {
-                  class: "completedChk", 
-                  for: `${task.taskId}`, 
-                  type: "checkbox",
-                  checked: true
-                },{change:(e)=>{
-                  e.stopPropagation();
-                  checked = true;
-                  handleCheckbox(e, checked)
-                }})
-                return completedTask
-            })(),
 
+          const itemContainerClass = `item-container priority-${task.taskPriority}` + (task.completed ? " completed" : "");
+          const taskDetailsClass = "taskDetails" + (task.completed ? " completed" : "");
+
+          const taskContainer = createElem("div", {class:itemContainerClass,"data-id":`${task.taskId}`},{},
+            createElem("div", {class:"taskControls"},{},
+              createElem("div",{class:"taskControls-top"},{},
+                (()=>{
+                  const checkbox = createElem("input", {
+                    class: "completedChk", 
+                    for: `${task.taskId}`, 
+                    type: "checkbox",
+                  },{change:(e)=>{
+                      e.stopPropagation();
+                      handleCheckbox(e, task.taskId) 
+                    }
+                  });
+                  if (task.completed) {
+                    checkbox.checked = true;
+                  }
+                  return checkbox
+                })()  
+              ),
+              createElem("div",{class:"taskControls-bottom"},{},
+                createElem("img",{class:"editTaskBtn", src:`${editSVG}`},{}),
+                createElem("img",{class:"deleteTaskBtn", src:`${deleteSVG}`},{})
+              )
             ),
-            createElem("div",{class:"taskControls-bottom"},{},
-              createElem("img",{class:"editTaskBtn", src:`${editSVG}`},{}),
-              createElem("img",{class:"deleteTaskBtn", src:`${deleteSVG}`},{})
-            )
-          ),
-          createElem("li",{"data-id":`${task.taskId}`},{},
-            createElem("div",{class:"taskDetails"},{},
-              createElem("div",{class:"header-wrapper"},{},
-                createElem("label",{id:`${task.taskId}`, class:"taskTitle"},{},`${task.taskTitle}`),
-                createElem("div",{class:"taskDesc"},{},`${task.taskDesc}`)
-              ),
-              createElem("div",{class:"calendar-wrapper"},{},
-                createElem("img",{class: "calendarSVG", src:`${calendarSVG}`},{}),
-                createElem("div",{class:"taskDueDate"},{},`${task.taskDueDate}`)
-              ),
-              createElem("div",{class:"priority-wrapper"},{},
-                createElem("div",{class:`priority-indicator priority-${task.taskPriority}`},{}),
-                createElem("div",{class:`taskPriority priority-${task.taskPriority}`},{},task.taskPriority)
-              ),
-              createElem("div",{class:"notes-wrapper"},{},
-                createElem("div",{class:"taskNotes"},{},"Task Notes"),
-                createElem("textarea",{class:"textarea"},{})
+            createElem("li",{"data-id":`${task.taskId}`},{},
+              createElem("div",{class:taskDetailsClass},{},
+                createElem("div",{class:"header-wrapper"},{},
+                  createElem("label",{id:`${task.taskId}`, class:"taskTitle"},{},`${task.taskTitle}`),
+                  createElem("div",{class:"taskDesc"},{},`${task.taskDesc}`)
+                ),
+                createElem("div",{class:"calendar-wrapper"},{},
+                  createElem("img",{class: "calendarSVG", src:`${calendarSVG}`},{}),
+                  createElem("div",{class:"taskDueDate"},{},`${task.taskDueDate}`)
+                ),
+                createElem("div",{class:"priority-wrapper"},{},
+                  createElem("div",{class:`priority-indicator priority-${task.taskPriority}`},{}),
+                  createElem("div",{class:`taskPriority priority-${task.taskPriority}`},{},task.taskPriority)
+                )
               )
             )
           )
-        ))
+        tasksList.appendChild(taskContainer)
         })
       })
     }

@@ -38,7 +38,6 @@ export function addTask(taskObj) {
   })
 }
 
- 
   // console.log(tasksContent.dataset.folder);
   // console.log(folderCounter);
   // console.log(typeof folderCounter);
@@ -49,24 +48,26 @@ export function addTask(taskObj) {
   // let folderCount = parseInt(folderCounter.textContent);
   // folderCount++
   // folderCounter.textContent = folderCount.toString();
-
-
-
-
-  // // handleCheckbox(taskId)
   
   // // when we add a new task call this function
-  export function handleCheckbox(e, checked) {
+  export function handleCheckbox(e, taskId) {
     const accounts = JSON.parse(localStorage.getItem("accounts"));
     accounts.forEach(acc=>{
       if (acc.isLoggedIn === true){
         acc.folders.forEach(folder=>{
           folder.tasks.forEach(task=>{
-            if (task.taskId === e.target.attributes[1].value){
-              task.completed === false ? 
-                task.completed = true : task.completed = false;
-                saveAccounts(accounts)
-              //run function to strike todo item here
+            if (task.taskId === taskId){
+              const taskDetails = document.querySelector(`li[data-id="${taskId}"] > .taskDetails`)
+              const taskItemContainer = document.querySelector(`.item-container[data-id="${taskId}"]`)
+              task.completed = e.target.checked
+              if (task.completed === true) {
+                taskDetails.classList.add("completed")
+                taskItemContainer.classList.add("completed")
+              } else {
+                taskDetails.classList.remove("completed")
+                taskItemContainer.classList.remove("completed")
+              }
+              saveAccounts(accounts)
             }
           })
         })
@@ -74,7 +75,7 @@ export function addTask(taskObj) {
     })
   }
 
-
+ 
   //   // this function gives the new checkbox an event listener
   //   const taskItemsChk = document.querySelectorAll(".completedChk")
 

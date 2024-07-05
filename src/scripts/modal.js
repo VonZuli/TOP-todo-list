@@ -89,8 +89,7 @@ export function createModal(e) {
           formFieldContainer,
           createElem("div", {id:"errorMsgDisplay"},{}),
           createElem("button", {id:"addBtn", form:"modalNewTaskForm", "data-add-type":"task"},{click:(e)=>{
-            e.preventDefault()
-            taskValidation()
+            taskValidation(e)
           }}, "Add", 
             createElem("img", {src:addTaskSVG})
           )
