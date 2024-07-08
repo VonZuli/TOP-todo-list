@@ -9,7 +9,7 @@ import {
   editFolder,
   onUpdate
 } from './folders.js'
-import { handleCheckbox } from "./tasks";
+import { handleCheckbox, editTask, onTaskUpdate } from "./tasks";
 //#endregion imports  
 
 export function renderFolders(){
@@ -29,8 +29,9 @@ export function renderFolders(){
         const deleteSVG = imagepath('./svg/delete.svg');
         const editSVG = imagepath('./svg/edit.svg')
 
+        const folderContainerClass = `folder-container` + (folder.isActive == true ? " active" : "");
         folderList.appendChild(
-          createElem("div",{class:'folder-container','data-folder': folderId},{},
+          createElem("div",{class:folderContainerClass,'data-folder': folderId},{},
             folder.isEditing !== true ?
             createElem("li",{'data-folder': folderId},{}, folderTitle)
             :
@@ -106,6 +107,7 @@ export function renderFolders(){
 };
 
 export function renderTasks(folderTasks){
+  console.log(folderTasks);
   const accounts = JSON.parse(localStorage.getItem("accounts"));
   const tasksList = document.querySelector("#tasks-content > ul");
 
@@ -122,8 +124,13 @@ export function renderTasks(folderTasks){
 
           const itemContainerClass = `item-container priority-${task.taskPriority}` + (task.completed ? " completed" : "");
           const taskDetailsClass = "taskDetails" + (task.completed ? " completed" : "");
+          let taskTitle = task.taskTitle
+          let taskDesc = task.taskDesc
+          let taskDueDate = task.taskDueDate
+          let taskPriority = task.taskPriority
+          let taskId = task.taskId
 
-          const taskContainer = createElem("div", {class:itemContainerClass,"data-id":`${task.taskId}`},{},
+          const taskContainer = createElem("div", {class:itemContainerClass,"data-id":`${task.taskId}`, "data-folder":`${folder.folderId}`},{},
             createElem("div", {class:"taskControls"},{},
               createElem("div",{class:"taskControls-top"},{},
                 (()=>{
@@ -143,10 +150,11 @@ export function renderTasks(folderTasks){
                 })()  
               ),
               createElem("div",{class:"taskControls-bottom"},{},
-                createElem("img",{class:"editTaskBtn", src:`${editSVG}`},{}),
+                createElem("img",{class:"editTaskBtn", src:`${editSVG}`, "data-task": `${task.taskId}`},{click:editTask}),
                 createElem("img",{class:"deleteTaskBtn", src:`${deleteSVG}`},{})
               )
             ),
+            task.isEditing !== true ?
             createElem("li",{"data-id":`${task.taskId}`},{},
               createElem("div",{class:taskDetailsClass},{},
                 createElem("div",{class:"header-wrapper"},{},
@@ -163,6 +171,61 @@ export function renderTasks(folderTasks){
                 )
               )
             )
+            :
+            (function () {
+              const editTaskContainer = 
+                createElem("div", {class:"edit-task-container"},{},
+                  createElem("input", {
+                    type: "text",
+                    id: `edit-taskTitle-${taskId}`,
+                    autofocus:"",
+                    class: "editTaskInput",
+                    "value": taskTitle
+                  },{click:(e)=>{
+                    e.stopPropagation()
+                  }}),
+                  createElem("input", {
+                    type: "text",
+                    id: `edit-taskDesc-${taskId}`,
+                    class: "editTaskInput",
+                    "value": taskDesc
+                  },{click:(e)=>{
+                    e.stopPropagation()
+                  }}),
+                  createElem("input", {
+                    type: "date",
+                    id: `edit-taskDueDate-${taskId}`,
+                    class: "editTaskInput",
+                    "value": taskDueDate
+                  },{click:(e)=>{
+                    e.stopPropagation()
+                  }}),
+                  createElem("select", {
+                    id: `edit-taskPriority-${taskId}`,
+                    class: "editTaskInput",
+                    "value": taskPriority
+                  },{click:(e)=>{
+                    e.stopPropagation()
+                  }},
+                  createElem("option",{ class: "default-select", value: taskPriority, selected:""},{},taskPriority),
+                  createElem("option", {class:"low-selectOpt",value:"Low"},{},"Low"),
+                  createElem("option", {class:"medium-selectOpt",value:"Medium"},{},"Medium"),
+                  createElem("option", {class:"high-selectOpt",value:"High"},{},"High")),
+                )
+
+                const saveTaskEditButton = 
+                  createElem("button", { 
+                    class: "saveEditBtn", 
+                    "data-id": taskId, 
+                    id: taskId 
+                  },{click:(e)=>{
+                    e.stopPropagation()
+                    onTaskUpdate(e)
+                  }}, "Save?");
+                
+                editTaskContainer.appendChild(saveTaskEditButton)
+                return editTaskContainer;
+            })()
           )
         tasksList.appendChild(taskContainer)
         })
@@ -171,3 +234,31 @@ export function renderTasks(folderTasks){
   })
   saveAccounts(accounts)
 }
+
+// (function() {
+//   const editingContainer = 
+//     createElem("div", { class: "editing-container" },{},
+//       createElem("input", { 
+//         type: "text", 
+//         id:`edit-folderTitle-${folderId}`, 
+//         autofocus: "", 
+//         class: "editFolderInput", 
+//         "value": folderTitle 
+//       },{click:(e)=>{
+//         e.stopPropagation()
+//       }})
+//   );
+
+//   const saveEditButton = 
+//     createElem("button", { 
+//       class: "saveEditBtn", 
+//       "data-folder": folderId, 
+//       id: folderId 
+//     },{click:(e)=>{
+//       e.stopPropagation()
+//       onUpdate(e)
+//     }}, "Save?");
+
+//   editingContainer.appendChild(saveEditButton);
+//   return editingContainer;
+// })(),

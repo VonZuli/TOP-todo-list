@@ -89,18 +89,6 @@ header{
     height: 40px;
     padding: 10px;
   }
-  .logoutBtn{
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    margin: 2px 20px;
-    font-weight: 700;
-    font-size: 1.2em;
-    width: 120px;
-    height: 40px;
-    padding: 10px;
-  }
   .loginSVG{
     max-width: 25px;
     margin: 2px 2px 2px 5px;
@@ -882,7 +870,8 @@ li > .taskDetails{
   flex-direction: column;
   justify-content: space-between;
   margin: 5px;
-  height: 120px
+  height: 120px;
+  cursor: pointer;
 }
   .taskControls-top{
     display: flex;
@@ -896,6 +885,7 @@ li > .taskDetails{
     width: 18px;
     height: 18px;
     accent-color: var(--secondary-color);
+    cursor: pointer;
   }
   .taskControls-bottom{
     display: flex;

@@ -26,12 +26,21 @@ export let userArr;
   //solution could be to create folder and tasks sections rather than them existing in HTML file
 export function initFolders(username, validLogin) {
   createHeader(username)
+  const logoutSVG = imagepath('./svg/logout.svg')
   const folderSVG = imagepath('./svg/folder.svg');
   const addFolderSVG = imagepath('./svg/add-folder.svg')
   const editSVG = imagepath('./svg/edit.svg');
   const deleteSVG = imagepath('./svg/delete.svg');
   const folderSection = createElem("section",{class:"folders-section"},{})
   const tasksSection = createElem("section",{class:"tasks-section"},{})
+
+  //get the accounts from localstorage
+  const accounts = JSON.parse(localStorage.getItem("accounts"));
+  accounts.forEach(acc=>{
+    acc.folders.forEach(folder=>{
+      folder.isActive = false;
+    })
+  })
 
   document.querySelector(".content").appendChild(folderSection)
   document.querySelector(".content").appendChild(tasksSection)
@@ -73,14 +82,10 @@ export function initFolders(username, validLogin) {
   //adds event listeners to elements on init
   displayDeleteBtn();
   selectFolder(); 
-  // deleteFolder();
 
-  //get the accounts from localstorage
-  const accounts = JSON.parse(localStorage.getItem("accounts"));
-  const header = document.querySelector("header")
+
   //for each account in accounts
   let defaultTitle = document.querySelector(".folder-container > li").textContent
-  let folderCounter = document.querySelector(".folder-counter")
 
   //function to push folder object to array
   function initFolderArray(accounts, username, folderId, folderTitle){
@@ -104,7 +109,9 @@ export function initFolders(username, validLogin) {
 
   //set logout event to login button
   let loginBtn = document.querySelector(".loginBtn"); 
-  loginBtn.innerHTML = "Logout" //add SVG here
+  loginBtn.innerHTML = "Logout"
+  createElem("img", {src:logoutSVG},{})
+  loginBtn.appendChild(createElem("img", {class:"loginSVG",src:logoutSVG},{}))
   loginBtn.removeEventListener("click", login)
   //right now this would logout any user that is flagged as logged in would need to be adjusted for real world application
   //a timeout would need to be added to logout user
@@ -159,10 +166,7 @@ export function initHomepage(){
   
     const content = document.querySelector(".content")
     content.removeAttribute("style")
-    const foldersSection = document.querySelector(".folders-section")
-    const tasksSection = document.querySelector(".tasks-section")
     const heroSection =  createElem('section',{class:"hero-section"},{})
-    // const accounts = JSON.parse(localStorage.getItem("accounts"))
    
     content.innerHTML = ""
 

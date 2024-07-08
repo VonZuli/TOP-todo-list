@@ -15,19 +15,24 @@ export function addFolder() {
 export function selectFolder(){
   const selectedFolder = document.querySelectorAll(".folder-container")
   selectedFolder.forEach((folderDiv)=>
-    folderDiv.addEventListener('click', (e)=>{
+  folderDiv.addEventListener('click', (e)=>{
       e.preventDefault()
+      const accounts = JSON.parse(localStorage.getItem("accounts"))
       document.querySelector(".active")?.classList.remove("active")
       folderDiv.classList.add("active")
+      
 
-      const accounts = JSON.parse(localStorage.getItem("accounts"))
       accounts.forEach(acc=>{
         if (acc.isLoggedIn === true) {
           acc.folders.forEach(folder=>{
             if (folder.folderId === e.target.dataset.folder) {
+              folder.isActive = true;
               initTasks();
               renderTasks(folder.tasks);
+            } else {
+              folder.isActive = false;
             }
+            saveAccounts(accounts)
           })
         }
       })
@@ -117,7 +122,6 @@ function setEditing(folderToEdit) {
           folder.isEditing = true
         }
       })
-
       saveAccounts(accounts)
     }
   })
