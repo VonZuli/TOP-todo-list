@@ -27,12 +27,12 @@ export function selectFolder(){
           acc.folders.forEach(folder=>{
             if (folder.folderId === e.target.dataset.folder) {
               folder.isActive = true;
-              initTasks();
-              renderTasks(folder.tasks);
+              saveAccounts(accounts)
+              initTasks(folder.tasks, folder.folderId);
+              // renderTasks(folder.tasks, folder.folderId);
             } else {
               folder.isActive = false;
             }
-            saveAccounts(accounts)
           })
         }
       })

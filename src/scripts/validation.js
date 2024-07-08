@@ -17,8 +17,6 @@ export const folderValidation = () =>{
   const errorMsg = document.querySelector("#errorMsgDisplay")
   
   let userInput = folderNameInput.value;
-  let folderTaskCount = document.querySelector('.folder-counter')
-  let count = folderTaskCount.textContent
   let folderId = generateId();
 
 
@@ -51,8 +49,7 @@ export const folderValidation = () =>{
     if (acc.isLoggedIn === true) {
       acc.folders.push({
         folderId, 
-        folderTitle:userInput, 
-        folderTaskCount:+count, 
+        folderTitle:userInput,
         "tasks":[]
       })
       saveAccounts(accounts)

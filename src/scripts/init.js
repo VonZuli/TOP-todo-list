@@ -1,7 +1,7 @@
 //#region imports
 import { createModal as modal } from './modal'
 import { imagepath } from "../index";
-import { renderFolders } from "./render";
+import { renderFolders, renderTasks } from "./render";
 import { saveAccounts } from './saveAccounts';
 import { generateId } from './generateID';
 import { selectFolder, 
@@ -134,7 +134,7 @@ export function initFolders(username, validLogin) {
 }
  
 //initialze tasks section
-export function initTasks(){
+export function initTasks(folderTasks, folderId){
   const addTaskSVG = imagepath("./svg/add-task.svg")
   const tasksSection = document.querySelector(".tasks-section")
   const mainContent = document.querySelector(".content")
@@ -159,6 +159,7 @@ export function initTasks(){
       )
     )
   )
+  renderTasks(folderTasks, folderId);
 }
 
 export function initHomepage(){

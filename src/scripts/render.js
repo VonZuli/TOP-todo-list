@@ -29,7 +29,7 @@ export function renderFolders(){
         const deleteSVG = imagepath('./svg/delete.svg');
         const editSVG = imagepath('./svg/edit.svg')
 
-        const folderContainerClass = `folder-container` + (folder.isActive == true ? " active" : "");
+        const folderContainerClass = `folder-container` + (folder.isActive === true ? " active" : "");
         folderList.appendChild(
           createElem("div",{class:folderContainerClass,'data-folder': folderId},{},
             folder.isEditing !== true ?
@@ -106,18 +106,16 @@ export function renderFolders(){
   saveAccounts(accounts)
 };
 
-export function renderTasks(folderTasks){
-  console.log(folderTasks);
+export function renderTasks(folderTasks, folderId){
   const accounts = JSON.parse(localStorage.getItem("accounts"));
   const tasksList = document.querySelector("#tasks-content > ul");
+  tasksList.innerHTML = ""
 
   accounts.forEach(acc=>{
     if(acc.isLoggedIn === true){
       acc.folders.forEach(folder=>{
-
-        tasksList.innerHTML = ""
-
-        folderTasks.forEach(task=>{
+      if (folder.folderId === folderId){ 
+        folder.tasks.forEach(task=>{
           const deleteSVG = imagepath('./svg/delete.svg')
           const editSVG = imagepath('./svg/edit.svg')
           const calendarSVG = imagepath('./svg/calendar-exclaim.svg')
@@ -150,7 +148,7 @@ export function renderTasks(folderTasks){
                 })()  
               ),
               createElem("div",{class:"taskControls-bottom"},{},
-                createElem("img",{class:"editTaskBtn", src:`${editSVG}`, "data-task": `${task.taskId}`},{click:editTask}),
+                createElem("img",{class:"editTaskBtn", src:`${editSVG}`, "data-task": `${task.taskId}`,"data-folder":`${folder.folderId}`},{click:editTask}),
                 createElem("img",{class:"deleteTaskBtn", src:`${deleteSVG}`},{})
               )
             ),
@@ -225,40 +223,13 @@ export function renderTasks(folderTasks){
                 
                 editTaskContainer.appendChild(saveTaskEditButton)
                 return editTaskContainer;
-            })()
-          )
-        tasksList.appendChild(taskContainer)
-        })
+              })()
+           )
+            tasksList.appendChild(taskContainer)
+          })
+        }
       })
     }
   })
   saveAccounts(accounts)
 }
-
-// (function() {
-//   const editingContainer = 
-//     createElem("div", { class: "editing-container" },{},
-//       createElem("input", { 
-//         type: "text", 
-//         id:`edit-folderTitle-${folderId}`, 
-//         autofocus: "", 
-//         class: "editFolderInput", 
-//         "value": folderTitle 
-//       },{click:(e)=>{
-//         e.stopPropagation()
-//       }})
-//   );
-
-//   const saveEditButton = 
-//     createElem("button", { 
-//       class: "saveEditBtn", 
-//       "data-folder": folderId, 
-//       id: folderId 
-//     },{click:(e)=>{
-//       e.stopPropagation()
-//       onUpdate(e)
-//     }}, "Save?");
-
-//   editingContainer.appendChild(saveEditButton);
-//   return editingContainer;
-// })(),

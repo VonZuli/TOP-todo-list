@@ -16,27 +16,32 @@ export function addTask(taskObj) {
   let folderFound = false;
 
   accounts.forEach(acc=>{
-    if(acc.isLoggedIn === true){
+    if(acc.isLoggedIn){
       userFound = true;
       acc.folders.forEach(folder=>{
-        
         if(folder.folderId === activeFolderId){
           folderFound = true
           console.log(`Adding task to folder: ${folder.folderTitle}`);
+          
+          if (!Array.isArray(folder.tasks)) {
+            folder.tasks = [];
+          }
           folder.tasks.push(taskObj);
-          renderTasks(folder.tasks);
+          
+          saveAccounts(accounts)
+          renderTasks(folder.tasks, folder.folderId);
+          renderFolders()
         }
-        
-        if (!Array.isArray(folder.tasks)) {
-          folder.tasks = [];
-        }
-        
-        saveAccounts(accounts)
-        renderFolders();
-        
       })
     }
   })
+  if (!userFound) {
+    console.error("No logged-in user found");
+  }
+
+  if (!folderFound) {
+    console.error("No matching folder found");
+  }
 }
   
 export function handleCheckbox(e, taskId) {
@@ -68,21 +73,14 @@ export function editTask(e){
   const editBtn = e.target;
   const taskToEdit = editBtn.dataset.task;
   setTaskEditing(taskToEdit);
+
   const accounts = JSON.parse(localStorage.getItem("accounts"))
   accounts.forEach(acc=>{
-    if (acc.isLoggedIn === true){
-      acc.folders.forEach(folder=>{
-        const folderDiv = document.querySelectorAll(".folder-container")
-        console.log(folderDiv);
-        folderDiv.forEach(el=>{
-          if (folder.folderId === el.dataset.folder){
-            renderTasks(folder.tasks);
-          };
-        })
-        // if (folder.folderId === folderDiv) {
-          
-        // }
-      })
+    if (acc.isLoggedIn){
+      const activeFolder = acc.folders.find(folder => folder.isActive);
+      if (activeFolder) {
+        renderTasks(activeFolder.tasks, activeFolder.folderId);
+      }
     }
   })
 }
@@ -125,10 +123,12 @@ export function onTaskUpdate(e) {
   accounts.forEach(acc=>{
     if (acc.isLoggedIn === true){
       acc.folders.forEach(folder=>{
-        const folderId = document.querySelector(".folder-container").dataset.folder
-        if(folder.folderId === folderId){
-
-          renderTasks(folder.tasks);
+        if (folder.isActive) {
+          folder.tasks.forEach(task=>{
+            if (task.taskId === taskId){
+              renderTasks(folder.tasks, folder.folderId);
+            };
+          })
         }
       })
     }
