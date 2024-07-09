@@ -42,6 +42,7 @@ export function addTask(taskObj) {
   if (!folderFound) {
     console.error("No matching folder found");
   }
+  document.querySelector("#new-modal").remove()
 }
   
 export function handleCheckbox(e, taskId) {

@@ -205,10 +205,10 @@ export function renderTasks(folderTasks, folderId){
                   },{click:(e)=>{
                     e.stopPropagation()
                   }},
-                  createElem("option",{ class: "default-select", value: taskPriority, selected:""},{},taskPriority),
-                  createElem("option", {class:"low-selectOpt",value:"Low"},{},"Low"),
-                  createElem("option", {class:"medium-selectOpt",value:"Medium"},{},"Medium"),
-                  createElem("option", {class:"high-selectOpt",value:"High"},{},"High")),
+                  createElem("option",{ class: "selectOpt default", value: taskPriority, selected:""},{},taskPriority),
+                  createElem("option", {class:"selectOpt low",value:"Low"},{},"Low"),
+                  createElem("option", {class:"selectOpt medium",value:"Medium"},{},"Medium"),
+                  createElem("option", {class:"selectOpt high",value:"High"},{},"High")),
                 )
 
                 const saveTaskEditButton = 

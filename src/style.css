@@ -691,6 +691,7 @@ button:focus{
       .deleteMsg_span{
         align-self: center;
         text-decoration: underline;
+        text-underline-offset: 0.3em;
         padding: 5px;
         color: rgb(255, 68, 68);
       }
@@ -970,7 +971,39 @@ li > .taskDetails{
     color:red;
   }
 
-.notes-wrapper{
+.edit-task-container{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin: 5px;
+  
+}  
+  .editTaskInput{
+    color: var(--tertiary-color);
+    text-align: start;
+    background: transparent;
+    border: none;
+    border-bottom: solid 1px var(--text-color);
+    padding: 2px 4px;
+    margin: 2px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  }
+  .editTaskInput[type=date]{
+    color-scheme: dark
+  }
+  select.editTaskInput{
+    margin-bottom: 5px;
+  }
+  .selectOpt{
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-weight: 100;
+    background-color: var(--primary-color);
+  }
+  .selectOpt.default{
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-weight: 500;
+  }
+/* .notes-wrapper{
   display: flex;
   flex-direction: column;
 }
@@ -984,8 +1017,8 @@ li > .taskDetails{
   content: "\25B7";
   margin: 5px;
 
-}
-.textarea{
+} */
+/* .textarea{
   display: block;
   resize: both;
   padding: 5px;
@@ -993,7 +1026,7 @@ li > .taskDetails{
 }
 /* .taskNotes{
   flex-basis: 100%;
-} */
+} */ */
 
 /*#endregion tasks*/
 
