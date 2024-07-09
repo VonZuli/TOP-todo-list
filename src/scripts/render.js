@@ -9,7 +9,7 @@ import {
   editFolder,
   onUpdate
 } from './folders.js'
-import { handleCheckbox, editTask, onTaskUpdate } from "./tasks";
+import { handleCheckbox, editTask, onTaskUpdate, deleteTask } from "./tasks";
 //#endregion imports  
 
 export function renderFolders(){
@@ -18,7 +18,7 @@ export function renderFolders(){
   const folderList = document.querySelector("#folder-content > ul")
 
   accounts.forEach(acc=>{
-    if (acc.isLoggedIn === true) {
+    if (acc.isLoggedIn) {
       folderList.innerHTML = ""
       acc.folders.forEach(folder=>{
 
@@ -112,7 +112,7 @@ export function renderTasks(folderTasks, folderId){
   tasksList.innerHTML = ""
 
   accounts.forEach(acc=>{
-    if(acc.isLoggedIn === true){
+    if(acc.isLoggedIn){
       acc.folders.forEach(folder=>{
       if (folder.folderId === folderId){ 
         folder.tasks.forEach(task=>{
@@ -149,7 +149,7 @@ export function renderTasks(folderTasks, folderId){
               ),
               createElem("div",{class:"taskControls-bottom"},{},
                 createElem("img",{class:"editTaskBtn", src:`${editSVG}`, "data-task": `${task.taskId}`,"data-folder":`${folder.folderId}`},{click:editTask}),
-                createElem("img",{class:"deleteTaskBtn", src:`${deleteSVG}`},{})
+                createElem("img",{class:"deleteTaskBtn", src:`${deleteSVG}`, "data-task":`${task.taskId}`, "data-folder":`${folder.folderId}`},{click:deleteTask})
               )
             ),
             task.isEditing !== true ?

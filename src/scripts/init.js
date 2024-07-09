@@ -117,8 +117,9 @@ export function initFolders(username, validLogin) {
   //a timeout would need to be added to logout user
   // user is not logged out on page refresh so you need to create a check for logged in users on refresh and load the correct DOM elements
   loginBtn.addEventListener("click", () =>{
+    const accounts = JSON.parse(localStorage.getItem("accounts"));
     accounts.forEach(acc=>{
-      if (acc.isLoggedIn === true){
+      if (acc.isLoggedIn){
         acc.isLoggedIn = false
         saveAccounts(accounts)
         console.log("Account logged out:", acc.username);

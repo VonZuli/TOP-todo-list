@@ -46,7 +46,7 @@ export const folderValidation = () =>{
   }
 
   accounts.forEach(acc=>{
-    if (acc.isLoggedIn === true) {
+    if (acc.isLoggedIn) {
       acc.folders.push({
         folderId, 
         folderTitle:userInput,
@@ -141,7 +141,7 @@ export const loginValidation = (username, password)=>{
   }
  
   let dialog = document.querySelector(".login_dialog")
-  console.log(`Signing in... ${username}`);
+  // console.log(`Signing in... ${username}`);
   dialog.remove()
 
   const section = document.querySelector("section")
@@ -159,7 +159,6 @@ export const loginValidation = (username, password)=>{
 
   //move user to their profile
   initFolders(username, validLogin)
-  // localStorage.setItem("accounts", JSON.stringify(accounts))
 }
 
 export function registrationValidation(userInfoObj){
@@ -356,7 +355,7 @@ export function registrationValidation(userInfoObj){
       })
     }); 
   })(errorArr)
-  console.log(`Error message array has ${errorArr.length} errors`, errorArr);
+  // console.log(`Error message array has ${errorArr.length} errors`, errorArr);
 
   if (errorArr.length === 0){
     const errorMsgDisplay = document.querySelectorAll(".error-msg");

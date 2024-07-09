@@ -23,13 +23,12 @@ export function selectFolder(){
       
 
       accounts.forEach(acc=>{
-        if (acc.isLoggedIn === true) {
+        if (acc.isLoggedIn) {
           acc.folders.forEach(folder=>{
             if (folder.folderId === e.target.dataset.folder) {
               folder.isActive = true;
               saveAccounts(accounts)
               initTasks(folder.tasks, folder.folderId);
-              // renderTasks(folder.tasks, folder.folderId);
             } else {
               folder.isActive = false;
             }
@@ -74,7 +73,7 @@ export const deleteFolder = (folderToDelete, folderTitle)=>{
             createElem("span",{class:'deleteMsg_span'},{},spanText)
           ),
           createElem("div",{class:'dialog-controls'},{},
-            createElem("button",{class:'confirmDelete_btn'},{mouseup: confirmDelete},"Confirm"),
+            createElem("button",{class:'confirmDelete_btn'},{click:confirmDelete},"Confirm"),
             createElem("button",{class:'cancelDelete_btn'},{click:cancelDelete},"Cancel")
           )
         )
@@ -97,7 +96,7 @@ function removeFolder(folderToDelete) {
   const accounts = JSON.parse(localStorage.getItem("accounts"));
 
   accounts.forEach(acc=>{
-    if (acc.isLoggedIn === true){
+    if (acc.isLoggedIn){
       const index = acc.folders.findIndex(folder => folder.folderId === folderToDelete)
       if (index > -1) {
         acc.folders.splice(index, 1);
@@ -116,7 +115,7 @@ export function editFolder(e) {
 function setEditing(folderToEdit) {
   const accounts = JSON.parse(localStorage.getItem("accounts"));
   accounts.forEach(acc=>{
-    if (acc.isLoggedIn === true){
+    if (acc.isLoggedIn){
       acc.folders.forEach(folder=>{
         if(folder.folderId === folderToEdit){
           folder.isEditing = true
@@ -143,7 +142,7 @@ export function onUpdate(e){
 function updateFolder(folderId, newFolderTitle){
   const accounts = JSON.parse(localStorage.getItem("accounts"));
   accounts.forEach(acc=>{
-    if (acc.isLoggedIn === true) {
+    if (acc.isLoggedIn) {
       acc.folders.forEach(folder=>{
         if(folder.folderId === folderId){
           folder.folderTitle = newFolderTitle

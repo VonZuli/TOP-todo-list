@@ -21,7 +21,7 @@ export function addTask(taskObj) {
       acc.folders.forEach(folder=>{
         if(folder.folderId === activeFolderId){
           folderFound = true
-          console.log(`Adding task to folder: ${folder.folderTitle}`);
+          // console.log(`Adding task to folder: ${folder.folderTitle}`);
           
           if (!Array.isArray(folder.tasks)) {
             folder.tasks = [];
@@ -47,7 +47,7 @@ export function addTask(taskObj) {
 export function handleCheckbox(e, taskId) {
   const accounts = JSON.parse(localStorage.getItem("accounts"));
   accounts.forEach(acc=>{
-    if (acc.isLoggedIn === true){
+    if (acc.isLoggedIn){
       acc.folders.forEach(folder=>{
         folder.tasks.forEach(task=>{
           if (task.taskId === taskId){
@@ -61,12 +61,12 @@ export function handleCheckbox(e, taskId) {
               taskDetails.classList.remove("completed")
               taskItemContainer.classList.remove("completed")
             }
-            saveAccounts(accounts)
           }
         })
       })
     }
   })
+  saveAccounts(accounts)
 }
 
 export function editTask(e){
@@ -88,7 +88,7 @@ export function editTask(e){
 function setTaskEditing(taskToEdit) {
   const accounts = JSON.parse(localStorage.getItem("accounts"));
   accounts.forEach(acc=>{
-    if (acc.isLoggedIn === true){
+    if (acc.isLoggedIn){
       acc.folders.forEach(folder=>{
         folder.tasks.forEach(task=>{
           if(task.taskId === taskToEdit){
@@ -121,7 +121,7 @@ export function onTaskUpdate(e) {
   updateTask(taskId, newTaskTitle, newTaskDesc, newTaskDueDate, newTaskPriority);  
 
   accounts.forEach(acc=>{
-    if (acc.isLoggedIn === true){
+    if (acc.isLoggedIn){
       acc.folders.forEach(folder=>{
         if (folder.isActive) {
           folder.tasks.forEach(task=>{
@@ -138,7 +138,7 @@ export function onTaskUpdate(e) {
 function updateTask(taskId, newTaskTitle, newTaskDesc, newTaskDueDate, newTaskPriority) {
   const accounts = JSON.parse(localStorage.getItem("accounts"));
   accounts.forEach(acc=>{
-    if (acc.isLoggedIn === true) {
+    if (acc.isLoggedIn) {
       acc.folders.forEach(folder=>{
         folder.tasks.forEach(task=>{
           if (task.taskId === taskId) {
@@ -153,4 +153,39 @@ function updateTask(taskId, newTaskTitle, newTaskDesc, newTaskDueDate, newTaskPr
       saveAccounts(accounts)
     }
   })
+}
+
+export function deleteTask(e){
+
+  const accounts = JSON.parse(localStorage.getItem("accounts"));
+  const delBtn = e.target;
+  const taskToDelete = delBtn.dataset.task;
+  removeTask(taskToDelete)
+  renderFolders()
+  accounts.forEach(acc=>{
+    if (acc.isLoggedIn) {
+      acc.folders.forEach(folder=>{
+        folder.tasks.forEach(task=>{
+          if (task.taskId === taskToDelete){
+            renderTasks(folder.tasks, folder.folderId)
+          }
+        })
+      })
+    }
+  })
+  
+  function removeTask(taskToDelete) {
+    const accounts = JSON.parse(localStorage.getItem("accounts"));
+    accounts.forEach(acc=>{
+      if (acc.isLoggedIn){
+        acc.folders.forEach(folder=>{
+          const index = folder.tasks.findIndex(task=>task.taskId === taskToDelete)
+          if (index > - 1) {
+            folder.tasks.splice(index, 1)
+          }
+          saveAccounts(accounts)
+        })
+      }
+    })
+  }
 }

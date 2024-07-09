@@ -1,4 +1,4 @@
 node_modules
-/dist
 /src/assets/images/unused
 /src/scripts/quotes.js
+/dist/assets/images/unused

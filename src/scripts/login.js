@@ -12,8 +12,6 @@ export function login() {
   let eyeCloseSVG = imagepath('./svg/eye-closed.svg')
   const loginSVG = imagepath('./svg/user-login.svg')
 
-  let loginObj = {}
-
   body.appendChild(
     createElem("dialog", {class:"login_dialog"},{},
       createElem("div",{class:"login-container"},{},
